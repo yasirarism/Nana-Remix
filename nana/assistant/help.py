@@ -4,7 +4,7 @@ import time
 from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, BotName, DB_AVAILABLE, StartTime
+from nana import setbot, AdminSettings, Command, BotName, DB_AVAILABLE, StartTime, NANA_IMG
 from nana.__main__ import get_runtime
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
@@ -12,8 +12,6 @@ from nana.modules.chats import get_msgc
 if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats
     from nana.modules.database.notes_db import get_all_selfnotes
-
-NANA_IMG = "https://telegra.ph/file/2c8278c78c5404cdf0e53.jpg"
 
 HELP_STRINGS = f"""
 You can use {", ".join(Command)} on your userbot to execute that commands.
@@ -54,7 +52,10 @@ def get_readable_time(seconds: int) -> str:
 async def help_parser(client, chat_id, text, keyboard=None):
     if not keyboard:
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help"))
-    await client.send_photo(chat_id, NANA_IMG, caption=text, reply_markup=keyboard)
+    if NANA_IMG:
+        await client.send_photo(chat_id, NANA_IMG, caption=text, reply_markup=keyboard)
+    else:
+        await client.send_message(chat_id, text, reply_markup=keyboard)
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["help"]))
