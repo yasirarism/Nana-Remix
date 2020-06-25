@@ -19,9 +19,7 @@ USER_IN_RESTRICT = []
 
 @app.on_message(~Filters.user("self") & Filters.private & ~Filters.bot)
 async def pm_block(client, message):
-	print("test1")
 	if not get_whitelist(message.chat.id):
-		print("test2")
 		await client.read_history(message.chat.id)
 		if message.text:
 			for x in message.text.lower().split():
