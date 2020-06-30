@@ -45,7 +45,7 @@ Convert a text to various style, can be used anywhere!
         me = None
     start_message = f"Hi {OwnerName},\n"
     start_message += "Nana is Ready at your Service!\n"
-    start_message += f"===================\n"
+    start_message += "===================\n"
     start_message += "-> Python: `{}`\n".format(python_version())
     if not me:
         start_message += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
@@ -55,8 +55,8 @@ Convert a text to various style, can be used anywhere!
     start_message += "-> Database: `{}`\n".format(DB_AVAILABLE)
     if DB_AVAILABLE:
         start_message += f"-> Group joined: `{len(get_all_chats())} groups`\n"
-    start_message += f"===================\n"
-    start_message += f"`For more about the bot press button down below`"
+    start_message += "===================\n"
+    start_message += "`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
     if NANA_IMG:
