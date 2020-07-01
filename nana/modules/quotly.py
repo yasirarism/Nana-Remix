@@ -38,6 +38,9 @@ async def q_maker(_client, message):
                 await message.edit("```Making a Quote```")
             except Exception as e:
                 await message.edit(f'**ERROR:**\n{e}')
+                await sleep(5)
+                await message.delete()
+                return
     await message.edit("```Complete !```")
     await message.delete()
     msg_id = msg[0]["message_id"]
