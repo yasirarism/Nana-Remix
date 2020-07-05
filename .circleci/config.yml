@@ -2,22 +2,9 @@ version: 2
 jobs:
  build:
    machine: true
-   docker:
-    - image: python:3.8-slim-buster
-      environment:
-        PIPENV_VENV_IN_PROJECT: true
-        ENV: Yes
-        TEST_DEVELOP: True
-        api_id: $api_id
-        api_hash: $api_hash
-        DB_URI: $DB_URI
-        ASSISTANT_BOT_TOKEN: $ASSISTANT_BOT_TOKEN
-        AdminSettings: $AdminSettings
-        USERBOT_SESSION: $USERBOT_SESSION
-        ASSISTANT_SESSION: $ASSISTANT_SESSION
-    steps:
-      - checkout
-      - run: git clone https://github.com/pokurt/Nana-Remix.git /root/nana
-      working_directory: /root/nana
-      - run: sudo pip3 install -U -r requirements.txt
-      - run: python3 -n nana
+   steps:
+     - checkout
+     # build the application image
+     - run: docker build -t nana/bot:v1.0 .
+      # run the docker image
+     - run: docker run -e ENV=Yes -e TEST_DEVELOP=True -e api_id=$api_id -e api_hash=$api_hash -e DB_URI=$DB_URI -e ASSISTANT_BOT_TOKEN=$ASSISTANT_BOT_TOKEN -e AdminSettings=$AdminSettings -e USERBOT_SESSION=$USERBOT_SESSION -e ASSISTANT_SESSION=$ASSISTANT_SESSION nana/bot:v1.0
