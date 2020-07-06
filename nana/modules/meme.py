@@ -7,6 +7,7 @@ import asyncio
 import aiohttp
 import requests
 from pyrogram import Filters
+from pyrogram.api import functions
 
 import nana.modules.meme_strings as meme_strings
 from nana.helpers.PyroHelpers import ReplyCheck
@@ -57,6 +58,10 @@ pat gifs
 ──「 **TypeWriter** 」──
 -> `type`
 typing message
+
+──「 **Fake Screenshot** 」──
+-> `fakess`
+Try it, works in Private messages only
 """
 
 
@@ -295,3 +300,17 @@ async def meme_gen(client, message):
         else:
             await client.send_sticker(message.chat.id, "nana/cache/meme.png", reply_to_message_id=message.message_id)
         os.remove("nana/cache/meme.png")
+
+
+@app.on_message(Filters.me & Filters.command(["fakess"], Command))
+async def fake_ss(client, message):
+    await asyncio.gather(
+        message.delete(),
+        client.send(
+            functions.messages.SendScreenshotNotification(
+                    peer=await client.resolve_peer(message.chat.id),
+                    reply_to_msg_id=0,
+                    random_id=client.rnd_id(),
+                )
+            )
+        )
