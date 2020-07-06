@@ -162,7 +162,7 @@ async def tracemoe_rs(client, message):
                 os.remove(dis_loc)
             result = search['docs'][0]
             msg = f"**Title**: {result['title_english']}" \
-                  f"\n**Similarity**: {str(result['similarity'])[1:2]}" \
+                  f"\n**Similarity**: {result['similarity']*100}"\
                   f"\n**Episode**: {result['episode']}"
             preview = await tracemoe.video_preview(search)
             with open('preview.mp4', 'wb') as f:
