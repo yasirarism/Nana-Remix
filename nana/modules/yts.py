@@ -69,7 +69,7 @@ async def yts(client, message):
         _rating = data['rating']
         _language = data['language']
         _torrents = data['torrents']
-        def_quality = "720p"
+        def_quality = "1080p"
         _qualities = []
         for i in _torrents:
             _qualities.append(i['quality'])

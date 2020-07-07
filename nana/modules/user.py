@@ -26,6 +26,13 @@ clone user identity with original backup
 
 -> `revert`
 revert to original identity
+
+──「 **Group** 」──
+-> `join <groupname>`
+joins a groupchat // Note: join works in public chats only
+
+-> `leave`
+Leave chat
 """
 
 profile_photo = "nana/downloads/pfp.jpg"
@@ -121,3 +128,28 @@ async def revert(client, message):
     await message.edit("`Identity Reverted`")
     await sleep(5)
     await message.delete()
+
+
+@app.on_message(Filters.me & Filters.command(["join"], Command))
+async def join_chat(client, message):
+    cmd = message.command
+    text = ""
+    if len(cmd) > 1:
+        text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`cant join the void.`")
+        await sleep(2)
+        await message.delete()
+        return
+    await client.join_chat(text.replace('@', ''))
+    await message.edit(f'joined {text} successfully!')
+    await sleep(2)
+    await message.delete()
+
+
+@app.on_message(Filters.me & Filters.command(["leave"], Command))
+async def leave_chat(client, message):
+    await message.edit('__adios__')
+    await client.leave_chat(message.chat.id)

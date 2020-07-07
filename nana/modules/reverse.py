@@ -1,17 +1,10 @@
-# Copyright (C) 2020 by UsergeTeam@Github, < https://github.com/UsergeTeam >.
-#
-# This file is part of < https://github.com/UsergeTeam/Userge > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/uaudith/Userge/blob/master/LICENSE >
-#
-# All rights reserved.
-# Ported to Nana by @pokurt
 
 import os
 from datetime import datetime
 import shlex
 
 import requests
+import tracemoepy
 from bs4 import BeautifulSoup
 from typing import Tuple, Optional
 from os.path import basename
@@ -20,17 +13,19 @@ import asyncio
 from pyrogram import Filters
 
 from nana import app, Command, logging
+from nana.helpers.PyroHelpers import ReplyCheck
 
 __MODULE__ = "Reverse"
 __HELP__ = """
-This module will help you Reverse Ssearch Media from Google
+This module will help you Reverse Search Media
 
 ──「 **Google Reverse Search** 」──
 -> `reverse (reply to a media)`
-Reverse search any supported media by google with this command
+Reverse search any supported media by google
 
-`Copyright (C) 2020 by UsergeTeam@Github,`
-`Ported to Nana - Userbot by` @pokurt
+──「 **TraceMoe Reverse Search** 」──
+-> `areverse (reply to a media)`
+Anime reverse search any supported media by tracemoe
 
 """
 
@@ -80,7 +75,7 @@ async def google_rs(client, message):
                 file_name=screen_shot
             )
             dis_loc = os.path.join(screen_shot, os.path.basename(dis))
-        if message_.animation:
+        if message_.animation or message_.video:
             await message.edit("`Converting this Gif`")
             img_file = os.path.join(screen_shot, "grs.jpg")
             await take_screen_shot(dis_loc, 0, img_file)
@@ -119,3 +114,73 @@ async def google_rs(client, message):
 <b>More Info</b>: Open this <a href="{the_location}">Link</a>
 """
     await message.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)
+
+
+@app.on_message(Filters.me & Filters.command(["areverse"], Command))
+async def tracemoe_rs(client, message):
+    dis_loc = ''
+    if message.reply_to_message:
+        message_ = message.reply_to_message
+        if message_.sticker and message_.sticker.file_name.endswith('.tgs'):
+            await message.delete()
+            return
+        if message_.photo or message_.animation or message_.sticker:
+            dis = await client.download_media(
+                message=message_,
+                file_name=screen_shot
+            )
+            dis_loc = os.path.join(screen_shot, os.path.basename(dis))
+        if message_.animation:
+            await message.edit("`Converting this Gif`")
+            img_file = os.path.join(screen_shot, "grs.jpg")
+            await take_screen_shot(dis_loc, 0, img_file)
+            if not os.path.lexists(img_file):
+                await message.edit("`Something went wrong in Conversion`")
+                await asyncio.sleep(5)
+                await message.delete()
+                return
+            dis_loc = img_file
+        if message_.video:
+            nama = "video_{}-{}.mp4".format(message.reply_to_message.video.date, message.reply_to_message.video.file_size)
+            await client.download_media(message.reply_to_message.video, file_name="nana/downloads/" + nama)
+            dis_loc = "nana/downloads/" + nama
+            img_file = os.path.join(screen_shot, "grs.jpg")
+            await take_screen_shot(dis_loc, 0, img_file)
+            if not os.path.lexists(img_file):
+                await message.edit("`Something went wrong in Conversion`")
+                await asyncio.sleep(5)
+                await message.delete()
+                return
+        if dis_loc:
+            tracemoe = tracemoepy.async_trace.Async_Trace()
+            if message_.video:
+                search = await tracemoe.search(img_file, encode=True)
+                os.remove(img_file)
+                os.remove(dis_loc)
+            else:
+                search = await tracemoe.search(dis_loc, encode=True)
+                os.remove(dis_loc)
+            result = search['docs'][0]
+            msg = f"**Title**: {result['title_english']}" \
+                  f"\n**Similarity**: {result['similarity']*100}"\
+                  f"\n**Episode**: {result['episode']}"
+            preview = await tracemoe.video_preview(search)
+            with open('preview.mp4', 'wb') as f:
+                f.write(preview)
+            await message.delete()
+            await client.send_video(message.chat.id,
+                                    'preview.mp4',
+                                    caption=msg,
+                                    reply_to_message_id=ReplyCheck(message)
+                                    )
+            await asyncio.sleep(5)
+            await message.delete()
+            os.remove('preview.mp4')
+        else:
+            await message.delete()
+            return
+    else:
+        await message.edit("`Reply to a message to proceed`")
+        await asyncio.sleep(5)
+        await message.delete()
+        return
