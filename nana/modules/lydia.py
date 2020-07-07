@@ -6,7 +6,7 @@ from coffeehouse.lydia import LydiaAI
 from coffeehouse.exception import CoffeeHouseError as CFError
 from pyrogram import Filters
 
-from nana import lydia_api, app, Command, setbot, Owner
+from nana import lydia_api, app, Command, setbot, Owner, OwnerUsername
 import nana.modules.database.lydia_db as sql
 
 __MODULE__ = "Chatbot"
@@ -53,7 +53,7 @@ async def remove_chat(_client, message):
         await message.edit("AI disabled successfully!")
 
 
-@app.on_message(~Filters.me & ~Filters.edited & (Filters.mentioned | Filters.private), group=6)
+@app.on_message(~Filters.me & ~Filters.edited & (Filters.group | Filters.private), group=6)
 async def chatbot(client, message):
     global api_client
     chat_id = message.chat.id
@@ -61,8 +61,8 @@ async def chatbot(client, message):
     if not is_chat:
         return
     if message.text and not message.document:
-        # if not check_message(client, message):
-        #     return
+        if not await check_message(client, message):
+            return
         sesh, exp = sql.get_ses(chat_id)
         query = message.text
         try:
@@ -84,9 +84,9 @@ async def chatbot(client, message):
                 Owner, f"Chatbot error: {e} occurred in {chat_id}!")
 
 
-async def check_message(_client, message):
-    reply_msg = await message.reply_to_message
-    if message.text.lower() == "poki":
+async def check_message(client, message):
+    reply_msg = message.reply_to_message
+    if message.text.lower() == f"{OwnerUsername}":
         return True
     if reply_msg:
         if reply_msg.from_user.id == Owner:
