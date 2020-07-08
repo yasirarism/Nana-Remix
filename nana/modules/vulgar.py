@@ -19,7 +19,8 @@ Current words: 'nigga', 'nigger', 'coon', 'fuck', 'bitch'
 
 vulgar_filter = False
 
-bad_words = ['nigga', 'nigger', 'coon', 'fuck', 'bitch']
+bad_words = ['nigga', 'nigger', 'coon', 'bitch']
+f_word = ['fuck']
 
 
 @app.on_message(~Filters.regex(r"^\.\w*") & Filters.me)
@@ -34,6 +35,9 @@ async def vulgar_f(_client, message):
 
             for word in bad_words:
                 txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
+            
+            for word in f_word:
+                txt = re.sub(word, 'duck', txt, flags=re.IGNORECASE)
 
             if message.caption:
                 if txt != message.caption:
