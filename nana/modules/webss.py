@@ -23,7 +23,7 @@ Take screenshot of that website, if `full` args given, take full of website and 
 
 
 @app.on_message(Filters.me & Filters.command(["print"], Command))
-async def ss_web(client, message):
+async def print_web(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `print web.url`")
         return
