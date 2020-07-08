@@ -33,6 +33,10 @@ joins a groupchat // Note: join works in public chats only
 
 -> `leave`
 Leave chat
+
+──「 **Tag All** 」──
+-> `tagall`
+tags most recent 100 members in a group
 """
 
 profile_photo = "nana/downloads/pfp.jpg"
@@ -153,3 +157,21 @@ async def join_chat(client, message):
 async def leave_chat(client, message):
     await message.edit('__adios__')
     await client.leave_chat(message.chat.id)
+
+
+@app.on_message(Filters.me & Filters.command(["tagall"], Command))
+async def tag_all(client, message):
+    if message.chat.type in (("supergroup", "channel")):
+        mentions = []
+        await message.edit("`tagging everyone...`")
+        async for member in client.iter_chat_members(message.chat.id, 100):
+            mentions.append(f"@{member.user.username}")
+        tagall = str(mentions)
+        tag_fix = tagall.replace('[','').replace(']','').replace('@None','').replace("'",'').replace(",",' ')
+        await message.edit("`tagall successful!`")
+        await client.send_message(message.chat.id, tag_fix)
+        await sleep(5)
+        await message.delete()
+        return
+    else:
+        await message.delete()
