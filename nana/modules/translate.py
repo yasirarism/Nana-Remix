@@ -18,9 +18,6 @@ Reply a message to translate that.
 * = Not used when reply a message!
 """
 
-
-# TODO: Setlang for translation
-
 @app.on_message(Filters.me & Filters.command(["tr"], Command))
 async def translate(_client, message):
     if message.reply_to_message and (message.reply_to_message.text or message.reply_to_message.caption):
@@ -36,9 +33,9 @@ async def translate(_client, message):
         try:
             tekstr = trl.translate(text, dest=target)
         except ValueError as err:
-            await message.edit("Error: `{}`".format(str(err)))
+            await message.edit(f"Error: `{str(err)}`")
             return
-        await message.edit("Translated from `{}` to `{}`:\n```{}```".format(detectlang.lang, target, tekstr.text))
+        await message.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n```{tekstr.text}```")
     else:
         if len(message.text.split()) <= 2:
             await message.edit("Usage: `tr <lang> <text>`")
@@ -51,4 +48,4 @@ async def translate(_client, message):
         except ValueError as err:
             await message.edit("Error: `{}`".format(str(err)))
             return
-        await message.edit("Translated from `{}` to `{}`:\n```{}```".format(detectlang.lang, target, tekstr.text))
+        await message.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n```{tekstr.text}```")
