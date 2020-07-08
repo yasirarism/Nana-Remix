@@ -46,7 +46,7 @@ APP_SESSION = "nana/session/Nana"
 
 if ENV:
     # Logger
-    logger = os.environ.get('LOGGER', False)
+    logger = os.environ.get('LOGGER', True)
     # Version
     lang_code = os.environ.get('lang_code', "en")
     device_model = os.environ.get('device_model', "PC")
