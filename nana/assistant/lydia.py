@@ -1,57 +1,73 @@
 import asyncio
 import random
 import re
+from time import time
 
 from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
+from coffeehouse.exception import CoffeeHouseError as CFError
 from pyrogram import Filters
 
-from nana import setbot, AdminSettings, lydia_api
+from nana import setbot, AdminSettings, lydia_api, Owner, BotUsername, BotID
 import nana.modules.meme_strings as meme_strings
+from nana.assistant.database import lydia_db as sql
 
-lydia_status = False
-coffeehouse_api = None
-lydia = None
-session = None
-poki_uwu = False
+CoffeeHouseAPI = API(lydia_api)
+api_client = LydiaAI(CoffeeHouseAPI)
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["lydia"]) & (Filters.group | Filters.private))
-async def lydia_stats(_client, message):
-    global lydia_status, coffeehouse_api, lydia, session
-    if lydia_api == "":
-        await message.reply("`lydia API key is not set!\nSet your lydia API key by adding Config Vars in heroku with "
-                            "name lydia_api with value your lydia key API`")
-        return
-    if lydia_status:
-        await message.reply("Turning off lydia...")
-        asyncio.sleep(0.3)
-        lydia_status = False
-        await message.reply("Lydia will not reply your message")
+
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["addchat"]))
+async def add_chat(_client, message):
+    global api_client
+    chat_id = message.chat.id
+    is_chat = sql.is_chat(chat_id)
+    if not is_chat:
+        ses = api_client.create_session()
+        ses_id = str(ses.id)
+        expires = str(ses.expires)
+        sql.set_ses(chat_id, ses_id, expires)
+        await message.reply("AI successfully enabled for this chat!")
     else:
-        await message.reply("Turning on lydia...")
-        try:
-            coffeehouse_api = API(lydia_api)
-            # Create Lydia instance
-            lydia = LydiaAI(coffeehouse_api)
-            # Create a new chat session (Like a conversation)
-            session = lydia.create_session()
-        except:
-            await message.reply("Wrong lydia API key!")
+        await message.reply("AI is already enabled for this chat!")
+
+
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["rmchat"]))
+async def remove_chat(_client, message):
+    chat_id = message.chat.id
+    is_chat = sql.is_chat(chat_id)
+    if not is_chat:
+        await message.reply("AI isn't enabled here in the first place!")
+    else:
+        sql.rem_chat(chat_id)
+        await message.reply("AI disabled successfully!")
+
+
+@setbot.on_message(~Filters.me & ~Filters.edited & (Filters.group | Filters.private), group=2)
+async def chat_bot(client, message):
+    global api_client
+    chat_id = message.chat.id
+    is_chat = sql.is_chat(chat_id)
+    if not is_chat:
+        return
+    if message.text and not message.document:
+        if not await check_message(client, message):
             return
-        lydia_status = True
-        await message.reply("now Lydia will reply your message!")
-
-
-@setbot.on_message(~Filters.me & ~Filters.edited & (Filters.mentioned | Filters.private), group=2)
-async def lydia_settings(client, message):
-    global lydia_status, session
-    if lydia_status:
-        await client.send_chat_action(chat_id=message.chat.id,action="typing")
-        output = session.think_thought(message.text)
-        await asyncio.sleep(0.3)
-        if poki_uwu:
-            reply_text = re.sub(r'[rl]', "w", output)
-            reply_text = re.sub(r'[ｒｌ]', "ｗ", output)
+        sesh, exp = sql.get_ses(chat_id)
+        query = message.text
+        try:
+            if int(exp) < time():
+                ses = api_client.create_session()
+                ses_id = str(ses.id)
+                expires = str(ses.expires)
+                sql.set_ses(chat_id, ses_id, expires)
+                sesh, exp = sql.get_ses(chat_id)
+        except ValueError:
+            pass
+        try:
+            await client.send_chat_action(chat_id, action='typing')
+            rep = api_client.think_thought(sesh, query)
+            reply_text = re.sub(r'[rl]', "w", rep)
+            reply_text = re.sub(r'[ｒｌ]', "ｗ", rep)
             reply_text = re.sub(r'[RL]', 'W', reply_text)
             reply_text = re.sub(r'[ＲＬ]', 'Ｗ', reply_text)
             reply_text = re.sub(r'n([aeiouａｅｉｏｕ])', r'ny\1', reply_text)
@@ -65,19 +81,19 @@ async def lydia_settings(client, message):
             reply_text = reply_text.replace("ｏｖｅ", "ｕｖ")
             reply_text = reply_text.replace(".", ",,.")
             reply_text += ' ' + random.choice(meme_strings.faces)
-            await message.reply_text(f"{reply_text.lower()}", quote=True)
-        else:
-            await message.reply_text(f"{output}", quote=True)
+            await asyncio.sleep(0.3)
+            await message.reply_text(reply_text.lower(), quote=True)
+        except CFError as e:
+            await client.send_message(
+                Owner, f"Chatbot error: {e} occurred in {chat_id}!")
+
+
+async def check_message(_client, message):
+    reply_msg = message.reply_to_message
+    if message.text.lower() == f"{BotUsername}":
+        return True
+    if reply_msg:
+        if reply_msg.from_user.id == BotID:
+            return True
     else:
-        return
-
-
-@setbot.on_message(Filters.user(AdminSettings) & Filters.regex("^pokichan") & (Filters.mentioned | Filters.private))
-async def lydia_uwu(client, message):
-    global poki_uwu
-    if poki_uwu:
-        poki_uwu = False
-    else:
-        poki_uwu = True
-
-
+        return False

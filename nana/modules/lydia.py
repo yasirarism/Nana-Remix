@@ -37,9 +37,13 @@ async def add_chat(_client, message):
         ses_id = str(ses.id)
         expires = str(ses.expires)
         sql.set_ses(chat_id, ses_id, expires)
-        await message.edit("AI successfully enabled for this chat!")
+        await message.edit("`AI successfully enabled for this chat!`")
+        await asyncio.sleep(5)
+        await message.delete()
     else:
-        await message.edit("AI is already enabled for this chat!")
+        await message.edit("`AI is already enabled for this chat!`")
+        await asyncio.sleep(5)
+        await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["rmchat"], Command))
@@ -47,14 +51,18 @@ async def remove_chat(_client, message):
     chat_id = message.chat.id
     is_chat = sql.is_chat(chat_id)
     if not is_chat:
-        await message.edit("AI isn't enabled here in the first place!")
+        await message.edit("`AI isn't enabled here in the first place!`")
+        await asyncio.sleep(5)
+        await message.delete()
     else:
         sql.rem_chat(chat_id)
-        await message.edit("AI disabled successfully!")
+        await message.edit("`AI disabled successfully!`")
+        await asyncio.sleep(5)
+        await message.delete()
 
 
 @app.on_message(~Filters.me & ~Filters.edited & (Filters.group | Filters.private), group=6)
-async def chatbot(client, message):
+async def chat_bot(client, message):
     global api_client
     chat_id = message.chat.id
     is_chat = sql.is_chat(chat_id)
@@ -84,9 +92,9 @@ async def chatbot(client, message):
                 Owner, f"Chatbot error: {e} occurred in {chat_id}!")
 
 
-async def check_message(client, message):
+async def check_message(_client, message):
     reply_msg = message.reply_to_message
-    if message.text.lower() == f"{OwnerUsername}":
+    if message.text.lower() == f"@{OwnerUsername}":
         return True
     if reply_msg:
         if reply_msg.from_user.id == Owner:

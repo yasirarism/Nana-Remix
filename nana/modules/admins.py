@@ -62,7 +62,7 @@ Reply to a user to unmute them
 
 ──「 **Message Pin** 」──
 -> `pin`
-Reply to a user to mute them forever
+Reply a message to pin in the Group
 
 Supported pin types: `alert`, `notify`, `loud`
 """
