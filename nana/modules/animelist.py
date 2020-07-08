@@ -1,8 +1,18 @@
+"""
+Anilist Search Plugin for nana
+By :- @Zero_cooll7870
+
+Original Repo: https://github.com/jaskaranSM/UniBorg give a star and follow
+
+"""
+
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
 from pyrogram import Filters
 import asyncio
 from nana import app, Command
+import requests
+import json
 from nana.helpers.string import replace_text
 
 __MODULE__ = "MyAnimeList"
@@ -13,6 +23,8 @@ Get information about anime, manga or characters from [MyAnimeList](https://myan
 ──「 **Anime** 」──
 -> `anime <anime>`
 returns information about the anime.
+
+__Original Module by @Zero_cooll7870__
 
 ──「 **Character** 」──
 -> `character <character>`
@@ -29,6 +41,71 @@ returns a list of new anime in the upcoming seasons.
 
 jikan = Jikan()
 
+
+async def anime_call_api(search_str):
+    query = '''
+    query ($id: Int,$search: String) { 
+      Media (id: $id, type: ANIME,search: $search) { 
+        id
+        title {
+          romaji
+          english
+        }
+        description (asHtml: false)
+        startDate{
+            year
+          }
+          episodes
+          chapters
+          volumes
+          season
+          type
+          format
+          status
+          duration
+          averageScore
+          genres
+          bannerImage
+      }
+    }
+    '''
+    variables = {
+        'search' : search_str
+    }
+    url = 'https://graphql.anilist.co'
+    response = requests.post(url, json={'query': query, 'variables': variables})
+    return response.text
+
+
+async def formatJSON(outData):
+    msg = ""
+    jsonData = json.loads(outData)
+    res = list(jsonData.keys())
+    if "errors" in res:
+        msg += f"**Error** : `{jsonData['errors'][0]['message']}`"
+        return msg
+    else:
+        jsonData = jsonData['data']['Media']
+        if "bannerImage" in jsonData.keys():
+            msg += f"[💮]({jsonData['bannerImage']})"
+        else:
+            msg += "💮"
+        title = jsonData['title']['romaji']
+        link = f"https://anilist.co/anime/{jsonData['id']}"
+        msg += f"[{title}]({link})"
+        msg += f"\n\n**Type** : {jsonData['format']}"
+        msg += f"\n**Genres** : "
+        for g in jsonData['genres']:
+            msg += g+" "
+        msg += f"\n**Status** : {jsonData['status']}"
+        msg += f"\n**Episode** : {jsonData['episodes']}"
+        msg += f"\n**Year** : {jsonData['startDate']['year']}"
+        msg += f"\n**Score** : {jsonData['averageScore']}"
+        msg += f"\n**Duration** : {jsonData['duration']} min"
+        msg += f"\n\n __{jsonData['description']}__"
+        return msg
+
+
 @app.on_message(Filters.me & Filters.command(["anime"], Command))
 async def anime(_client, message):
     cmd = message.command
@@ -42,61 +119,11 @@ async def anime(_client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    res = ""
-    try:
-        res = jikan.search("anime", query)
-    except APIException:
-        await message.edit("Error connecting to the API. Please try again!")
-        return ""
-    try:
-        res = res.get("results")[0].get("mal_id") # Grab first result
-    except APIException:
-        await message.edit("Error connecting to the API. Please try again!")
-        return ""
-    if res:
-        anime = jikan.anime(res)
-        title = anime.get("title")
-        japanese = anime.get("title_japanese")
-        type = anime.get("type")
-        duration = anime.get("duration")
-        synopsis = anime.get("synopsis")
-        source = anime.get("source")
-        status = anime.get("status")
-        episodes = anime.get("episodes")
-        score = anime.get("score")
-        rating = anime.get("rating")
-        genre_lst = anime.get("genres")
-        genres = ""
-        for genre in genre_lst:
-            genres += genre.get("name") + ", "
-        genres = genres[:-2]
-        studios = ""
-        studio_lst = anime.get("studios")
-        for studio in studio_lst:
-            studios += studio.get("name") + ", "
-        studios = studios[:-2]
-        duration = anime.get("duration")
-        premiered = anime.get("premiered")
-        image_url = anime.get("image_url")
-        url = anime.get("url")
-    else:
-        await message.edit("No results found!")
-        return
-    rep = f"<b>{title} ({japanese})</b>\n"
-    rep += f"<b>Type:</b> <code>{type}</code>\n"
-    rep += f"<b>Source:</b> <code>{source}</code>\n"
-    rep += f"<b>Status:</b> <code>{status}</code>\n"
-    rep += f"<b>Genres:</b> <code>{genres}</code>\n"
-    rep += f"<b>Episodes:</b> <code>{episodes}</code>\n"
-    rep += f"<b>Duration:</b> <code>{duration}</code>\n"
-    rep += f"<b>Score:</b> <code>{score}</code>\n"
-    rep += f"<b>Studio(s):</b> <code>{studios}</code>\n"
-    rep += f"<b>Premiered:</b> <code>{premiered}</code>\n"
-    rep += f"<b>Rating:</b> <code>{rating}</code>\n\n"
-    rep += f"<a href='{image_url}'>\u200c</a>"
-    rep += f"<i>{synopsis}</i>\n"
-    rep += f'Read More: <a href="{url}">MyAnimeList</a>'
-    await message.edit(rep)
+    result = await anime_call_api(query)
+    msg = await formatJSON(result)
+    await message.edit(msg, disable_web_page_preview=False)
+
+
 
 @app.on_message(Filters.me & Filters.command(["character"], Command))
 async def character(_client, message):
