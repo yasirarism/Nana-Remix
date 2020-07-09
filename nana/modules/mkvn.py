@@ -18,7 +18,7 @@ Reply a video to make it as video note
 
 @app.on_message(Filters.me & Filters.command(["mkvn"], Command))
 async def vn_maker(client, message):
-	if message.reply_to_message and message.reply_to_message.video and message.reply_to_message.animation:
+	if message.reply_to_message.video and message.reply_to_message.animation:
 		dlvid = await download_reply_nocall(client, message)
 		if dlvid:
 			await message.edit("__Converting...__")
@@ -44,5 +44,3 @@ async def vn_maker(client, message):
 			await message.delete()
 			os.remove(dlvid)
 			os.remove(dlvid+"_converted.mp4")
-	else:
-		await message.edit("`reply to a video to convert`")
