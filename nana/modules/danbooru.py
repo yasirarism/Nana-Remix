@@ -1,0 +1,65 @@
+import requests
+from asyncio import sleep
+from pyrogram import Filters
+from nana import app, Command
+__MODULE__ = "Memes"
+__HELP__ = """
+This module can search images in danbooru and send in to the chat!
+
+──「 **Stretch Text** 」──
+-> `animu`(search string) or `animu nsfw`(search nsfw string)
+Search images from Danbooru.
+
+"""
+
+@app.on_message(Filters.me & Filters.command(["animu"], Command))
+async def danbooru(client, message):
+    await message.edit(f"`Processing…`")
+
+    if "nsfw" in message.command[1]:
+        rating = "Explicit"
+    else:
+        rating = "Safe"
+
+    search_query = ' '.join(message.command[2:])
+
+    params = {"limit": 1,
+              "random": "true",
+              "tags": f"Rating:{rating} {search_query}".strip()}
+
+    with requests.get("http://danbooru.donmai.us/posts.json", params=params) as response:
+        if response.status_code == 200:
+            response = response.json()
+        else:
+            await message.edit(f"`An error occurred, response code:` **{response.status_code}**")
+            await sleep(5)
+            await message.delete()
+            return
+
+    if not response:
+        await message.edit(f"`No results for query:` __{search_query}__")
+        await sleep(5)
+        await message.delete()
+        return
+
+    valid_urls = []
+
+    for url in ['file_url', 'large_file_url', 'source']:
+        if url in response[0].keys():
+            valid_urls.append(response[0][url])
+    if not valid_urls:
+        await message.edit(f"`Failed to find URLs for query:` __{search_query}__")
+        await sleep(5)
+        await message.delete()
+        return
+    for image_url in valid_urls:
+        try:
+            await client.send_photo(message.chat.id, image_url)
+            await message.delete()
+            return
+        except Exception as e:
+            print(e)
+            pass
+    await message.edit(f"``Failed to fetch media for query:` __{search_query}__")
+    await sleep(5)
+    await message.delete()
