@@ -21,7 +21,7 @@ __HELP__ = """
 This command means for helping development
 
 ──「 **Execution** 」──
--> `exec (command)`
+-> `py (command)`
 Execute a python commands.
 
 ──「 **Evaluation** 」──
@@ -29,7 +29,7 @@ Execute a python commands.
 Do math evaluation.
 
 ──「 **Command shell** 」──
--> `cmd (command)`
+-> `sh (command)`
 Execute command shell
 
 ──「 **Take log** 」──
