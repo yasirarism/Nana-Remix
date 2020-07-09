@@ -1,6 +1,3 @@
-
-# ffmpeg -i video_1573046696-542963.mp4 -vf scale=500x500 -strict -2 vid.mp4
-
 from asyncio import sleep
 import subprocess
 import os
@@ -19,9 +16,9 @@ Reply a video to make it as video note
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["mkvn"], Command))
+@app.on_message(Filters.me & Filters.command(["mkvn"], Command))
 async def vn_maker(client, message):
-	if message.reply_to_message and message.reply_to_message.video:
+	if message.reply_to_message and message.reply_to_message.video and message.reply_to_message.animation:
 		dlvid = await download_reply_nocall(client, message)
 		if dlvid:
 			await message.edit("__Converting...__")
@@ -34,7 +31,7 @@ async def vn_maker(client, message):
 					await message.delete()
 					await setbot.send_message(
                         Owner,
-                        "Hello 🙂\nYou need to install ffmpeg to make audio works better, here is guide how to install it:\n\n**If you're using linux**, go to your terminal, type:\n`sudo apt install ffmpeg`\n\n**If you're using Windows**, download ffmpeg here:\n`https://ffmpeg.zeranoe.com/builds/`\nAnd then extract (if was archive), and place ffmpeg.exe to workdir (in current dir)\n\n**If you're using heroku**, type this in your workdir:\n`heroku buildpacks:add https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`\nOr if you not using heroku term, follow this guide:\n1. Go to heroku.com\n2. Go to your app in heroku\n3. Change tabs/click Settings, then search for Buildpacks text\n4. Click button Add build pack, then type `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`\n5. Click Save changes, and you need to rebuild your heroku app to take changes!"
+                        "Hello 🙂\nYou need to install ffmpeg to make audio works better"
                     )
 					return
 			os.system(
@@ -47,3 +44,5 @@ async def vn_maker(client, message):
 			await message.delete()
 			os.remove(dlvid)
 			os.remove(dlvid+"_converted.mp4")
+	else:
+		await message.edit("`reply to a video to convert`")
