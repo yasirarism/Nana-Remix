@@ -1,5 +1,5 @@
 import os
-from asyncio import sleep
+from asyncio import sleep, gather
 from pyrogram.api import functions
 from pyrogram import Filters
 from nana import app, Command, DB_AVAILABLE
@@ -37,6 +37,14 @@ Leave chat
 ──「 **Tag All** 」──
 -> `tagall`
 tags most recent 100 members in a group
+
+──「 **Unread** 」──
+-> `un` or `unread`
+Set chat status to unread
+
+──「 **Save Message** 」──
+-> `s` or `save`
+Forward a message into Saved Messages
 """
 
 profile_photo = "nana/downloads/pfp.jpg"
@@ -175,3 +183,20 @@ async def tag_all(client, message):
         return
     else:
         await message.delete()
+
+@app.on_message(Filters.command(['unread', 'un'], Command) & Filters.me)
+async def mark_chat_unread(client, message):
+    await gather(
+        message.delete(),
+        client.send(
+            functions.messages.MarkDialogUnread(
+                peer=await client.resolve_peer(message.chat.id), unread=True
+            )
+        )
+    )
+
+
+@app.on_message(Filters.command(['save', 's'], Command) & Filters.me)
+async def to_saved(_client, message):
+    await message.delete()
+    await message.reply_to_message.forward('self')
