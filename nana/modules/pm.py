@@ -70,7 +70,7 @@ async def pm_button(client, query):
             return
         if re.match(r"engine_pm_block", query.data):
             await setbot.edit_inline_text(query.inline_message_id, "💩")
-            await app.send_message(query.from_user.id, "Opps, no nudes for you")
+            await app.send_message(query.from_user.id, "Sorry, No cash.\n Also you getting reported to TAbuse, OwO")
             await app.block_user(query.from_user.id)
         elif re.match(r"engine_pm_nope", query.data):
             await setbot.edit_inline_text(query.inline_message_id, "👍")
