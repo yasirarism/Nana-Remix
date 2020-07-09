@@ -2,7 +2,7 @@ import requests
 from asyncio import sleep
 from pyrogram import Filters
 from nana import app, Command
-__MODULE__ = "Memes"
+__MODULE__ = "Danbooru"
 __HELP__ = """
 This module can search images in danbooru and send in to the chat!
 
