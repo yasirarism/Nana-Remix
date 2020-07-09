@@ -25,8 +25,11 @@ async def pm_block(client, message):
             if message.text:
                 for x in message.text.lower().split():
                     if x in BLACKLIST:
+                        await client.send_sticker(message.chat.id,
+                                                  sticker='CAADAgAD1QQAAp7kTAry1JrL3zVXSxYE'
+                                                  )
                         await message.reply(
-                            "Naah im blocking you and reporting you to TAbuse,\nwith that being said fuck you OwO")
+                            "Naah im blocking you and reporting you to SpamWatch,\nwith that being said fuck you too OwO")
                         await client.block_user(message.chat.id)
                         return
             if not get_req(message.chat.id):
@@ -69,8 +72,8 @@ async def pm_button(client, query):
             await client.answer_callback_query(query.id, "No, you can't click by yourself", show_alert=False)
             return
         if re.match(r"engine_pm_block", query.data):
-            await setbot.edit_inline_text(query.inline_message_id, "💩")
-            await app.send_message(query.from_user.id, "Sorry, No cash.\n Also you getting reported to TAbuse, OwO")
+            await app.send_sticker(query.from_user.id, sticker='CAADAgAD1QQAAp7kTAry1JrL3zVXSxYE')
+            await app.send_message(query.from_user.id, "Sorry, No cash.\nAlso you are getting reported to SpamWatch, OwO")
             await app.block_user(query.from_user.id)
         elif re.match(r"engine_pm_nope", query.data):
             await setbot.edit_inline_text(query.inline_message_id, "👍")
