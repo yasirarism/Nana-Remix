@@ -6,7 +6,7 @@ __MODULE__ = "Danbooru"
 __HELP__ = """
 This module can search images in danbooru and send in to the chat!
 
-──「 **Stretch Text** 」──
+──「 **Danbooru Search** 」──
 -> `animu`(search string) or `animu nsfw`(search nsfw string)
 Search images from Danbooru.
 
