@@ -47,6 +47,13 @@ Usage:
 -> `aes`
 Convert your text to Vaporwave.
 
+──「 **Vaporwave/Aestethic** 」──
+-> `spam` (value) (word)
+spams a word with value given
+
+-> `spamstk` (value)
+Reply to a sticker to spam the sticker with value given
+
 ──「 **Shrugs** 」──
 -> `shg`
 Free Shrugs? Anyone?...
@@ -144,6 +151,31 @@ async def spam(client, message):
         for _ in range(int(times)):
             await client.send_message(message.chat.id, to_spam)
             await asyncio.sleep(0.20)
+
+
+@app.on_message(Filters.me & Filters.command(["spamstk"], Command))
+async def spam_stick(client, message):
+    if not message.reply_to_message:
+        await message.edit("`reply to a sticker with amount you want to spam`")
+        return
+    if not message.reply_to_message.sticker:
+        await message.edit("`reply to a sticker with amount you want to spam`")
+        return
+    else:
+        times = message.command[1]
+        if message.chat.type in ['supergroup', 'group']:
+            for _ in range(int(times)):
+                await client.send_sticker(message.chat.id,
+                sticker=message.reply_to_message.sticker.file_id,
+                reply_to_message_id=ReplyCheck(message)
+                )
+                await asyncio.sleep(0.20)
+
+        if message.chat.type == "private":
+            for _ in range(int(times)):
+                await client.send_message(message.chat.id,
+                sticker=message.reply_to_message.sticker.file_id)
+                await asyncio.sleep(0.20)
 
 
 @app.on_message(Filters.me & Filters.command(["owo"], Command))
