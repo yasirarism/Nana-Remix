@@ -306,7 +306,7 @@ async def get_id(_client, message):
             user_detail = f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
-        user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`\n\n"
+        user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`\n"
         user_detail += file_id
         await message.edit(user_detail)
 
