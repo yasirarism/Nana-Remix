@@ -89,6 +89,11 @@
       "value": "False",
       "required": false
     },
+    "PM_PERMIT": {
+      "description": "(optional) Set to True if you want to turn on PmPermit",
+      "value": "False",
+      "required": false
+    },
     "lydia_api": {
       "description": "(optional) Fill in your Coffeehouse API, get from https://coffeehouse.intellivoid.net",
       "value": "False",
@@ -129,14 +134,6 @@
       "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
     }
   },
-  "addons": [
-    {
-      "plan": "heroku-postgresql",
-      "options": {
-        "version": "9.5"
-      }
-    }
-  ],
   "buildpacks": [
     {
       "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
