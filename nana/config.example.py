@@ -30,20 +30,20 @@ class Config(object):
 	thumbnail_API = ""  # Register free here: https://thumbnail.ws/
 	screenshotlayer_API = ""  # Register free here: https://screenshotlayer.com/
 	bitly_token = ""  # register here : bitly.com
-	lydia_api = ""
-	remove_bg_api = ""
+	lydia_api = "" #get from https://coffeehouse.intellivoid.net
+	remove_bg_api = "" # Get from https://remove.bg
 	HEROKU_API = ""  # if you're using heroku this field must filled, get from here : https://dashboard.heroku.com/account
 	# Load or no load plugins
 	# userbot
-	USERBOT_LOAD = []
-	USERBOT_NOLOAD = []
+	USERBOT_LOAD = [] # Load modules you want only for user, Leave Blank if you want to use All
+	USERBOT_NOLOAD = [] # Unload modules you do not like for user, Leave Blank if you want to use All
 	# manager bot
-	ASSISTANT_LOAD = []
-	ASSISTANT_NOLOAD = []
+	ASSISTANT_LOAD = [] # Load modules you want only for assistant, Leave Blank if you want to use All
+	ASSISTANT_NOLOAD = [] # Load modules you want only for asisstant, Leave Blank if you want to use All
 
 	# Fill this if you want to login using session code, else leave it blank
-	USERBOT_SESSION = ""
-	ASSISTANT_SESSION = ""
+	USERBOT_SESSION = "" # Your User session goes here
+	ASSISTANT_SESSION = "" # Your Bot session goes here
 	# Pass True if you want to use test mode
 	TEST_MODE = False
 
@@ -55,4 +55,4 @@ class Production(Config):
 class Development(Config):
 	TEST_DEVELOP = None
 	LOGGER = False
-	TERMUX_USER = False
+	TERMUX_USER = False # Make it True if you are a Termux User
