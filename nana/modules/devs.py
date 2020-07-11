@@ -231,18 +231,18 @@ async def get_id(_client, message):
         rep = message.reply_to_message
         
         if rep.audio:
-            file_id = f"**File ID**: `{rep.audio.file_id}`"
-            file_id += f"**File Ref**: `{rep.audio.file_ref}`"
-            file_id += "**File Type**: `audio`"
+            file_id = f"**File ID**: `{rep.audio.file_id}`\n"
+            file_id += f"**File Ref**: `{rep.audio.file_ref}`\n"
+            file_id += "**File Type**: `audio`\n"
 
         elif rep.document:
-            file_id = f"**File ID**: `{rep.document.file_id}`"
-            file_id += f"**File Ref**: `{rep.document.file_ref}`"
-            file_id += f"**File Type**: `{rep.document.mime_type}`"
+            file_id = f"**File ID**: `{rep.document.file_id}`\n"
+            file_id += f"**File Ref**: `{rep.document.file_ref}`\n"
+            file_id += f"**File Type**: `{rep.document.mime_type}`\n"
 
         elif rep.photo:
-            file_id = f"**File ID**: `{rep.photo.file_id}`"
-            file_id += f"**File Ref**: `{rep.photo.file_ref}`"
+            file_id = f"**File ID**: `{rep.photo.file_id}`\n"
+            file_id += f"**File Ref**: `{rep.photo.file_ref}`\n"
             file_id += "**File Type**: `photo`"
 
         elif rep.sticker:
