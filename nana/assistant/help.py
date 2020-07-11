@@ -4,7 +4,7 @@ import time
 from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG
+from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, BotUsername
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
 
@@ -60,11 +60,12 @@ async def help_parser(client, chat_id, text, keyboard=None):
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["help"]))
 async def help_command(client, message):
     if message.chat.type != "private":
-        keyboard = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text="Bantuan", url=f"t.me/{setbot.get_me()['username']}?start=help")]])
-        await message.reply("Hubungi saya di PM untuk mendapatkan daftar perintah.", reply_markup=keyboard)
+        buttons = InlineKeyboardMarkup(
+            [[InlineKeyboardButton(text="Help",
+                                   url=f"t.me/{BotUsername}?start=help")]])
+        await message.reply("**OWNER ONLY**\nContact me in PM to get the list of possible commands.",
+                            reply_markup=buttons)
         return
-    #TODO: Add image of nana in NANA_IMG
     await help_parser(client, message.chat.id, HELP_STRINGS)
 
 

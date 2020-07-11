@@ -16,6 +16,9 @@ if DB_AVAILABLE:
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["start"]))
 async def start(_client, message):
+    if message.chat.type != "private":
+        await message.reply(f"こんにちは, {OwnerName}! ^_^")
+        return
     if len(message.text.split()) >= 2:
         helparg = message.text.split()[1]
         if helparg == "help_inline":
