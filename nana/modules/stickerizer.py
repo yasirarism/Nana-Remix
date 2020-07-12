@@ -35,7 +35,17 @@ senpais = [37, 38, 48, 55]
 
 @app.on_message(Filters.me & Filters.command(["ggl"], Command))
 async def google_search(client, message):
-    googles = message.reply_to_message.text
+    cmd = message.command
+    googles = ""
+    if len(cmd) > 1:
+        googles = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        googles = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`No text Given hence can not google the void.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
     x = await client.get_inline_bot_results("Stickerizerbot", f"#12{googles}")
     await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
