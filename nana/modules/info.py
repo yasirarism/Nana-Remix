@@ -11,40 +11,21 @@ from nana.helpers.PyroHelpers import ReplyCheck
 __MODULE__ = "Whois"
 __HELP__ = """
 ──「 **Whois** 」──
--> `whois` @username
--> `whois` "reply to a text"
+-> `info` `@username` or `user_id`
+-> `info` "reply to a text"
 To find information about a person.
 
 """
 
 WHOIS = (
-    "**WHO IS \"{full_name}\"?**\n"
-    "[Link to profile](tg://user?id={user_id})\n"
-    "════════════════\n"
-    "UserID: `{user_id}`\n"
-    "First Name: `{first_name}`\n"
-    "Last Name: `{last_name}`\n"
-    "Username: `{username}`\n"
-    "Last Online: `{last_online}`\n"
-    "Common Groups: `{common_groups}`\n"
-    "════════════════\n"
-    "Bio:\n{bio}")
-
-WHOIS_PIC = (
-    "**WHO IS \"{full_name}\"?**\n"
-    "[Link to profile](tg://user?id={user_id})\n"
-    "════════════════\n"
-    "UserID: `{user_id}`\n"
-    "First Name: `{first_name}`\n"
-    "Last Name: `{last_name}`\n"
-    "Username: `{username}`\n"
-    "Last Online: `{last_online}`\n"
-    "Common Groups: `{common_groups}`\n"
-    "════════════════\n"
-    "Profile Pics: `{profile_pics}`\n"
-    "Last Updated: `{profile_pic_update}`\n"
-    "════════════════\n"
-    "Bio:\n{bio}")
+    "**About {first_name}**:\n"
+    " - **UserID**: `{user_id}`\n"
+    " - **First Name**: `{first_name}`\n"
+    " - **Last Name**: `{last_name}`\n"
+    " - **Username**: `{username}`\n"
+    " - **Last Online**: `{last_online}`\n"
+    " - **Common Groups**: `{common_groups}`\n"
+    " - **Profile**: [link](tg://user?id={user_id})")
 
 
 def LastOnline(user: User):
@@ -81,7 +62,7 @@ def ProfilePicUpdate(user_pic):
     return datetime.fromtimestamp(user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
 
 
-@app.on_message(Filters.me & Filters.command(["whois"], Command))
+@app.on_message(Filters.me & Filters.command("info", Command))
 async def whois(client, message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:
@@ -103,11 +84,9 @@ async def whois(client, message):
         return
     desc = await client.get_chat(get_user)
     desc = desc.description
-    user_pic = await client.get_profile_photos(user.id)
-    pic_count = await client.get_profile_photos_count(user.id)
     common = await GetCommon(client, user.id)
 
-    if not user.photo:
+    if user:
         await message.edit(
             WHOIS.format(
                 full_name=FullName(user),
@@ -119,30 +98,3 @@ async def whois(client, message):
                 common_groups=len(common.chats),
                 bio=desc if desc else "`No bio set up.`"),
             disable_web_page_preview=True)
-    elif user.photo:
-        await client.send_photo(
-            message.chat.id,
-            user_pic[0].file_id,
-            caption=WHOIS_PIC.format(
-                full_name=FullName(user),
-                user_id=user.id,
-                first_name=user.first_name,
-                last_name=user.last_name if user.last_name else "",
-                username=user.username if user.username else "",
-                last_online=LastOnline(user),
-                profile_pics=pic_count,
-                common_groups=len(common.chats),
-                bio=desc if desc else "`No bio set up.`",
-                profile_pic_update=ProfilePicUpdate(user_pic)),
-            reply_to_message_id=ReplyCheck(message),
-            file_ref=user_pic[0].file_ref,
-        )
-        await message.delete()
-
-
-# add_command_help(
-#     'whois', [
-#         ['.whois', 'Finds out who the person is. Reply to message sent by the person'
-#                    'you want information from and send the command. Without the dot also works.']
-#     ]
-# )
