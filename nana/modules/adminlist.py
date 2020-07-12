@@ -121,7 +121,7 @@ async def report_admin(client, message):
         await client.send_message(message.chat.id, teks, parse_mode="html")
 
 
-@app.on_message(Filters.me & Filters.command(["everyone"], Command))
+@app.on_message(Filters.me & Filters.command("everyone", Command))
 async def tag_all_users(client, message):
     await message.delete()
     if len(message.text.split()) >= 2:
@@ -139,7 +139,7 @@ async def tag_all_users(client, message):
         await client.send_message(message.chat.id, text, parse_mode="html")
 
 
-@app.on_message(Filters.me & Filters.command(["botlist"], Command))
+@app.on_message(Filters.me & Filters.command("botlist", Command))
 async def get_list_bots(client, message):
     replyid = None
     if len(message.text.split()) >= 2:

@@ -15,7 +15,7 @@ Create a Nekobin paste using replied to message.
 """
 
 
-@app.on_message(Filters.me & Filters.command(["neko"], Command))
+@app.on_message(Filters.me & Filters.command("neko", Command))
 async def paste(client, message):
     if message.reply_to_message:
         text = message.reply_to_message.text

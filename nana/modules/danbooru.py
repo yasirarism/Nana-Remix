@@ -12,7 +12,7 @@ Search images from Danbooru.
 
 """
 
-@app.on_message(Filters.me & Filters.command(["animu"], Command))
+@app.on_message(Filters.me & Filters.command("animu", Command))
 async def danbooru(client, message):
     await message.edit(f"`Processing…`")
 

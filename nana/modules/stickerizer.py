@@ -33,7 +33,7 @@ waifus = [20, 32, 33, 40, 41, 42, 58]
 senpais = [37, 38, 48, 55]
 
 
-@app.on_message(Filters.me & Filters.command(["ggl"], Command))
+@app.on_message(Filters.me & Filters.command("ggl", Command))
 async def google_search(client, message):
     cmd = message.command
     googles = ""
@@ -55,7 +55,7 @@ async def google_search(client, message):
                                         hide_via=True)
 
 
-@app.on_message(Filters.me & Filters.command(["mock"], Command))
+@app.on_message(Filters.me & Filters.command("mock", Command))
 async def mock_spongebob(client, message):
     cmd = message.command
     mock = ""
@@ -77,7 +77,7 @@ async def mock_spongebob(client, message):
                                         hide_via=True)
 
 
-@app.on_message(Filters.me & Filters.command(["senpai"], Command))
+@app.on_message(Filters.me & Filters.command("senpai", Command))
 async def senpai_sticker(client, message):
     cmd = message.command
     senpai = ""
@@ -99,7 +99,7 @@ async def senpai_sticker(client, message):
                                         hide_via=True)
 
 
-@app.on_message(Filters.me & Filters.command(["waifu"], Command))
+@app.on_message(Filters.me & Filters.command("waifu", Command))
 async def waifu_sticker(client, message):
     cmd = message.command
     waifu = ""

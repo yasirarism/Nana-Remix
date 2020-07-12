@@ -85,7 +85,7 @@ async def mocking_text(text):
     return pesan
 
 
-@app.on_message(Filters.me & Filters.command(["pat"], Command))
+@app.on_message(Filters.me & Filters.command("pat", Command))
 async def pat(client, message):
     URL = "https://some-random-api.ml/animu/pat"
     async with aiohttp.ClientSession() as session:
@@ -100,7 +100,7 @@ async def pat(client, message):
                                     )
 
 
-@app.on_message(Filters.me & Filters.command(["scam"], Command))
+@app.on_message(Filters.me & Filters.command("scam", Command))
 async def scam(client, message):
     input_str = message.command
     if len(input_str) == 1:  # Let bot decide action and time
@@ -132,12 +132,12 @@ async def scam(client, message):
         return
 
 
-@app.on_message(Filters.me & Filters.command(["shg"], Command))
+@app.on_message(Filters.me & Filters.command("shg", Command))
 async def shg(_client, message):
     await message.edit(random.choice(meme_strings.shgs))
 
 
-@app.on_message(Filters.me & Filters.command(["spam"], Command))
+@app.on_message(Filters.me & Filters.command("spam", Command))
 async def spam(client, message):
     await message.delete()
     times = message.command[1]
@@ -153,7 +153,7 @@ async def spam(client, message):
             await asyncio.sleep(0.20)
 
 
-@app.on_message(Filters.me & Filters.command(["spamstk"], Command))
+@app.on_message(Filters.me & Filters.command("spamstk", Command))
 async def spam_stick(client, message):
     if not message.reply_to_message:
         await message.edit("`reply to a sticker with amount you want to spam`")
@@ -178,7 +178,7 @@ async def spam_stick(client, message):
                 await asyncio.sleep(0.20)
 
 
-@app.on_message(Filters.me & Filters.command(["owo"], Command))
+@app.on_message(Filters.me & Filters.command("owo", Command))
 async def owo(_client, message):
     cmd = message.command
     text = ""
@@ -208,7 +208,7 @@ async def owo(_client, message):
     await message.edit(reply_text)
 
 
-@app.on_message(Filters.me & Filters.command(["f"], Command))
+@app.on_message(Filters.me & Filters.command("f", Command))
 async def pay_respecc(_client, message):
     cmd = message.command
     paytext = ""
@@ -229,7 +229,7 @@ async def pay_respecc(_client, message):
     await message.edit(pay)
 
 
-@app.on_message(Filters.me & Filters.command(["str"], Command))
+@app.on_message(Filters.me & Filters.command("str", Command))
 async def stretch(_client, message):
     cmd = message.command
     stretch_text = ""
@@ -248,7 +248,7 @@ async def stretch(_client, message):
     await message.edit(reply_text)
 
 
-@app.on_message(Filters.me & Filters.command(["cp"], Command))
+@app.on_message(Filters.me & Filters.command("cp", Command))
 async def haha_emojis(_client, message):
     if message.reply_to_message.message_id:
         teks = message.reply_to_message.text
@@ -271,7 +271,7 @@ async def haha_emojis(_client, message):
         await message.edit(reply_text)
 
 
-@app.on_message(Filters.me & Filters.command(["mocktxt"], Command))
+@app.on_message(Filters.me & Filters.command("mocktxt", Command))
 async def mock_text(client, message):
     if message.reply_to_message:
         teks = message.reply_to_message.text
@@ -283,7 +283,7 @@ async def mock_text(client, message):
         await client.edit_message_text(message.chat.id, message.message_id, pesan)
 
 
-@app.on_message(Filters.me & Filters.command(["type"], Command))
+@app.on_message(Filters.me & Filters.command("type", Command))
 async def typingmeme(_client, message):
     teks = message.text[3:]
     total = len(teks)
@@ -294,7 +294,7 @@ async def typingmeme(_client, message):
             pass
 
 
-@app.on_message(Filters.me & Filters.command(["meme"], Command))
+@app.on_message(Filters.me & Filters.command("meme", Command))
 async def meme_gen(client, message):
     meme_types = requests.get(
         "https://raw.githubusercontent.com/legenhand/Nana-Bot/master/nana/helpers/memes.json").json()
@@ -334,7 +334,7 @@ async def meme_gen(client, message):
         os.remove("nana/cache/meme.png")
 
 
-@app.on_message(Filters.me & Filters.command(["fakess"], Command))
+@app.on_message(Filters.me & Filters.command("fakess", Command))
 async def fake_ss(client, message):
     await asyncio.gather(
         message.delete(),

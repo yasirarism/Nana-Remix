@@ -106,7 +106,7 @@ async def formatJSON(outData):
         return msg
 
 
-@app.on_message(Filters.me & Filters.command(["anime"], Command))
+@app.on_message(Filters.me & Filters.command("anime", Command))
 async def anime(_client, message):
     cmd = message.command
     query = ""
@@ -125,7 +125,7 @@ async def anime(_client, message):
 
 
 
-@app.on_message(Filters.me & Filters.command(["character"], Command))
+@app.on_message(Filters.me & Filters.command("character", Command))
 async def character(_client, message):
     res = ""
     cmd = message.command
@@ -164,7 +164,7 @@ async def character(_client, message):
         rep += f'Read More: <a href="{url}">MyAnimeList</a>'
         await message.edit(replace_text(rep))
 
-@app.on_message(Filters.me & Filters.command(["manga"], Command))
+@app.on_message(Filters.me & Filters.command("manga", Command))
 async def manga(_client, message):
     cmd = message.command
     query = ""
@@ -217,7 +217,7 @@ async def manga(_client, message):
         rep += f'Read More: {url}'
         await message.edit(rep)
 
-@app.on_message(Filters.me & Filters.command(["upcoming"], Command))
+@app.on_message(Filters.me & Filters.command("upcoming", Command))
 async def upcoming(_client, message):
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()

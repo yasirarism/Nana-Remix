@@ -22,7 +22,7 @@ Take screenshot of that website, if `full` args given, take full of website and 
 """
 
 
-@app.on_message(Filters.me & Filters.command(["print"], Command))
+@app.on_message(Filters.me & Filters.command("print", Command))
 async def print_web(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `print web.url`")
@@ -55,7 +55,7 @@ async def print_web(client, message):
     message.edit(capt)
 
 
-@app.on_message(Filters.me & Filters.command(["ss"], Command))
+@app.on_message(Filters.me & Filters.command("ss", Command))
 async def ss_web(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `print web.url`")

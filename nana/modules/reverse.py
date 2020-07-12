@@ -58,7 +58,7 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
-@app.on_message(Filters.me & Filters.command(["reverse"], Command))
+@app.on_message(Filters.me & Filters.command("reverse", Command))
 async def google_rs(client, message):
     start = datetime.now()
     dis_loc = ''
@@ -116,7 +116,7 @@ async def google_rs(client, message):
     await message.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)
 
 
-@app.on_message(Filters.me & Filters.command(["areverse"], Command))
+@app.on_message(Filters.me & Filters.command("areverse", Command))
 async def tracemoe_rs(client, message):
     dis_loc = ''
     if message.reply_to_message:

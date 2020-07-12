@@ -50,7 +50,7 @@ Forward a message into Saved Messages
 profile_photo = "nana/downloads/pfp.jpg"
 
 
-@app.on_message(Filters.me & Filters.command(["setpfp"], Command))
+@app.on_message(Filters.me & Filters.command("setpfp", Command))
 async def set_pfp(client, message):
     replied = message.reply_to_message
     if (replied and replied.media and (
@@ -76,7 +76,7 @@ async def set_pfp(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["vpfp"], Command))
+@app.on_message(Filters.me & Filters.command("vpfp", Command))
 async def view_pfp(client, message):
     replied = message.reply_to_message
     if replied:
@@ -96,7 +96,7 @@ async def view_pfp(client, message):
         os.remove(profile_photo)
 
 
-@app.on_message(Filters.me & Filters.command(["clone"], Command))
+@app.on_message(Filters.me & Filters.command("clone", Command))
 async def clone(client, message):
     if message.reply_to_message:
         target = message.reply_to_message.from_user.id
@@ -125,7 +125,7 @@ async def clone(client, message):
     await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["revert"], Command))
+@app.on_message(Filters.me & Filters.command("revert", Command))
 async def revert(client, message):
     first_name, last_name, bio = restore_identity()
 
@@ -142,7 +142,7 @@ async def revert(client, message):
     await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["join"], Command))
+@app.on_message(Filters.me & Filters.command("join", Command))
 async def join_chat(client, message):
     cmd = message.command
     text = ""
@@ -161,30 +161,13 @@ async def join_chat(client, message):
     await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["leave"], Command))
+@app.on_message(Filters.me & Filters.command("leave", Command))
 async def leave_chat(client, message):
     await message.edit('__adios__')
     await client.leave_chat(message.chat.id)
+    
 
-
-@app.on_message(Filters.me & Filters.command(["tagall"], Command))
-async def tag_all(client, message):
-    if message.chat.type in (("supergroup", "channel")):
-        mentions = []
-        await message.edit("`tagging everyone...`")
-        async for member in client.iter_chat_members(message.chat.id, 100):
-            mentions.append(f"@{member.user.username}")
-        tagall = str(mentions)
-        tag_fix = tagall.replace('[','').replace(']','').replace('@None','').replace("'",'').replace(",",' ')
-        await message.edit("`tagall successful!`")
-        await client.send_message(message.chat.id, tag_fix)
-        await sleep(5)
-        await message.delete()
-        return
-    else:
-        await message.delete()
-
-@app.on_message(Filters.command(['unread', 'un'], Command) & Filters.me)
+@app.on_message(Filters.command('unread', Command) & Filters.me)
 async def mark_chat_unread(client, message):
     await gather(
         message.delete(),
@@ -196,7 +179,7 @@ async def mark_chat_unread(client, message):
     )
 
 
-@app.on_message(Filters.command(['save', 's'], Command) & Filters.me)
+@app.on_message(Filters.command('s', Command) & Filters.me)
 async def to_saved(_client, message):
     await message.delete()
     await message.reply_to_message.forward('self')

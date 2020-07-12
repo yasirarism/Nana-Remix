@@ -19,7 +19,7 @@ Reply a video to make it as video note
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["mkvn"], Command))
+@app.on_message(Filters.me & Filters.command("mkvn", Command))
 async def vn_maker(client, message):
 	if message.reply_to_message and message.reply_to_message.video:
 		dlvid = await download_reply_nocall(client, message)

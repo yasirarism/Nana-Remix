@@ -34,7 +34,7 @@ async def updatemychats(_client, message):
     MESSAGE_RECOUNTER += 1
 
 
-@app.on_message(Filters.me & Filters.command(["chatlist"], Command))
+@app.on_message(Filters.me & Filters.command("chatlist", Command))
 async def get_chat(client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")

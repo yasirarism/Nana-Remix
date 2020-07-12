@@ -44,7 +44,7 @@ async def pm_block(client, message):
         return
 
 
-@app.on_message(Filters.me & Filters.command(["approve"], Command) & Filters.private)
+@app.on_message(Filters.me & Filters.command("approve", Command) & Filters.private)
 async def approve_pm(_client, message):
     set_whitelist(message.chat.id, True)
     await message.edit("`PM permission was approved!`")

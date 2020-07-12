@@ -19,7 +19,7 @@ Reply or parse arg of url to expand
 """
 
 
-@app.on_message(Filters.me & Filters.command(["bitly"], Command))
+@app.on_message(Filters.me & Filters.command("bitly", Command))
 async def bitly(_client, message):
     args = message.text.split(None, 1)
     shortener = Shortener(tokens=bitly_token, max_cache_size=8192)

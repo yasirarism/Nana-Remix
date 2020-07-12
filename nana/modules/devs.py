@@ -85,7 +85,7 @@ async def aexec(client, message, code):
     return await locals()['__ex'](client, message)
 
 
-@app.on_message(Filters.me & Filters.command(["py"], Command))
+@app.on_message(Filters.me & Filters.command("py", Command))
 async def executor(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `py message.edit('edited!')`")
@@ -101,13 +101,13 @@ async def executor(client, message):
         logging.exception("Execution error")
 
 
-@app.on_message(Filters.me & Filters.command(["ip"], Command))
+@app.on_message(Filters.me & Filters.command("ip", Command))
 async def public_ip(_client, message):
     ip = await AioHttp().get_text("https://api.ipify.org")
     await message.edit(f'<code>{ip}</code>', parse_mode='html')
 
 
-@app.on_message(Filters.me & Filters.command(["sh"], Command))
+@app.on_message(Filters.me & Filters.command("sh", Command))
 async def terminal(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `sh ping -c 5 google.com`")
@@ -175,7 +175,7 @@ async def log(_client, message):
     await message.edit("`Your recent logs stored here : `{}".format(data))
 
 
-@app.on_message(Filters.me & Filters.command(["dc"], Command))
+@app.on_message(Filters.me & Filters.command("dc", Command))
 async def dc_id(_client, message):
     user = message.from_user
     if message.reply_to_message:
@@ -205,7 +205,7 @@ async def dc_id(_client, message):
     await message.edit(text)
 
 
-@app.on_message(Filters.me & Filters.command(["alive"], Command))
+@app.on_message(Filters.me & Filters.command("alive", Command))
 async def alive(_client, message):
     try:
         me = await app.get_me()
@@ -222,7 +222,7 @@ async def alive(_client, message):
     text += "- Pyrogram: `{}`\n".format(p.__version__)
     await message.edit(text, disable_web_page_preview=True)
 
-@app.on_message(Filters.me & Filters.command(["id"], Command))
+@app.on_message(Filters.me & Filters.command("id", Command))
 async def get_id(_client, message):
     file_id = None
     user_id = None
@@ -314,7 +314,7 @@ async def get_id(_client, message):
         await message.edit(f"**Chat ID**: `{message.chat.id}`")
 
 
-@app.on_message(Filters.me & Filters.command(["speedtest"], Command))
+@app.on_message(Filters.me & Filters.command("speedtest", Command))
 async def speedtest(_client, message):
     await message.edit("`Running speed test . . .`")
     test = Speedtest()

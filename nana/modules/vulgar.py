@@ -51,7 +51,7 @@ async def vulgar_f(_client, message):
         return
 
 
-@app.on_message(Filters.me & Filters.command(["vulgar"], Command))
+@app.on_message(Filters.me & Filters.command("vulgar", Command))
 async def vulgar_trigger(_client, message):
     global vulgar_filter
     if vulgar_filter:

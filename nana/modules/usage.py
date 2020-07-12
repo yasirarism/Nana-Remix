@@ -12,7 +12,7 @@ heroku_api = "https://api.heroku.com"
 # ================= CONSTANT =================
 
 
-@app.on_message(Filters.me & Filters.command(["usage"], Command))
+@app.on_message(Filters.me & Filters.command("usage", Command))
 async def usage(client, message):
     useragent = ('Mozilla/5.0 (Linux; Android 10; SM-G975F) '
                  'AppleWebKit/537.36 (KHTML, like Gecko) '

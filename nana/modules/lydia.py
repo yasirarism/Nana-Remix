@@ -27,7 +27,7 @@ CoffeeHouseAPI = API(lydia_api)
 api_client = LydiaAI(CoffeeHouseAPI)
 
 
-@app.on_message(Filters.me & Filters.command(["addchat"], Command))
+@app.on_message(Filters.me & Filters.command("addchat", Command))
 async def add_chat(_client, message):
     global api_client
     chat_id = message.chat.id
@@ -46,7 +46,7 @@ async def add_chat(_client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["rmchat"], Command))
+@app.on_message(Filters.me & Filters.command("rmchat", Command))
 async def remove_chat(_client, message):
     chat_id = message.chat.id
     is_chat = sql.is_chat(chat_id)

@@ -18,7 +18,7 @@ Usage: `device (codename)`
 DEVICE_LIST = "https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json"
 
 
-@app.on_message(Filters.me & Filters.command(["device"], Command))
+@app.on_message(Filters.me & Filters.command("device", Command))
 async def get_device(_client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `device (codename)`")
