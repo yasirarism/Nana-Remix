@@ -8,6 +8,7 @@ from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, HEROKU_API, \
     Owner, OwnerName, NANA_IMG
 from nana.__main__ import reload_userbot, restart_all
+from .repo_changer import change_repo
 
 if DB_AVAILABLE:
     from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
@@ -122,6 +123,7 @@ async def settings(_client, message):
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     await message.reply(text, reply_markup=button)
 
@@ -179,6 +181,7 @@ async def start_stop_bot(client, query):
                         InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
         if HEROKU_API:
             list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+            list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
         button = InlineKeyboardMarkup(list_button)
         try:
             await query.message.edit_text(text, reply_markup=button)
@@ -197,6 +200,7 @@ async def start_stop_bot(client, query):
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     try:
         await query.message.edit_text(text, reply_markup=button)
@@ -230,6 +234,7 @@ async def reboot_bot(client, query):
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     try:
         await query.message.edit_text(text, reply_markup=button)
