@@ -265,6 +265,7 @@ async def reboot_heroku(client, query):
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     if HEROKU_API is not None:
         text += "\nPlease wait..."
@@ -345,6 +346,7 @@ async def back(_client, message):
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     await message.message.edit_text(text, reply_markup=button)
 
@@ -462,6 +464,7 @@ async def set_stickers(client, message):
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     await message.reply(text, reply_markup=button)
 
