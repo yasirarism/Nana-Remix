@@ -9,24 +9,28 @@ import asyncio
 
 from pyrogram import Filters
 
-from nana import app, Command
+from nana import app, Command, setbot
+from nana.helpers.aiohttp_helper import AioHttp
 
 __MODULE__ = "YTS"
 __HELP__ = """
-This module is to send .torrent files into a chat.
+This module is to send .torrent files using assistant.
 
-──「 **Export chats** 」──
+──「 **YTS downloads** 」──
 -> `yts`
-Sends torrent file into the chat.
+Sends torrent file using assistant.
+usage: `yts [Movie name]`
+Example: `yts lion king`
 
-usage: `yts [Movie name] [-limit] [-quality]`
-Example: `yts lion king -l10 -q1080p`
+──「 **Magnet Links** 」──
+-> `ytsearch (movie name)`
+Sends magnetlink using assistant.
 
 """
 
 
-@app.on_message(Filters.me & Filters.command(["yts"], Command))
-async def yts(client, message):
+@app.on_message(Filters.me & Filters.command("yts", Command))
+async def yts(_client, message):
     qual = None
     max_limit = 5
     input_ = message.command[1]
@@ -61,7 +65,7 @@ async def yts(client, message):
         await message.delete()
         return
     _matches = datas['data']['movie_count']
-    await message.edit(f"{_matches} Matches Found!, Sending {len(datas['data']['movies'])}.")
+    await message.edit(f"`{_matches} Matches Found!, Asisstant sending {len(datas['data']['movies'])}.`")
     await asyncio.sleep(5)
     await message.delete()
     for data in datas['data']['movies']:
@@ -90,10 +94,10 @@ Available in: {qualsize}'''
             files = files.replace('/', '\\')
             with open(files, 'wb') as f:
                 f.write(requests.get(_torrents[_qualities.index(def_quality)]['url']).content)
-            await client.send_document(chat_id=message.chat.id,
-                                       document=files,
-                                       caption=capts,
-                                       disable_notification=True)
+            await setbot.send_document(message.from_user.id,
+            files,
+            caption=capts
+            )
             os.remove(files)
         else:
             message.edit("Not Found")
@@ -101,3 +105,48 @@ Available in: {qualsize}'''
             await message.delete()
             return
     return
+
+
+@app.on_message(Filters.me & Filters.command("ytsearch", Command))
+async def yts_search(_client, message):
+    cmd = message.command
+    query = ""
+    if len(cmd) > 1:
+        query = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        query = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`No search query given for torrent search`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    rep = ""
+    await message.edit("`please check assistant for magnet urls`")
+    try:
+        torrents = await AioHttp().get_json(f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}")
+        for torrent in torrents:
+            title = torrent['name']
+            size = torrent['size']
+            seeders = torrent['seeder']
+            leechers = torrent['leecher']
+            magnet = torrent['magnet']
+            try:
+                rep = f"\n\n<b>{title}</b>\n"
+                rep +=f"<b>Size:</b> {size}\n"
+                rep +=f"<b>Seeders:</b> {seeders}\n"
+                rep +=f"<b>Leechers:</b> {leechers}\n"
+                rep +=f"<code>{magnet}</code>"
+                await asyncio.sleep(3)
+                await setbot.send_message(message.from_user.id, rep, parse_mode="html")
+            except Exception as e:
+                print(e)
+                pass
+
+        if rep == "":
+            await message.edit(f"No torrents found: __{query}__")
+    except Exception as e:
+        print(e)
+        await message.edit("API is Down!\nTry again later")
+        await asyncio.sleep(2)
+        await message.delete()
+    await message.delete()
