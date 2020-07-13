@@ -88,7 +88,7 @@ async def aexec(client, message, code):
 @app.on_message(Filters.me & Filters.command("py", Command))
 async def executor(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `py message.edit('edited!')`")
+        await message.edit("Usage: `py await message.edit('edited!')`")
         return
     args = message.text.split(None, 1)
     code = args[1]
