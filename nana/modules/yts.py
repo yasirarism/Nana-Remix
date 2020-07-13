@@ -122,9 +122,13 @@ async def yts_search(_client, message):
         return
     rep = ""
     await message.edit("`please check assistant for magnet urls`")
+    count = 0
     try:
         torrents = await AioHttp().get_json(f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}")
         for torrent in torrents:
+            count += 1
+            if count % 10 == 0:
+                break
             title = torrent['name']
             size = torrent['size']
             seeders = torrent['seeder']
@@ -136,7 +140,6 @@ async def yts_search(_client, message):
                 rep +=f"<b>Seeders:</b> {seeders}\n"
                 rep +=f"<b>Leechers:</b> {leechers}\n"
                 rep +=f"<code>{magnet}</code>"
-                await asyncio.sleep(3)
                 await setbot.send_message(message.from_user.id, rep, parse_mode="html")
             except Exception as e:
                 print(e)
