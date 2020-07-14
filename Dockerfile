@@ -53,6 +53,8 @@ RUN apt update && apt upgrade -y && \
     zlib1g \
     ffmpeg \
     libssl-dev \
+    chromium-chromedriver \
+    chromium \
     libopus0 \
     libopus-dev \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
