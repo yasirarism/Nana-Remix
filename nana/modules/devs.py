@@ -40,10 +40,6 @@ Edit log message, or deldog instead
 -> `dc`
 Get user specific data center
 
-──「 **Get Repo Nana-Bot** 」──
--> `repo`
-Get Repo For this userbot
-
 ──「 **Test Your Server Internet Speed** 」──
 -> `speedtest`
 Obtain Server internet speed using speedtest
@@ -211,40 +207,35 @@ async def alive(_client, message):
         me = await app.get_me()
     except ConnectionError:
         me = None
-    text = "[Nana-Remix](https://github.com/pokurt/Nana-Remix)** Up and Running:**\n"
+    text = "**[Nana-Remix](https://github.com/pokurt/Nana-Remix) Running:**\n"
     if not me:
-        text += "- Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
+        text += f" - **Userbot**: `Stopped (v{USERBOT_VERSION})`\n"
     else:
-        text += "- Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
-    text += "- Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
-    text += "- Database: `{}`\n".format(DB_AVAILABLE)
-    text += "- Python: `{}`\n".format(python_version())
-    text += "- Pyrogram: `{}`\n".format(p.__version__)
+        text += f" - **Userbot**: `Running (v{USERBOT_VERSION})`\n"
+    text += f" - **Assistant**: `Running (v{ASSISTANT_VERSION})`\n"
+    text += f" - **Pyrogram**: `{p.__version__}`\n"
+    text += f" - **Python**: `{python_version()}`\n"
+    text += f" - **Database**: `{DB_AVAILABLE}`\n"
     await message.edit(text, disable_web_page_preview=True)
 
 @app.on_message(Filters.me & Filters.command("id", Command))
 async def get_id(_client, message):
     file_id = None
     user_id = None
-
     if message.reply_to_message:
         rep = message.reply_to_message
-        
         if rep.audio:
             file_id = f"**File ID**: `{rep.audio.file_id}`\n"
             file_id += f"**File Ref**: `{rep.audio.file_ref}`\n"
             file_id += "**File Type**: `audio`\n"
-
         elif rep.document:
             file_id = f"**File ID**: `{rep.document.file_id}`\n"
             file_id += f"**File Ref**: `{rep.document.file_ref}`\n"
             file_id += f"**File Type**: `{rep.document.mime_type}`\n"
-
         elif rep.photo:
             file_id = f"**File ID**: `{rep.photo.file_id}`\n"
             file_id += f"**File Ref**: `{rep.photo.file_ref}`\n"
             file_id += "**File Type**: `photo`"
-
         elif rep.sticker:
             file_id = f"**Sicker ID**: `{rep.sticker.file_id}`\n"
             if rep.sticker.set_name and rep.sticker.emoji:
@@ -257,32 +248,26 @@ async def get_id(_client, message):
             else:
                 file_id += "**Sticker Set**: __None__\n"
                 file_id += "**Sticker Emoji**: __None__"  
-
         elif rep.video:
             file_id = f"**File ID**: `{rep.video.file_id}`\n"
             file_id += f"**File Ref**: `{rep.video.file_ref}`\n"
             file_id += "**File Type**: `video`"
-
         elif rep.animation:
             file_id = f"**File ID**: `{rep.animation.file_id}`\n"
             file_id += f"**File Ref**: `{rep.animation.file_ref}`\n"
             file_id += "**File Type**: `GIF`"
-
         elif rep.voice:
             file_id = f"**File ID**: `{rep.voice.file_id}`\n"
             file_id += f"**File Ref**: `{rep.voice.file_ref}`\n"
             file_id += "**File Type**: `Voice Note`"
-
         elif rep.video_note:
             file_id = f"**File ID**: `{rep.animation.file_id}`\n"
             file_id += f"**File Ref**: `{rep.animation.file_ref}`\n"
             file_id += "**File Type**: `Video Note`"
-
         elif rep.location:
             file_id = "**Location**:\n"
             file_id += f"**longitude**: `{rep.location.longitude}`\n"
             file_id += f"**latitude**: `{rep.location.latitude}`"
-
         elif rep.venue:
             file_id = "**Location**:\n"
             file_id += f"**longitude**: `{rep.venue.location.longitude}`\n"
@@ -290,10 +275,8 @@ async def get_id(_client, message):
             file_id += "**Address**:\n"
             file_id += f"**title**: `{rep.venue.title}`\n"
             file_id += f"**detailed**: `{rep.venue.address}`\n\n"
-
         elif rep.from_user:
             user_id = rep.from_user.id
-
     if user_id:
         if rep.forward_from:
             user_detail = f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
@@ -309,7 +292,6 @@ async def get_id(_client, message):
         user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`\n\n"
         user_detail += file_id
         await message.edit(user_detail)
-
     else:
         await message.edit(f"**Chat ID**: `{message.chat.id}`")
 

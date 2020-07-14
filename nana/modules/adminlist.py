@@ -121,9 +121,9 @@ async def report_admin(client, message):
         await client.send_message(message.chat.id, teks, parse_mode="html")
 
 
-@app.on_message(Filters.me & Filters.command("everyone", Command))
+@app.on_message(Filters.me & Filters.command("tagall", Command))
 async def tag_all_users(client, message):
-    await message.delete()
+    await message.edit('`tagging everyone...`')
     if len(message.text.split()) >= 2:
         text = message.text.split(None, 1)[1]
     else:
@@ -137,6 +137,7 @@ async def tag_all_users(client, message):
                                   parse_mode="html")
     else:
         await client.send_message(message.chat.id, text, parse_mode="html")
+    await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command("botlist", Command))

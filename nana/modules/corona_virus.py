@@ -23,15 +23,15 @@ async def corona(_client, message):
         try:
             r = await AioHttp().get_json("https://corona.lmao.ninja/v2/all")
             reply_text = f"""**Global Cases 🦠:**
-Cases: `{r['cases']:,}`
-Cases Today: `{r['todayCases']:,}`
-Deaths: `{r['deaths']:,}`
-Deaths Today: `{r['todayDeaths']:,}`
-Recovered: `{r['recovered']:,}`
-Active: `{r['active']:,}`
-Critical: `{r['critical']:,}`
-Cases/Mil: `{r['casesPerOneMillion']}`
-Deaths/Mil: `{r['deathsPerOneMillion']}``
+ - **Cases:** `{r['cases']:,}`
+ - **Cases Today:** `{r['todayCases']:,}`
+ - **Deaths:** `{r['deaths']:,}`
+ - **Deaths Today:** `{r['todayDeaths']:,}`
+ - **Recovered:** `{r['recovered']:,}`
+ - **Active:** `{r['active']:,}`
+ - **Critical:** `{r['critical']:,}`
+ - **Cases/Mil:** `{r['casesPerOneMillion']}`
+ - **Deaths/Mil:** `{r['deathsPerOneMillion']}``
 """
             await message.edit(f"{reply_text}")
             return
@@ -50,15 +50,15 @@ Deaths/Mil: `{r['deathsPerOneMillion']}``
     else:
         try:
             reply_text = f"""**Cases for {r['country']} 🦠:**
-Cases: `{r['cases']:,}`
-Cases Today: `{r['todayCases']:,}`
-Deaths: `{r['deaths']:,}`
-Deaths Today: `{r['todayDeaths']:,}`
-Recovered: `{r['recovered']:,}`
-Active: `{r['active']:,}`
-Critical: `{r['critical']:,}`
-Cases/Mil: `{r['casesPerOneMillion']}`
-Deaths/Mil: `{r['deathsPerOneMillion']}`
+ - **Cases:** `{r['cases']:,}`
+ - **Cases Today:** `{r['todayCases']:,}`
+ - **Deaths:** `{r['deaths']:,}`
+ - **Deaths Today:** `{r['todayDeaths']:,}`
+ - **Recovered:** `{r['recovered']:,}`
+ - **Active:** `{r['active']:,}`
+ - **Critical:** `{r['critical']:,}`
+ - **Cases/Mil:** `{r['casesPerOneMillion']}`
+ - **Deaths/Mil:** `{r['deathsPerOneMillion']}`
 """
             await message.edit(f"{reply_text}")
         except Exception as e:

@@ -40,7 +40,10 @@ async def paste(client, message):
         return
     else:
         url = f'https://nekobin.com/{key}'
-        reply_text = f'Nekofied to [Nekobin]({url})'
+        raw_url = f'https://nekobin.com/raw/{key}'
+        reply_text = '**Nekofied:**\n'
+        reply_text += f' - **Link**: {url}\n'
+        reply_text += f' - **Raw**: {raw_url}'
         delete = True if len(message.command) > 1 and \
                          message.command[1] in ['d', 'del'] and \
                          message.reply_to_message.from_user.is_self else False
