@@ -56,7 +56,7 @@ async def evaluation(client, message):
                 file = open("nana/cache/output.txt", "w+")
                 file.write(ev)
                 file.close()
-                await client.send_file(message.chat.id, "nana/cache/output.txt",
+                await client.send_document(message.chat.id, "nana/cache/output.txt",
                                        caption="`Output too large, sending as file`")
                 os.remove("nana/cache/output.txt")
                 return
