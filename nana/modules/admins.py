@@ -16,11 +16,8 @@ __HELP__ = """
 Module for Group Admins
 
 ──「 **Locks / Unlocks** 」──
--> `lock`
-locks permission in the group
-
--> `unlock`
-unlocks permission in the group
+-> `lock` or `unlock`
+locks and unlocks permission in the group
 
 Supported Locks / Unlocks:
  `msg` | `media` | `stickers`
@@ -60,6 +57,10 @@ Reply to a user to mute them for 24 hours
 -> `unmute`
 Reply to a user to unmute them
 
+──「 **Invite Link** 」──
+-> `invite`
+Generate Invite link for the group
+
 ──「 **Message Pin** 」──
 -> `pin`
 Reply a message to pin in the Group
@@ -96,6 +97,24 @@ unmute_permissions = ChatPermissions(
     can_invite_users=True,
     can_pin_messages=False
 )
+
+@app.on_message(Filters.me & Filters.command("invite", Command))
+async def invite_link(client, message):
+    if message.chat.type in ['group', 'supergroup']:
+        chat_id = message.chat.id
+        chat_name = message.chat.title
+        can_invite = await admin_check(message) 
+        if can_invite:
+            try:
+                link = await client.export_chat_invite_link(chat_id)
+                await message.edit(f'**Generated Invite link for {chat_name}:**\n - **Join Link:** {link}',
+                                   disable_web_page_preview=True
+                                   )
+            except Exception as e:
+                print(e)
+                await message.edit("`permission denied`")
+    else:
+        await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command("pin", Command))
