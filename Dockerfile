@@ -53,14 +53,29 @@ RUN apt update && apt upgrade -y && \
     zlib1g \
     ffmpeg \
     libssl-dev \
-    chromium-chromedriver \
+    libgconf-2-4 \
+    libxi6 \
+    xvfb \
     chromium \
+    unzip \
     libopus0 \
     libopus-dev \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
+
+
+# chrome driver install
+RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+
+RUN unzip chromedriver_linux64.zip
+
+RUN sudo mv chromedriver /usr/bin/chromedriver
+
+RUN sudo chown root:root /usr/bin/chromedriver
+
+RUN sudo chmod +x /usr/bin/chromedriver
 
 # Copy Python Requirements to /root/nana
 RUN git clone https://github.com/pokurt/Nana-Remix.git /root/nana

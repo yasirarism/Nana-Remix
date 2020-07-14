@@ -40,7 +40,7 @@ async def carbon_api(client, message):
         prefs = {'download.default_directory': './'}
         chrome_options.add_experimental_option('prefs', prefs)
         await message.edit("Processing 30%")
-        driver = webdriver.Chrome(executable_path="chromedriver", options=chrome_options)
+        driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver", options=chrome_options)
         driver.get(url)
         download_path = './'
         driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
