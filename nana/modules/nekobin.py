@@ -49,7 +49,10 @@ async def paste(client, message):
                          message.reply_to_message.from_user.is_self else False
         if delete:
             await asyncio.gather(
-                client.send_message(message.chat.id, reply_text, disable_web_page_preview=True),
+                client.send_message(message.chat.id,
+                                    reply_text,
+                                    disable_web_page_preview=True
+                                    ),
                 message.reply_to_message.delete(),
                 message.delete()
             )
