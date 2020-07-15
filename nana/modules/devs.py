@@ -1,4 +1,5 @@
 import os
+import git
 import re
 import shutil
 import subprocess
@@ -11,7 +12,7 @@ from pyrogram import Filters
 from speedtest import Speedtest
 import pyrogram as p
 
-from nana import Command, logging, app, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION
+from nana import Command, logging, app, DB_AVAILABLE, USERBOT_VERSION
 from nana.helpers.deldog import deldog
 from nana.helpers.parser import mention_markdown
 from nana.helpers.aiohttp_helper import AioHttp
@@ -203,16 +204,19 @@ async def dc_id(_client, message):
 
 @app.on_message(Filters.me & Filters.command("alive", Command))
 async def alive(_client, message):
+    repo = git.Repo(os.getcwd())
+    master = repo.head.reference
+    commit_id = master.commit.hexsha
+    commit_link = f"<a href='https://github.com/pokurt/Nana-Remix/commit/{commit_id}'>{commit_id[:7]}</a>"
     try:
         me = await app.get_me()
     except ConnectionError:
         me = None
-    text = "**[Nana-Remix](https://github.com/pokurt/Nana-Remix) Running:**\n"
+    text = f"**[Nana-Remix](https://github.com/pokurt/Nana-Remix) Running on {commit_link}:**\n"
     if not me:
-        text += f" - **Userbot**: `Stopped (v{USERBOT_VERSION})`\n"
+        text += f" - **Bot**: `stopped (v{USERBOT_VERSION})`\n"
     else:
-        text += f" - **Userbot**: `Running (v{USERBOT_VERSION})`\n"
-    text += f" - **Assistant**: `Running (v{ASSISTANT_VERSION})`\n"
+        text += f" - **Bot**: `alive (v{USERBOT_VERSION})`\n"
     text += f" - **Pyrogram**: `{p.__version__}`\n"
     text += f" - **Python**: `{python_version()}`\n"
     text += f" - **Database**: `{DB_AVAILABLE}`\n"
