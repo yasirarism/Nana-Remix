@@ -26,6 +26,8 @@ bitlyshortener==0.3.5
 heroku3==4.2.1
 uptime
 py-cpuinfo
+svglib
+reportlab
 speedtest-cli
 git+https://github.com/legenhand/mega.py.git
 httplib2==0.15.0
