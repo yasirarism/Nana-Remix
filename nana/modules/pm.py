@@ -8,8 +8,11 @@ from nana.helpers.parser import mention_markdown
 if DB_AVAILABLE:
     from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req, del_whitelist
 
-welc_txt = f"""Hello, I'm {OwnerName}'s Userbot.
-Try contacting me by pressing buttons down bellow"""
+welc_txt = f"""
+Hello, I'm {OwnerName}'s Userbot.
+Try contacting me by pressing buttons down bellow
+"""
+
 
 NOTIFY_ID = Owner
 BLACKLIST = ["hack", "fuck", "bitch", "pubg", "sex"]
@@ -35,7 +38,8 @@ async def pm_block(client, message):
             if not get_req(message.chat.id):
                 x = await client.get_inline_bot_results(BotUsername, "engine_pm")
                 await client.send_inline_bot_result(message.chat.id, query_id=x.query_id,
-                                                    result_id=x.results[0].id, hide_via=True)
+                                                    result_id=x.results[0].id, hide_via=True
+                                                    )
             else:
                 x = await client.get_inline_bot_results(BotUsername, "engine_pm")
                 await client.send_inline_bot_result(message.chat.id, query_id=x.query_id,
@@ -67,7 +71,7 @@ pm_button_create = Filters.create(pm_button_callback)
 @setbot.on_callback_query(pm_button_create)
 async def pm_button(client, query):
     if PM_PERMIT:
-        if query.from_user.id in AdminSettings and not re.match(r"engine_pm_apr", query.data) and not re.match(
+        if query.from_user.id in AdminSettings and not re.match("engine_pm_apr", query.data) and not re.match(
                 r"engine_pm_blk", query.data):
             await client.answer_callback_query(query.id, "No, you can't click by yourself", show_alert=False)
             return
