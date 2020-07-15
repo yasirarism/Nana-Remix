@@ -57,6 +57,7 @@ RUN apt update && apt upgrade -y && \
     libxi6 \
     xvfb \
     chromium \
+    chromium-browser \
     unzip \
     libopus0 \
     libopus-dev \
