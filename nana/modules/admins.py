@@ -6,7 +6,9 @@ from pyrogram import ChatPermissions, Filters
 from pyrogram.errors import (UsernameInvalid,
                              ChatAdminRequired,
                              PeerIdInvalid,
-                             UserIdInvalid)
+                             UserIdInvalid,
+                             UserAdminInvalid,
+                             FloodWait)
 
 from nana import app, Command
 from nana.helpers.admincheck import admin_check, is_sudoadmin
@@ -18,8 +20,7 @@ Module for Group Admins
 ──「 **Locks / Unlocks** 」──
 -> `lock` or `unlock`
 locks and unlocks permission in the group
-
-Supported Locks / Unlocks:
+__Supported Locks / Unlocks__:
  `msg` | `media` | `stickers`
  `polls` | `info`  | `invite` |
  `animations` | `games` |
@@ -64,8 +65,14 @@ Generate Invite link for the group
 ──「 **Message Pin** 」──
 -> `pin`
 Reply a message to pin in the Group
+__Supported pin types__: `alert`, `notify`, `loud`
 
-Supported pin types: `alert`, `notify`, `loud`
+──「 **Deleted Account** 」──
+-> `delacc`
+Checks Group for deleted accounts
+
+-> `delacc clean`
+Remove deleted accounts from group (does not work for admin deleted accounts)
 """
 
 # Mute permissions
@@ -866,3 +873,71 @@ async def view_perm(client, message):
                     f"**Log:** `{e}`")
     else:
         await message.delete()
+
+
+@app.on_message(Filters.me & Filters.command("delacc", Command))
+async def deleted_clean(client, message):
+    cmd = message.command
+    chat_id = message.chat.id
+    get_group = await client.get_chat(chat_id)
+
+    clean_tag = " ".join(cmd[1:])
+    rm_delaccs = 'clean' in clean_tag
+    can_clean = await admin_check(message)
+
+    if rm_delaccs:
+
+        del_users = 0
+        del_admins = 0
+        del_total = 0
+        del_stats = "`no deleted accounts found in this chat`"
+
+        if can_clean:
+
+            await message.edit("`cleaning deleted accounts from this chat..`")
+            async for member in client.iter_chat_members(chat_id):
+
+                if member.user.is_deleted:
+
+                    try:
+                        await client.kick_chat_member(
+                            chat_id,
+                            member.user.id, int(time.time() + 45))
+
+                    except UserAdminInvalid:
+                        del_users -= 1
+                        del_admins += 1
+
+                    except FloodWait as e:
+                        await asyncio.sleep(e.x)
+                    del_users += 1
+                    del_total += 1
+
+            if del_admins > 0:
+                del_stats = f"`Found` **{del_total}** `total accounts..`"
+            else:
+                del_stats = f"`Found` **{del_total}** `total accounts..`"
+
+            await message.edit(del_stats)
+            await message.edit(
+                            f"**Cleaned Deleted accounts**:\n"
+                            f"Total Deleted Accounts: `{del_total}`\n"
+                            f"Cleaned Deleted Accounts: `{del_users}`\n"
+                            f"Chat: `{get_group.title}` (`{chat_id}`)"
+                            )
+
+        else:
+            await message.edit("`permission denied`")
+
+    else:
+
+        del_users = 0
+        del_stats = "`no deleted accounts found in this chat`"
+        async for member in client.iter_chat_members(chat_id):
+            if member.user.is_deleted:
+                del_users += 1
+        if del_users > 0:
+            del_stats = f"`Found` **{del_users}** `deleted accounts in this chat.`"
+            await message.edit(del_stats)
+        else:
+            await message.edit(del_stats)
