@@ -64,32 +64,6 @@ RUN apt update && apt upgrade -y && \
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
 
-#google chrome install
-RUN apt-get install -y gconf-service \
-    libasound2 libatk1.0-0 libcairo2 \
-    libcups2 \
-    libfontconfig1 \
-    libgdk-pixbuf2.0-0 \
-    libgtk-3-0 \
-    libnspr4 \
-    libpango-1.0-0 \
-    libxss1 \
-    fonts-liberation \
-    libappindicator1 \
-    libnss3 \
-    lsb-release \
-    && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
-
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
-
-
-# chrome driver install
-RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
-RUN unzip chromedriver_linux64.zip
-RUN sudo mv chromedriver /usr/bin/chromedriver
-RUN sudo chown root:root /usr/bin/chromedriver
-RUN sudo chmod +x /usr/bin/chromedriver
 
 # Copy Python Requirements to /root/nana
 RUN git clone https://github.com/pokurt/Nana-Remix.git /root/nana
