@@ -12,7 +12,7 @@
     "productivity",
     "testing"
   ],
-  "repository": "https://github.com/legenhand/Nana-Bot",
+  "repository": "https://github.com/pokurt/Nana-Remix",
   "website": "sagita.tech",
   "success_url": "https://t.me/nanabotsupport",
   "stack": "container",
@@ -22,15 +22,15 @@
       "value": "Yes"
     },
     "api_id": {
-      "description": "Get this value from https://my.telegram.org/apps",
+      "description": "To use this userbot, get your development App ID from https://my.telegram.org/apps.",
       "value": ""
     },
     "api_hash": {
-      "description": "Get this value from https://my.telegram.org/apps",
+      "description": "To use this userbot, get your development API hash from https://my.telegram.org/apps.",
       "value": ""
     },
     "Owner": {
-      "description": "Go to some bot, and check your id there. Ex. Emilia or Rose.",
+      "description": "Go to some bot such as Rose and check your id there.",
       "value": ""
     },
     "Command": {
@@ -61,7 +61,7 @@
       "required": false
     },
     "NANA_IMG": {
-      "description": "(optional) Url of a photo to show up in your Assistant",
+      "description": "(optional) Image URL to show up in your Assistant",
       "value": "",
       "required": false
     },
@@ -81,57 +81,59 @@
       "required": false
     },
     "thumbnail_API": {
-      "description": "(optional) Register free here: https://thumbnail.ws/",
+      "description": "(optional) To get an API key, signup at https://thumbnail.ws/.",
       "required": false
     },
     "screenshotlayer_API": {
-      "description": "(optional) Register free here: https://screenshotlayer.com/",
+      "description": "(optional) To get an API key, signup at https://screenshotlayer.com/.",
       "value": "False",
       "required": false
     },
     "PM_PERMIT": {
-      "description": "(optional) Set to True if you want to turn on PmPermit",
+      "description": "(optional) Set to True if you want to turn on PM Permit",
       "value": "False",
       "required": false
     },
     "lydia_api": {
-      "description": "(optional) Fill in your Coffeehouse API, get from https://coffeehouse.intellivoid.net",
+      "description": "(optional) Fill in your Coffeehouse API, get one from https://coffeehouse.intellivoid.net",
       "value": "False",
       "required": false
     },
     "bitly_token": {
-      "description": "(optional) Register at : https://http://app.bitly.com/ profile settings -> generic access token",
+      "description": "(optional) Sign in to https://http://app.bitly.com/, then open Profile Settings -> Generic Access Token.",
       "required": false
     },
     "remove_bg_api": {
-      "description": "(optional) Register at : https://www.remove.bg/",
+      "description": "(optional) To get an API toen, signup at https://www.remove.bg/.",
       "required": false
     },
     "HEROKU_API": {
-      "description": "HEROKU API KEY For support updater",
+      "description": "Your Heroku API key for updater to work. Generate one at https://dashboard.heroku.com/account/applications/authorizations/new.",
       "required": true
     },
     "USERBOT_LOAD": {
-      "description": "(optional) Fill if you want to load that module only",
+      "description": "(optional) Fill if you want to load some modules for your userbot.",
       "required": false
     },
     "USERBOT_NOLOAD": {
-      "description": "(optional) Fill if you dont want to load that module",
+      "description": "(optional) Fill if you want to unload some modules for your userbot.",
       "required": false
     },
     "ASSISTANT_LOAD": {
-      "description": "(optional) Fill if you want to load that module only",
+      "description": "(optional) Fill if you want to load some modules for your Assistant.",
       "required": false
     },
     "ASSISTANT_NOLOAD": {
-      "description": "(optional) Fill if you dont want to load that module",
+      "description": "(optional) Fill if you want to unload some modules for your Assistant.",
       "required": false
     },
     "USERBOT_SESSION": {
-      "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
+      "description": "To generate an session, read: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/",
+      "required": true
     },
     "ASSISTANT_SESSION": {
-      "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
+      "description": "To generate an session, read: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/",
+      "required": true
     }
   },
   "buildpacks": [
