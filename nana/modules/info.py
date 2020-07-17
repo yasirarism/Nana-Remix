@@ -25,7 +25,9 @@ WHOIS = (
     " - **Username**: `{username}`\n"
     " - **Last Online**: `{last_online}`\n"
     " - **Common Groups**: `{common_groups}`\n"
-    " - **Profile**: [link](tg://user?id={user_id})")
+    " - **Profile**: [link](tg://user?id={user_id})"
+    " - **Mutual Contact**: `{mutual_contact}`"
+    )
 
 
 def LastOnline(user: User):
@@ -78,7 +80,7 @@ async def whois(client, message):
     try:
         user = await client.get_users(get_user)
     except PeerIdInvalid:
-        await message.edit("I don't know that User.")
+        await message.edit("`did not fetch user`")
         sleep(2)
         await message.delete()
         return
@@ -97,4 +99,5 @@ async def whois(client, message):
                 last_online=LastOnline(user),
                 common_groups=len(common.chats),
                 bio=desc if desc else "`No bio set up.`"),
+                mutual_contact=user.is_mutual_contact,
             disable_web_page_preview=True)
