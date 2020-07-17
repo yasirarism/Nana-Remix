@@ -18,13 +18,7 @@ from nana.modules.downloads import download_url
 
 __MODULE__ = "YouTube"
 __HELP__ = """
-Search, download, convert music from youtube!
-Enjoy~
-
-──「 **Search video** 」──
--> `youtube (text)`
--> `yt (text)`
-Give text as args for search from youtube, will send result more than 10 depending on yt page.
+download, convert music from youtube!
 
 ──「 **Download video** 」──
 -> `ytdl (url) (resolution*)`
@@ -35,31 +29,6 @@ Download youtube video (mp4), resolution is optional. use resolution under 240p 
 -> `ytaudio (url)`
 Download youtube music, and then send to tg as music.
 """
-
-
-@app.on_message(Filters.user("self") & Filters.command(["youtube", "yt"], Command))
-async def youtube_search(_client, message):
-	args = message.text.split(None, 1)
-	if len(args) == 1:
-		await message.edit("Write any args here!")
-		return
-	teks = args[1]
-	responce = requests.get('https://www.youtube.com/results?search_query=' + teks.replace(" ", "%20"))
-	soup = BeautifulSoup(responce.content, "html.parser")
-	divs = soup.find_all("div", {"class": "yt-lockup"})
-	yutub = "<b>Results of {}</b>\n".format(teks)
-	nomor = 0
-	for i in divs:
-		title = i.find('h3', {'class': "yt-lockup-title"}).a.get('title')
-		url = i.find('h3', {'class': "yt-lockup-title"}).a.get('href')
-		vidtime = i.find("span", {"class": "video-time"})
-		if vidtime:
-			vidtime = str("(" + vidtime.text + ")")
-		else:
-			vidtime = ""
-		nomor += 1
-		yutub += '<b>{}.</b> <a href="{}">{}</a> {}\n'.format(nomor, "https://www.youtube.com" + url, title, vidtime)
-	await message.edit(yutub, disable_web_page_preview=True, parse_mode="html")
 
 
 @app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
