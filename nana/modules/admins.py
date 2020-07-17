@@ -23,11 +23,11 @@ Module for Group Admins
 -> `lock` or `unlock`
 locks and unlocks permission in the group
 __Supported Locks / Unlocks__:
- `msg` | `media` | `stickers`
- `polls` | `info`  | `invite` |
- `animations` | `games` |
- `inlinebots` | `webprev` |
- `pin` | `all`
+ `msg` `media` `stickers`
+ `polls` `info` `invite`
+ `animations` `games`
+ `inlinebots` `webprev`
+ `pin` `all`
 
 -> `vlock`
 view group permissions
@@ -40,29 +40,20 @@ Reply to a user to promote
 Reply to a user to demote
 
 ──「 **Ban / Unban** 」──
--> `ban`
-Reply to a user to perform ban
-
--> `unban`
-Reply to a user to perform unban
+-> `ban` or `unban`
+Reply to a user to perform ban or unban
 
 ──「 **Kick User** 」──
 -> `kick`
 Reply to a user to kick from chat
 
 ──「 **Mute / Unmute** 」──
--> `mute`
-Reply to a user to mute them forever
-
--> `mute 24`
-Reply to a user to mute them for 24 hours
-
--> `unmute`
-Reply to a user to unmute them
+-> `mute` or `mute 24` or `unmute`
+Reply to a user to mute or unmute
 
 ──「 **Invite Link** 」──
 -> `invite`
-Generate Invite link for the group
+Generate Invite link
 
 ──「 **Message Pin** 」──
 -> `pin`
@@ -70,11 +61,8 @@ Reply a message to pin in the Group
 __Supported pin types__: `alert`, `notify`, `loud`
 
 ──「 **Deleted Account** 」──
--> `delacc`
-Checks Group for deleted accounts
-
--> `delacc clean`
-Remove deleted accounts from group (does not work for admin deleted accounts)
+-> `delacc` or `delacc clean`
+Checks Group for deleted accounts & clean them
 """
 
 # Mute permissions
