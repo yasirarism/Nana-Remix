@@ -9,23 +9,7 @@ __MODULE__ = "Stylish Text"
 __HELP__ = """
 Convert your text to stylish text!
 
-Use this custom format:
--> `<upside>Upside-down text</upside>` = `ʇxəʇ uʍop-əpısp∩`
--> `<oline>Overline text</oline>` = `̅o̅v̅e̅r̅l̅i̅n̅e̅ ̅t̅e̅x̅t̅`
--> `<strike>Strike text</strike>` = `̶s̶t̶r̶i̶k̶e̶ ̶t̶e̶x̶t̶`
--> `<unline>Underline text</unline>` = `̲u̲n̲d̲e̲r̲l̲i̲n̲e̲ ̲t̲e̲x̲t̲`
--> `<point>Point text</point>` = `p̤o̤i̤n̤t̤ ̤t̤e̤x̤t̤`
--> `<smallcaps>Smallcaps text</smallcaps>` = `sᴍᴀʟʟᴄᴀᴘs ᴛᴇxᴛ`
--> `<superscript>Superscript text</superscript>` = `ˢᵘᵖᵉʳˢᶜʳᶦᵖᵗ ᵗᵉˣᵗ`
--> `<subscript>Subscript text</subscript>` = `ₛᵤᵦₛ𝒸ᵣᵢₚₜ ₜₑₓₜ`
--> `<wide>Wide text</wide>` = `ｗｉｄｅ ｔｅｘｔ`
--> `<bubble>Bubbles text</bubble>` = `ⒷⓊⒷⒷⓁⒺⓈ ⓉⒺⓍⓉ`
--> `<bubble2>Bubbles black text</bubble2>` = `🅑🅤🅑🅑🅛🅔🅢 🅑🅛🅐🅒🅚 🅣🅔🅧🅣`
--> `<smoth>Smoth text</smoth>` = `ᔑᗰᝪᎢᕼ Ꭲᗴ᙭Ꭲ`
--> `<graffiti>Graffiti text</graffiti>` = `𝔊𝔯𝔞𝔣𝔣𝔦𝔱𝔦 𝔱𝔢𝔵𝔱`
--> `<graffitib>Graffiti Bold text</graffitib>` = `𝕲𝖗𝖆𝖋𝖋𝖎𝖙𝖎 𝕭𝖔𝖑𝖉 𝖙𝖊𝖝𝖙`
--> `<handwriting>Handwaritng text</handwriting>` = `𝐻𝒶𝓃𝒹𝓌𝓇𝒾𝓉𝒾𝓃𝑔 𝓉𝑒𝓍𝓉`
--> `<handwritingb>Handwriting Bold text</handwritingb>` = `𝓗𝓪𝓷𝓭𝔀𝓻𝓲𝓽𝓲𝓷𝓰 𝓑𝓸𝓵𝓭 𝓽𝓮𝔁𝓽`
+Use this custom format: [Click here to Read](https://telegra.ph/Nana-Remix-Stylish-Text-Helper-07-17)
 
 ──「 **Stylish Generator** 」──
 -> `stylish Your text here <upside>with</upside> <strike>formatted</strike> <unline>style</unline>`
