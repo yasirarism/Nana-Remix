@@ -25,7 +25,9 @@ WHOIS = (
     " - **Username**: `{username}`\n"
     " - **Last Online**: `{last_online}`\n"
     " - **Common Groups**: `{common_groups}`\n"
-    " - **Profile**: [link](tg://user?id={user_id})")
+    " - **Contact**: `{is_contact}`\n"
+    " - **Profile**: [link](tg://user?id={user_id})\n"
+    )
 
 
 def LastOnline(user: User):
@@ -68,7 +70,10 @@ async def whois(client, message):
     if not message.reply_to_message and len(cmd) == 1:
         get_user = message.from_user.id
     elif message.reply_to_message and len(cmd) == 1:
-        get_user = message.reply_to_message.from_user.id
+        if message.reply_to_message.forward_from:
+            get_user = message.reply_to_message.forward_from.id
+        else:
+            get_user = message.reply_to_message.from_user.id
     elif len(cmd) > 1:
         get_user = cmd[1]
         try:
@@ -96,5 +101,5 @@ async def whois(client, message):
                 username=user.username if user.username else "",
                 last_online=LastOnline(user),
                 common_groups=len(common.chats),
-                bio=desc if desc else "`No bio set up.`"),
+                is_contact=user.is_contact),
             disable_web_page_preview=True)
