@@ -49,8 +49,8 @@ async def github(client, message):
             created_at = result.get("created_at", "Not Found")
 
             REPLY = (
-                f"**GitHub Info for {username}**"
-                f"\n**Username:** `{name}`\n**Bio:** `{bio}`\n**Profile Link:** [Link]({url})"
+                f"**GitHub Info for {name}**"
+                f"\n**Username:** `{username}`\n**Bio:** `{bio}`\n**Profile Link:** [Link]({url})"
                 f"\n**Company:** `{company}`\n**Created at:** `{created_at}`"
                 f"\n**Repository:** [Link](https://github.com/{username}?tab=repositories)"
             )
