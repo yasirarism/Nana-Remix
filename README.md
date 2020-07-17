@@ -1,6 +1,6 @@
 # Nana-Remix
 
-[![CircleCI](https://circleci.com/gh/pokurt/Nana-Remix.svg?style=svg)](https://circleci.com/gh/pokurt/Nana-Remix)[![Codacy Badge](https://app.codacy.com/project/badge/Grade/60a0afaac7e74c309b4b21178b7338cf)](https://www.codacy.com/manual/AmaanAhmed/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pokurt/Nana-Bot&amp;utm_campaign=Badge_Grade) ![Repo Size](https://img.shields.io/github/repo-size/pokurt/Nana-Remix) [![HitCount](http://hits.dwyl.com/pokurt/Nana-Remix.svg)](http://hits.dwyl.com/pokurt/Nana-Remix)
+[![CircleCI](https://circleci.com/gh/pokurt/Nana-Remix.svg?style=svg)](https://circleci.com/gh/pokurt/Nana-Remix) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/60a0afaac7e74c309b4b21178b7338cf)](https://www.codacy.com/manual/AmaanAhmed/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pokurt/Nana-Bot&amp;utm_campaign=Badge_Grade) ![Repo Size](https://img.shields.io/github/repo-size/pokurt/Nana-Remix) [![HitCount](http://hits.dwyl.com/pokurt/Nana-Remix.svg)](http://hits.dwyl.com/pokurt/Nana-Remix) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/pokurt/Nana-Remix)
 
 ## Userbot + Assistant for Telegram
 
