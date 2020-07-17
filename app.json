@@ -13,7 +13,7 @@
     "testing"
   ],
   "repository": "https://github.com/pokurt/Nana-Remix",
-  "website": "sagita.tech",
+  "website": "pokurt.github.io",
   "success_url": "https://t.me/nanabotsupport",
   "stack": "container",
   "env": {
@@ -128,11 +128,15 @@
       "required": false
     },
     "USERBOT_SESSION": {
-      "description": "To generate an session, read: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/",
+      "description": "To generate an session, read: https://aman-a.gitbook.io/nana-remix/deploy-nana-remix-on-heroku",
       "required": true
     },
     "ASSISTANT_SESSION": {
-      "description": "To generate an session, read: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/",
+      "description": "To generate an session, read: https://aman-a.gitbook.io/nana-remix/deploy-nana-remix-on-heroku",
+      "required": true
+    },
+    "sw_api": {
+      "description": "Read SpamWatch Docs on How to obtain api, https://docs.spamwat.ch/",
       "required": true
     }
   },

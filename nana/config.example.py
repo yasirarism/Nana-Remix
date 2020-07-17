@@ -29,6 +29,7 @@ class Config(object):
 	# APIs token
 	thumbnail_API = ""  # Register free here: https://thumbnail.ws/
 	screenshotlayer_API = ""  # Register free here: https://screenshotlayer.com/
+	sw_api = "" # Read docs in docs.spamwat.ch
 	bitly_token = ""  # register here : bitly.com
 	lydia_api = "" #get from https://coffeehouse.intellivoid.net
 	remove_bg_api = "" # Get from https://remove.bg

@@ -91,6 +91,7 @@ if ENV:
     gdrive_credentials = os.environ.get('gdrive_credentials', None)
     lydia_api = os.environ.get('lydia_api', None)
     remove_bg_api = os.environ.get('remove_bg_api', None)
+    sw_api = os.environ.get('sw_api', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
@@ -137,6 +138,7 @@ else:
 
     # APIs
     thumbnail_API = Config.thumbnail_API
+    sw_api = Config.sw_api
     screenshotlayer_API = Config.screenshotlayer_API
     bitly_token = [Config.bitly_token]
     gdrive_credentials = None
