@@ -2,8 +2,8 @@ echo Nana-Remix install for Termux
 echo Written by @pokurt
 echo Beginning dependency installation in 5 seconds....
 sleep 5
-pkg update
-pkg install nano clang curl git libcrypt libffi libiconv libjpeg* libjpeg-turbo libwebp libxml2 libxslt make ndk-sysroot openssl postgresql python readline wget zlib -y
+apt update
+apt install nano clang curl git libcrypt libffi libiconv libjpeg* libjpeg-turbo libwebp libxml2 libxslt make ndk-sysroot openssl postgresql python readline wget zlib -y
 git clone https://github.com/pokurt/Nana-Remix.git
 cd Nana-Remix
 pip install --upgrade pip setuptools
