@@ -141,7 +141,7 @@ else:
     sw_api = Config.sw_api
     screenshotlayer_API = Config.screenshotlayer_API
     bitly_token = [Config.bitly_token]
-    gdrive_credentials = None
+    gdrive_credentials = Config.gdrive_credentials
     lydia_api = Config.lydia_api
     HEROKU_API = Config.HEROKU_API
     remove_bg_api = Config.remove_bg_api

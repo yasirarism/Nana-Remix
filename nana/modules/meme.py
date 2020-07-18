@@ -5,7 +5,6 @@ from difflib import get_close_matches
 import re
 import asyncio
 import aiohttp
-import requests
 from pyrogram import Filters
 from pyrogram.api import functions
 
@@ -23,25 +22,17 @@ stretch text
 
 ──「 **Copy Pasta** 」──
 -> `cp`
-add randoms emoji to his/her text.
+add randoms emoji to text.
 
 ──「 **Scam** 」──
 -> `scam <action>`
-User decides time/action, bot decides the other.
+chat action.
 
-scame types: `'typing','upload_photo', 'record_video', 'upload_video', 'record_audio', 'upload_audio', 'upload_document', 'find_location','record_video_note', 'upload_video_note', 'choose_contact', 'playing'`
+scame types: `'typing','upload_photo', 'record_video', 'upload_video', 'record_audio', 'upload_audio', 'upload_document', 'find_location','record_video_note', 'upload_video_note', 'playing'`
 
 ──「 **Mock text** 」──
 -> `mocktxt`
 Mock someone with text.
-
-──「 **Meme generator** 」──
--> `meme`
-For get avaiable type, just send `meme`, just send `meme (type)`.
-To leave it blank, set text to _
-Usage:
-```meme (up text)
-(down text)```
 
 ──「 **Vaporwave/Aestethic** 」──
 -> `aes`
@@ -52,23 +43,19 @@ Convert your text to Vaporwave.
 spams a word with value given
 
 -> `spamstk` (value)
-Reply to a sticker to spam the sticker with value given
+Reply to a sticker to spam the sticker
 
 ──「 **Shrugs** 」──
 -> `shg`
-Free Shrugs? Anyone?...
+Free Shrugs?..
 
 ──「 **Pat** 」──
 -> `pat`
 pat gifs
 
-──「 **TypeWriter** 」──
--> `type`
-typing message
-
 ──「 **Fake Screenshot** 」──
 -> `fakess`
-Try it, works in Private messages only
+fake notification toasts
 """
 
 
@@ -281,57 +268,6 @@ async def mock_text(client, message):
                 return
         pesan = await mocking_text(teks)
         await client.edit_message_text(message.chat.id, message.message_id, pesan)
-
-
-@app.on_message(Filters.me & Filters.command("type", Command))
-async def typingmeme(_client, message):
-    teks = message.text[3:]
-    total = len(teks)
-    for loop in range(total):
-        try:
-            await message.edit(teks[:loop + 1])
-        except:
-            pass
-
-
-@app.on_message(Filters.me & Filters.command("meme", Command))
-async def meme_gen(client, message):
-    meme_types = requests.get(
-        "https://raw.githubusercontent.com/legenhand/Nana-Bot/master/nana/helpers/memes.json").json()
-    if len(message.text.split()) <= 2:
-        if len(message.text.split()) == 2:
-            closematch = get_close_matches(message.text.split(None, 1)[1], list(meme_types))
-            text = "Search result:\n"
-            for x in closematch:
-                text += "\n`{}`\n-> **{}**\n-> [Example]({})\n".format(x, meme_types[x]['title'],
-                                                                       meme_types[x]['example'])
-            await message.edit(text)
-        else:
-            await message.edit("Avaiable type: `{}`".format("`, `".join(list(meme_types))))
-        return
-    memetype = message.text.split(None, 2)[1]
-    if memetype not in list(meme_types):
-        await message.edit("Unknown type!")
-        return
-    await message.delete()
-    sptext = message.text.split(None, 2)[2].split("\n")
-    if len(sptext) == 1:
-        text1 = "_"
-        text2 = sptext[0]
-    else:
-        text1 = sptext[0]
-        text2 = sptext[1]
-    getimg = requests.get("https://memegen.link/{}/{}/{}.jpg?font=impact".format(memetype, text1, text2), stream=True)
-    if getimg.status_code == 200:
-        with open("nana/cache/meme.png", 'wb') as f:
-            getimg.raw.decode_content = True
-            shutil.copyfileobj(getimg.raw, f)
-        if message.reply_to_message:
-            await client.send_sticker(message.chat.id, "nana/cache/meme.png",
-                                      reply_to_message_id=message.reply_to_message.message_id)
-        else:
-            await client.send_sticker(message.chat.id, "nana/cache/meme.png", reply_to_message_id=message.message_id)
-        os.remove("nana/cache/meme.png")
 
 
 @app.on_message(Filters.me & Filters.command("fakess", Command))

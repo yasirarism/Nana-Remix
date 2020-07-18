@@ -3,8 +3,8 @@ class Config(object):
 	LOGGER = True
 	# Must be filled!
 	# Register here: https://my.telegram.org/apps
-	api_id = 1234 # Your API_ID
-	api_hash = "" # Your API_HASH
+	api_id = 1234  # Your API_ID
+	api_hash = ""  # Your API_HASH
 	DB_URI = ""  # Your database URL
 
 	# Version
@@ -18,8 +18,10 @@ class Config(object):
 	ASSISTANT_BOT_TOKEN = ""
 	NANA_IMG = ""
 	# Required for some features
-	AdminSettings = []  # Insert int id, Add someone so they can access your assistant, leave it blank if you dont want!
-	Command = ["!", "."]  # Insert command prefix, if you insert "!" then you can do !ping
+	# Insert int id, Add someone so they can access your assistant, leave it blank if you dont want!
+	AdminSettings = []
+	# Insert command prefix, if you insert "!" then you can do !ping
+	Command = ["!", "."]
 	# WORKER must be int (number)
 	NANA_WORKER = 8
 	ASSISTANT_WORKER = 2
@@ -29,7 +31,8 @@ class Config(object):
 	# APIs token
 	thumbnail_API = ""  # Register free here: https://thumbnail.ws/
 	screenshotlayer_API = ""  # Register free here: https://screenshotlayer.com/
-	sw_api = "" # Read docs in docs.spamwat.ch
+    gdrive_credentials = '' #JSON output of your credentials
+    sw_api = "" # Read docs in docs.spamwat.ch
 	bitly_token = ""  # register here : bitly.com
 	lydia_api = "" #get from https://coffeehouse.intellivoid.net
 	remove_bg_api = "" # Get from https://remove.bg
