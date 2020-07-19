@@ -17,8 +17,6 @@ Try contacting me by pressing buttons down bellow
 NOTIFY_ID = Owner
 BLACKLIST = ["hack", "fuck", "bitch", "pubg", "sex"]
 
-USER_IN_RESTRICT = []
-
 
 @app.on_message(~Filters.me & Filters.private & ~Filters.bot)
 async def pm_block(client, message):
