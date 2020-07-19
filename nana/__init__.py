@@ -93,6 +93,8 @@ if ENV:
     remove_bg_api = os.environ.get('remove_bg_api', None)
     sw_api = os.environ.get('sw_api', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
+    IBM_WATSON_CRED_URL = os.environ.get('IBM_WATSON_CRED_URL', None)
+    IBM_WATSON_CRED_PASSWORD = os.environ.get('IBM_WATSON_CRED_PASSWORD', None)
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
     USERBOT_NOLOAD = os.environ.get("USERBOT_NOLOAD", "").split()
@@ -146,6 +148,8 @@ else:
     HEROKU_API = Config.HEROKU_API
     remove_bg_api = Config.remove_bg_api
     NANA_IMG = Config.NANA_IMG
+    IBM_WATSON_CRED_URL = Config.IBM_WATSON_CRED_URL
+    IBM_WATSON_CRED_PASSWORD = Config.IBM_WATSON_CRED_PASSWORD
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD
     USERBOT_NOLOAD = Config.USERBOT_NOLOAD

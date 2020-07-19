@@ -65,6 +65,16 @@
       "value": "",
       "required": false
     },
+    "IBM_WATSON_CRED_URL": {
+      "description": "(optional)",
+      "value": "",
+      "required": false
+    },
+    "IBM_WATSON_CRED_PASSWORD": {
+      "description": "(optional)",
+      "value": "",
+      "required": false
+    },
     "lang_code": {
       "description": "(optional) Your language code",
       "value": "en",

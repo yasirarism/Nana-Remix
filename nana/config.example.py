@@ -31,12 +31,14 @@ class Config(object):
 	# APIs token
 	thumbnail_API = ""  # Register free here: https://thumbnail.ws/
 	screenshotlayer_API = ""  # Register free here: https://screenshotlayer.com/
-    gdrive_credentials = '' #JSON output of your credentials
-    sw_api = "" # Read docs in docs.spamwat.ch
+	gdrive_credentials = "" # JSON output
+	sw_api = "" # Read docs in docs.spamwat.ch
 	bitly_token = ""  # register here : bitly.com
 	lydia_api = "" #get from https://coffeehouse.intellivoid.net
 	remove_bg_api = "" # Get from https://remove.bg
 	HEROKU_API = ""  # if you're using heroku this field must filled, get from here : https://dashboard.heroku.com/account
+	IBM_WATSON_CRED_URL = ""
+	IBM_WATSON_CRED_PASSWORD = ""
 	# Load or no load plugins
 	# userbot
 	USERBOT_LOAD = [] # Load modules you want only for user, Leave Blank if you want to use All
