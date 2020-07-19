@@ -14,7 +14,6 @@ async def speach_to_text(client, message):
     start = datetime.now()
     input_str = message.reply_to_message.voice
     if input_str:
-        previous_message = input_str
         required_file_name = await download_reply_nocall(client, message)
         lan = input_str
         if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
@@ -23,7 +22,7 @@ async def speach_to_text(client, message):
             await message.delete()
         else:
             headers = {
-                "Content-Type": previous_message,
+                "Content-Type": message.reply_to_message.voice.mime_type,
             }
             data = open(required_file_name, "rb").read()
             response = requests.post(
