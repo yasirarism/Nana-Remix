@@ -516,7 +516,7 @@ async def download_reply_nocall(client, message):
 		nama = "{}".format(message.reply_to_message.audio.file_name)
 		await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama)
 	elif message.reply_to_message.voice:
-		nama = "audio_{}.ogg".format(message.reply_to_message.voice)
+		nama = "audio_{}.ogg".format(message.reply_to_message.voice.date)
 		await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama)
 	elif message.reply_to_message.document:
 		nama = "{}".format(message.reply_to_message.document.file_name)
