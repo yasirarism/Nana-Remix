@@ -187,7 +187,7 @@ async def youtube_music(_client, message):
 									"text\n4. Click button Add build pack, then type "
 									"`https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`\n5. Click Save "
 									"changes, and you need to rebuild your heroku app to take changes!\n\nNeed "
-									"help?\nGo @AyraSupport and ask there")
+									"help?\nGo to @NanaBotSupport and ask there")
 			return
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
