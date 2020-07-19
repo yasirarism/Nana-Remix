@@ -18,6 +18,7 @@ Finds the 25 most used words in the last 1000 messages in a chat.
 
 class Custom(dict):
     def __missing__(self, key):
+        """define missing value"""
         return 0
 
 

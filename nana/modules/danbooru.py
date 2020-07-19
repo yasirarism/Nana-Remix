@@ -14,7 +14,7 @@ Search images from Danbooru.
 
 @app.on_message(Filters.me & Filters.command("animu", Command))
 async def danbooru(client, message):
-    await message.edit(f"`Processing…`")
+    await message.edit("`Processing…`")
 
     rating = "Explicit" if "nsfw" in message.command[1] else "Safe"
     search_query = ' '.join(message.command[2:])

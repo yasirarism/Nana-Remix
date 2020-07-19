@@ -4,8 +4,8 @@ class Config(object):
 	# Must be filled!
 	# Register here: https://my.telegram.org/apps
 	api_id = 1234  # Your API_ID
-	api_hash = ""  # Your API_HASH
-	DB_URI = ""  # Your database URL
+	api_hash = "token"  # Your API_HASH
+	DB_URI = "token"  # Your database URL
 
 	# Version
 	lang_code = "en"  # Your language code
@@ -15,8 +15,8 @@ class Config(object):
 	# Use real bot for Assistant
 	# Pass False if you dont want
 	ASSISTANT_BOT = True
-	ASSISTANT_BOT_TOKEN = ""
-	NANA_IMG = ""
+	ASSISTANT_BOT_TOKEN = "token"
+	NANA_IMG = "token"
 	# Required for some features
 	# Insert int id, Add someone so they can access your assistant, leave it blank if you dont want!
 	AdminSettings = []
@@ -29,16 +29,16 @@ class Config(object):
 	REMINDER_UPDATE = True
 
 	# APIs token
-	thumbnail_API = ""  # Register free here: https://thumbnail.ws/
-	screenshotlayer_API = ""  # Register free here: https://screenshotlayer.com/
-	gdrive_credentials = "" # JSON output
-	sw_api = "" # Read docs in docs.spamwat.ch
-	bitly_token = ""  # register here : bitly.com
-	lydia_api = "" #get from https://coffeehouse.intellivoid.net
-	remove_bg_api = "" # Get from https://remove.bg
-	HEROKU_API = ""  # if you're using heroku this field must filled, get from here : https://dashboard.heroku.com/account
-	IBM_WATSON_CRED_URL = ""
-	IBM_WATSON_CRED_PASSWORD = ""
+	thumbnail_API = "token"  # Register free here: https://thumbnail.ws/
+	screenshotlayer_API = "token"  # Register free here: https://screenshotlayer.com/
+	gdrive_credentials = "token" # JSON output
+	sw_api = "token" # Read docs in docs.spamwat.ch
+	bitly_token = "token"  # register here : bitly.com
+	lydia_api = "token" #get from https://coffeehouse.intellivoid.net
+	remove_bg_api = "token" # Get from https://remove.bg
+	HEROKU_API = "token"  # if you're using heroku this field must filled, get from here : https://dashboard.heroku.com/account
+	IBM_WATSON_CRED_URL = "token"
+	IBM_WATSON_CRED_PASSWORD = "token"
 	# Load or no load plugins
 	# userbot
 	USERBOT_LOAD = [] # Load modules you want only for user, Leave Blank if you want to use All
@@ -48,8 +48,8 @@ class Config(object):
 	ASSISTANT_NOLOAD = [] # Load modules you want only for asisstant, Leave Blank if you want to use All
 
 	# Fill this if you want to login using session code, else leave it blank
-	USERBOT_SESSION = "" # Your User session goes here
-	ASSISTANT_SESSION = "" # Your Bot session goes here
+	USERBOT_SESSION = "token" # Your User session goes here
+	ASSISTANT_SESSION = "token" # Your Bot session goes here
 	# Pass True if you want to use test mode
 	TEST_MODE = False
 

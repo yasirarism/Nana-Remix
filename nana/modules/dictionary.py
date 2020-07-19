@@ -7,14 +7,14 @@ from nana.helpers.aiohttp_helper import AioHttp
 
 __HELP__ = """
 ──「 **Dictionary** 」──
--> `dic` or `dictionary`
+-> `dic`
 Search dictionary for given words
 
 """
 __MODULE__ = "Dictionary"
 
 
-@app.on_message(Filters.me & Filters.command(["dic", "dictionary"], Command))
+@app.on_message(Filters.me & Filters.command("dic", Command))
 async def dictionary(_client, message):
     cmd = message.command
     input_ = ""

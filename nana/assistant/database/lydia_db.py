@@ -12,6 +12,7 @@ class ChatbotChats(BASE):
     expires = Column(String(15))
 
     def __init__(self, chat_id, ses_id, expires):
+        """initialize db"""
         self.chat_id = chat_id
         self.ses_id = ses_id
         self.expires = expires

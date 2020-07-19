@@ -105,7 +105,8 @@ async def gdrive_stuff(client, message):
         else:
             try:
                 gauth.GetAuthUrl()
-            except:
+            except Exception as e:
+                print(e)
                 await setbot.send_message(message.from_user.id,
                                           "Wrong Credentials! Check var ENV gdrive_credentials on heroku or do "
                                           ".credentials (your credentials) for change your Credentials")

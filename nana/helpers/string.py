@@ -10,7 +10,7 @@ def replace_text(text):
         return text.replace("\"", "").replace("\\r", "").replace("\\n", "").replace(
             "\\", "")
 
-            
+
 def extract_time(message, time_val):
     if any(time_val.endswith(unit) for unit in ('m', 'h', 'd')):
         unit = time_val[-1]
@@ -99,7 +99,7 @@ def parse_button(text):
             buttons.append((match.group(2), match.group(3), bool(match.group(4))))
             note_data += markdown_note[prev:match.start(1)]
             prev = match.end(1)
-        # if odd, escaped -> move along
+            break
         else:
             note_data += markdown_note[prev:to_check]
             prev = match.start(1) - 1

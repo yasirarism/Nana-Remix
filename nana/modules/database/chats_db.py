@@ -10,11 +10,13 @@ class MyChats(BASE):
     chat_username = Column(UnicodeText)
 
     def __init__(self, chat_id, chat_name, chat_username):
+        "initializing db"
         self.chat_id = str(chat_id)
         self.chat_name = chat_name
         self.chat_username = chat_username
 
     def __repr__(self):
+        "chat message for db"
         return "<Chat {} ({})>".format(self.chat_name, self.chat_id)
 
 

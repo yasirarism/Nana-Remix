@@ -115,10 +115,12 @@ async def kang_stickers(client, message):
         os.remove('nana/cache/sticker.png')
     try:
         ic = message.text.split(None, 1)[1]
-    except:
+    except Exception as e:
+        print(e)
         try:
             ic = message.reply_to_message.sticker.emoji
-        except:
+        except Exception as err:
+            print(err)
             ic = "🤔"
     if ic is None:
         ic = "🤔"

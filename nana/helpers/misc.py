@@ -4,12 +4,15 @@ from pyrogram import InlineKeyboardButton
 
 class EqInlineKeyboardButton(InlineKeyboardButton):
     def __eq__(self, other):
+        "inline keyboard open for bot"
         return self.text == other.text
 
     def __lt__(self, other):
+        "inline method for text"
         return self.text < other.text
 
     def __gt__(self, other):
+        "inline method for text and others"
         return self.text > other.text
 
 

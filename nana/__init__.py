@@ -1,3 +1,6 @@
+"""
+The initial start of Nana-Remix
+"""
 import logging
 import os
 import sys

@@ -15,6 +15,7 @@ class SelfNotes(BASE):
     file = Column(UnicodeText)
 
     def __init__(self, user_id, name, value, msgtype, file):
+        """initializing db"""
         self.user_id = user_id
         self.name = name
         self.value = value
@@ -22,6 +23,7 @@ class SelfNotes(BASE):
         self.file = file
 
     def __repr__(self):
+        """get db message"""
         return "<Note %s>" % self.name
 
 

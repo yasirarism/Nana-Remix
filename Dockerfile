@@ -78,7 +78,7 @@ COPY ./README.md ./client_secrets.json* /root/nana/
 ENV PATH="/home/userbot/bin:$PATH"
 
 # Install requirements
-RUN sudo pip3 install -U -r requirements.txt
+RUN pip3 install -U -r requirements.txt
 
 # Starting Worker
 CMD ["python3","-m","nana"]

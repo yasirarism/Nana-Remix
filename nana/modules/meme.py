@@ -1,7 +1,4 @@
-import os
 import random
-import shutil
-from difflib import get_close_matches
 import re
 import asyncio
 import aiohttp

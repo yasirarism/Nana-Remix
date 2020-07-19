@@ -7,7 +7,6 @@ from pyrogram.api import functions
 from pyrogram.errors import PeerIdInvalid
 
 from nana import app, Command, sw_api
-from nana.helpers.PyroHelpers import ReplyCheck
 
 __MODULE__ = "Whois"
 __HELP__ = """

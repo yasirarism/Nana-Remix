@@ -100,7 +100,8 @@ async def mega_downloader(_client, megadl):
                 if display_message != current_message:
                     await megadl.edit(current_message)
                     display_message = current_message
-        except Exception:
+        except Exception as e:
+            print(e)
             pass
     if downloader.isSuccessful():
         download_time = downloader.get_dl_time(human=True)

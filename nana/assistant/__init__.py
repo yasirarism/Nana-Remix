@@ -1,3 +1,6 @@
+"""
+initial assistant's modules
+"""
 from nana import ASSISTANT_LOAD, ASSISTANT_NOLOAD, log
 
 

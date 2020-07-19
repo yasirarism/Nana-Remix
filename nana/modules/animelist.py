@@ -1,11 +1,4 @@
-"""
-Anilist Search Plugin for nana
-By :- @Zero_cooll7870
-
-Original Repo: https://github.com/jaskaranSM/UniBorg give a star and follow
-
-"""
-
+"""Anilist Search Plugin for nana By :- @Zero_cooll7870"""
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
 from pyrogram import Filters
@@ -93,7 +86,7 @@ async def formatJSON(outData):
         link = f"https://anilist.co/anime/{jsonData['id']}"
         msg += f"[{title}]({link})"
         msg += f"\n\n**Type** : {jsonData['format']}"
-        msg += f"\n**Genres** : "
+        msg += "\n**Genres** : "
         for g in jsonData['genres']:
             msg += g+" "
         msg += f"\n**Status** : {jsonData['status']}"

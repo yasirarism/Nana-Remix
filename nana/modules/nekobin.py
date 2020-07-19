@@ -21,6 +21,7 @@ async def paste(client, message):
         text = message.reply_to_message.text
     if message.reply_to_message.document and message.reply_to_message.document.file_size < 2 ** 20 * 10:
         var = os.path.splitext(message.reply_to_message.document.file_name)[1]
+        print(var)
         path = await message.reply_to_message.download("nana/")
         with open(path, 'r') as doc:
             text = doc.read()
@@ -65,7 +66,7 @@ async def paste(client, message):
 
 @app.on_message(Filters.me & Filters.command(["gpaste"], Command))
 async def get_paste_(_client, message):
-    """ fetches the content of a dogbin or nekobin URL """
+    """fetches the content of a dogbin or nekobin URL."""
     link = message.reply_to_message.text
     if not link:
         await message.edit("input not found!")

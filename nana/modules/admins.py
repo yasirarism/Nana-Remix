@@ -526,7 +526,7 @@ async def demote_usr(client, message):
 
 @app.on_message(Filters.me & Filters.command("lock", Command))
 async def lock_permission(client, message):
-    """locks group permission"""
+    """module that locks group permissions"""
     if message.chat.type in ["group", "supergroup"]:
         cmd = message.command
         is_admin = await admin_check(message)
@@ -659,7 +659,7 @@ async def lock_permission(client, message):
 
 @app.on_message(Filters.me & Filters.command("unlock", Command))
 async def unlock_permission(client, message):
-    """unlocks group permission"""
+    """this module unlocks group permission for admins"""
     if message.chat.type in ["group", "supergroup"]:
         cmd = message.command
         is_admin = await admin_check(message)
@@ -810,7 +810,7 @@ async def unlock_permission(client, message):
 
 @app.on_message(Filters.me & Filters.command("vlock", Command))
 async def view_perm(client, message):
-    """view group permission"""
+    """view group permission."""
     if message.chat.type in ["group", "supergroup"]:
         is_admin = await admin_check(message)
         if not is_admin:
