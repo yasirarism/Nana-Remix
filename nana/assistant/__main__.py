@@ -85,13 +85,6 @@ Convert a text to various style, can be used anywhere!
                 )
             )
             return
-        if helparg == "createown":
-            await message.reply(
-                "Want to create your own Userbot and Assistant?\n[Go here]("
-                "https://github.com/AyraHikari/Nana-TgBot/wiki), read guide carefully.\nIf you want to ask, "
-                "join our community @AyraSupport"
-            )
-            return
     try:
         me = await app.get_me()
     except ConnectionError:

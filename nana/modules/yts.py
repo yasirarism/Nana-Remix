@@ -6,6 +6,9 @@ import os
 import re
 import requests
 import asyncio
+from urllib.parse import quote as urlencode
+import aiohttp
+import htmlement
 
 from pyrogram import Filters
 
@@ -27,6 +30,18 @@ Example: `yts lion king`
 Sends magnetlink using assistant.
 
 """
+
+
+async def sukebei_search(query):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f'https://sukebei.nyaa.si/?page=rss&c=0_0&f=0&q={urlencode(query)}') as resp:
+            root = htmlement.fromstring(await resp.text())
+    results = []
+    for i in root.iterfind('.//channel/item'):
+        title = i.find('title').text
+        link = i.find('link').tail
+        results.append((title, link))
+    return results
 
 
 @app.on_message(Filters.me & Filters.command("yts", Command))
@@ -151,3 +166,36 @@ async def yts_search(_client, message):
         await asyncio.sleep(2)
         await message.delete()
     await message.delete()
+
+
+@app.on_message(Filters.me & Filters.command("sb", Command))
+async def saku_bei(client, message):
+    cmd = message.command
+    query = ""
+    if len(cmd) > 1:
+        query = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        query = message.reply_to_message.text
+    elif len(cmd) == 1:
+        await message.edit("`cant sakubei the void.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    try:
+        results = await sukebei_search(query)
+    except Exception as e:
+        print(e)
+        await message.edit("`something went wrong please check logs!")
+        await asyncio.sleep(2)
+        await message.delete()
+    await message.edit("`check assistant for magnet links`")
+    await asyncio.sleep(7)
+    await message.delete()
+    count = 0
+    for i, j in results:
+        count += 1
+        if count % 10 == 0:
+            break
+        rep = f'<b>Sakubei Torrent:</b>\n{i}: {j}'
+        await setbot.send_message(message.from_user.id, rep)
+    
