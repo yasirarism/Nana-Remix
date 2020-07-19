@@ -833,7 +833,7 @@ async def view_perm(client, message):
         v_perm = await client.get_chat(message.chat.id)
 
         def convert_to_emoji(val: bool):
-            if val is True:
+            if val:
                 return "<code>True</code>"
             return "<code>False</code>"
 
@@ -884,16 +884,16 @@ async def deleted_clean(client, message):
     rm_delaccs = "clean" in clean_tag
     can_clean = await admin_check(message)
 
-    if rm_delaccs:
+    del_stats = "`no deleted accounts found in this chat`"
 
-        del_users = 0
-        del_admins = 0
-        del_total = 0
-        del_stats = "`no deleted accounts found in this chat`"
+    del_users = 0
+    if rm_delaccs:
 
         if can_clean:
 
             await message.edit("`cleaning deleted accounts from this chat..`")
+            del_admins = 0
+            del_total = 0
             async for member in client.iter_chat_members(chat_id):
 
                 if member.user.is_deleted:
@@ -912,11 +912,7 @@ async def deleted_clean(client, message):
                     del_users += 1
                     del_total += 1
 
-            if del_admins > 0:
-                del_stats = f"`Found` **{del_total}** `total accounts..`"
-            else:
-                del_stats = f"`Found` **{del_total}** `total accounts..`"
-
+            del_stats = f"`Found` **{del_total}** `total accounts..`"
             await message.edit(del_stats)
             await message.edit(
                 f"**Cleaned Deleted accounts**:\n"
@@ -930,13 +926,9 @@ async def deleted_clean(client, message):
 
     else:
 
-        del_users = 0
-        del_stats = "`no deleted accounts found in this chat`"
         async for member in client.iter_chat_members(chat_id):
             if member.user.is_deleted:
                 del_users += 1
         if del_users > 0:
             del_stats = f"`Found` **{del_users}** `deleted accounts in this chat.`"
-            await message.edit(del_stats)
-        else:
-            await message.edit(del_stats)
+        await message.edit(del_stats)

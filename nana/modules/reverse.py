@@ -62,7 +62,6 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
 async def google_rs(client, message):
     start = datetime.now()
     dis_loc = ''
-    base_url = "http://www.google.com"
     out_str = "`Reply to an image`"
     if message.reply_to_message:
         message_ = message.reply_to_message
@@ -85,6 +84,7 @@ async def google_rs(client, message):
                 await message.delete()
                 return
             dis_loc = img_file
+        base_url = "http://www.google.com"
         if dis_loc:
             search_url = "{}/searchbyimage/upload".format(base_url)
             multipart = {
@@ -156,10 +156,9 @@ async def tracemoe_rs(client, message):
             if message_.video:
                 search = await tracemoe.search(img_file, encode=True)
                 os.remove(img_file)
-                os.remove(dis_loc)
             else:
                 search = await tracemoe.search(dis_loc, encode=True)
-                os.remove(dis_loc)
+            os.remove(dis_loc)
             result = search['docs'][0]
             msg = f"**Title**: {result['title_english']}" \
                   f"\n**Similarity**: {result['similarity']*100}"\

@@ -100,10 +100,7 @@ async def get_note(client, message):
     if getnotes['type'] == Types.TEXT:
         teks, button = parse_button(getnotes.get('value'))
         button = build_keyboard(button)
-        if button:
-            button = InlineKeyboardMarkup(button)
-        else:
-            button = None
+        button = InlineKeyboardMarkup(button) if button else None
         if button:
             try:
                 inlineresult = await app.get_inline_bot_results(f"@{BotUsername}", f"note {note}")
@@ -136,10 +133,7 @@ async def get_note(client, message):
         if getnotes.get('value'):
             teks, button = parse_button(getnotes.get('value'))
             button = build_keyboard(button)
-            if button:
-                button = InlineKeyboardMarkup(button)
-            else:
-                button = None
+            button = InlineKeyboardMarkup(button) if button else None
         else:
             teks = None
             button = None

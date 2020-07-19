@@ -115,7 +115,7 @@ async def yts_search(_client, message):
         query = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         query = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`No search query given for torrent search`")
         await asyncio.sleep(2)
         await message.delete()
@@ -143,8 +143,6 @@ async def yts_search(_client, message):
                 await setbot.send_message(message.from_user.id, rep, parse_mode="html")
             except Exception as e:
                 print(e)
-                pass
-
         if rep == "":
             await message.edit(f"No torrents found: __{query}__")
     except Exception as e:

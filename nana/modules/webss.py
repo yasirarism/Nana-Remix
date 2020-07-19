@@ -33,10 +33,7 @@ async def print_web(client, message):
     await message.edit("Please wait...")
     args = message.text.split(None, 1)
     teks = args[1]
-    if "http://" in teks or "https://" in teks:
-        teks = teks
-    else:
-        teks = "http://" + teks
+    teks = teks if "http://" in teks or "https://" in teks else "http://" + teks
     capt = f"Website: `{teks}`"
 
     await client.send_chat_action(message.chat.id, action="upload_photo")
@@ -67,14 +64,13 @@ async def ss_web(client, message):
     args = message.text.split(None, 1)
     teks = args[1]
     full = False
-    if len(message.text.split()) >= 3:
-        if message.text.split(None, 2)[2] == "full":
-            full = True
+    if (
+        len(message.text.split()) >= 3
+        and message.text.split(None, 2)[2] == "full"
+    ):
+        full = True
 
-    if "http://" in teks or "https://" in teks:
-        teks = teks
-    else:
-        teks = "http://" + teks
+    teks = teks if "http://" in teks or "https://" in teks else "http://" + teks
     capt = f"Website: `{teks}`"
 
     await client.send_chat_action(message.chat.id, action="upload_photo")
@@ -94,8 +90,6 @@ async def ss_web(client, message):
             return
     except Exception as err:
         print(err)
-        pass
-
     with open("nana/cache/web.png", "wb") as stk:
         for chunk in r:
             stk.write(chunk)

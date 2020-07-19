@@ -32,10 +32,9 @@ async def adminlist(client, message):
     toolong = False
     if len(message.text.split()) >= 2:
         chat = message.text.split(None, 1)[1]
-        grup = await client.get_chat(chat)
     else:
         chat = message.chat.id
-        grup = await client.get_chat(chat)
+    grup = await client.get_chat(chat)
     if message.reply_to_message:
         replyid = message.reply_to_message.message_id
     alladmins = client.iter_chat_members(chat, filter="administrators")
@@ -99,9 +98,8 @@ async def report_admin(client, message):
     alladmins = client.iter_chat_members(message.chat.id, filter="administrators")
     admin = []
     async for a in alladmins:
-        if a.status == "administrator" or a.status == "creator":
-            if not a.user.is_bot:
-                admin.append(mention_html(a.user.id, "\u200b"))
+        if a.status in ["administrator", "creator"] and not a.user.is_bot:
+            admin.append(mention_html(a.user.id, "\u200b"))
     if message.reply_to_message:
         if text:
             teks = '{}'.format(text)
@@ -145,10 +143,9 @@ async def get_list_bots(client, message):
     replyid = None
     if len(message.text.split()) >= 2:
         chat = message.text.split(None, 1)[1]
-        grup = await client.get_chat(chat)
     else:
         chat = message.chat.id
-        grup = await client.get_chat(chat)
+    grup = await client.get_chat(chat)
     if message.reply_to_message:
         replyid = message.reply_to_message.message_id
     getbots = client.iter_chat_members(chat)

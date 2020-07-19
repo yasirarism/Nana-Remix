@@ -62,20 +62,17 @@ fake notification toasts
 async def mocking_text(text):
     teks = list(text)
     for i, ele in enumerate(teks):
-        if i % 2 != 0:
-            teks[i] = ele.upper()
-        else:
-            teks[i] = ele.lower()
+        teks[i] = ele.upper() if i % 2 != 0 else ele.lower()
     pesan = ""
-    for x in range(len(teks)):
-        pesan += teks[x]
+    for tek in teks:
+        pesan += tek
     return pesan
 
 
 @app.on_message(Filters.me & Filters.command("pat", Command))
 async def pat(client, message):
-    URL = "https://some-random-api.ml/animu/pat"
     async with aiohttp.ClientSession() as session:
+        URL = "https://some-random-api.ml/animu/pat"
         async with session.get(URL) as request:
             if request.status == 404:
                 return await message.edit("`no Pats for u :c")
@@ -173,7 +170,7 @@ async def owo(_client, message):
         text = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`cant uwu the void.`")
         await asyncio.sleep(2)
         await message.delete()
@@ -203,7 +200,7 @@ async def pay_respecc(_client, message):
         paytext = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         paytext = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`Press F to Pay Respecc`")
         await asyncio.sleep(2)
         await message.delete()
@@ -224,7 +221,7 @@ async def stretch(_client, message):
         stretch_text = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         stretch_text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`Giiiiiiiv sooooooomeeeeeee teeeeeeext!`")
         await asyncio.sleep(2)
         await message.delete()
@@ -237,25 +234,24 @@ async def stretch(_client, message):
 
 @app.on_message(Filters.me & Filters.command("cp", Command))
 async def haha_emojis(_client, message):
-    if message.reply_to_message.message_id:
-        teks = message.reply_to_message.text
-        reply_text = random.choice(meme_strings.emojis)
-        b_char = random.choice(teks).lower()
-        for c in teks:
-            if c == " ":
-                reply_text += random.choice(meme_strings.emojis)
-            elif c in meme_strings.emojis:
-                reply_text += c
-                reply_text += random.choice(meme_strings.emojis)
-            elif c.lower() == b_char:
-                reply_text += "🅱️"
-            else:
-                if bool(random.getrandbits(1)):
-                    reply_text += c.upper()
-                else:
-                    reply_text += c.lower()
-        reply_text += random.choice(meme_strings.emojis)
-        await message.edit(reply_text)
+    if not message.reply_to_message.message_id:
+        return
+
+    teks = message.reply_to_message.text
+    reply_text = random.choice(meme_strings.emojis)
+    b_char = random.choice(teks).lower()
+    for c in teks:
+        if c == " ":
+            reply_text += random.choice(meme_strings.emojis)
+        elif c in meme_strings.emojis:
+            reply_text += c
+            reply_text += random.choice(meme_strings.emojis)
+        elif c.lower() == b_char:
+            reply_text += "🅱️"
+        else:
+            reply_text += c.upper() if bool(random.getrandbits(1)) else c.lower()
+    reply_text += random.choice(meme_strings.emojis)
+    await message.edit(reply_text)
 
 
 @app.on_message(Filters.me & Filters.command("mocktxt", Command))
@@ -264,8 +260,8 @@ async def mock_text(client, message):
         teks = message.reply_to_message.text
         if teks is None:
             teks = message.reply_to_message.caption
-            if teks is None:
-                return
+        if teks is None:
+            return
         pesan = await mocking_text(teks)
         await client.edit_message_text(message.chat.id, message.message_id, pesan)
 

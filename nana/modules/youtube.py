@@ -109,14 +109,14 @@ async def youtube_music(_client, message):
 		r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/maxresdefault.jpg", stream=True)
 		if r.status_code != 200:
 			r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/hqdefault.jpg", stream=True)
-			if r.status_code != 200:
-				r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/sddefault.jpg", stream=True)
-				if r.status_code != 200:
-					r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/mqdefault.jpg", stream=True)
-					if r.status_code != 200:
-						r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/default.jpg", stream=True)
-						if r.status_code != 200:
-							avthumb = False
+		if r.status_code != 200:
+			r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/sddefault.jpg", stream=True)
+		if r.status_code != 200:
+			r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/mqdefault.jpg", stream=True)
+		if r.status_code != 200:
+			r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/default.jpg", stream=True)
+		if r.status_code != 200:
+			avthumb = False
 		if r.status_code == 200:
 			avthumb = True
 			with open("nana/cache/thumb.jpg", "wb") as stk:

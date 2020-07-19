@@ -38,12 +38,11 @@ async def add_chat(_client, message):
         expires = str(ses.expires)
         sql.set_ses(chat_id, ses_id, expires)
         await message.edit("`AI successfully enabled for this chat!`")
-        await asyncio.sleep(5)
-        await message.delete()
     else:
         await message.edit("`AI is already enabled for this chat!`")
-        await asyncio.sleep(5)
-        await message.delete()
+
+    await asyncio.sleep(5)
+    await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command("rmchat", Command))
@@ -52,13 +51,12 @@ async def remove_chat(_client, message):
     is_chat = sql.is_chat(chat_id)
     if not is_chat:
         await message.edit("`AI isn't enabled here in the first place!`")
-        await asyncio.sleep(5)
-        await message.delete()
     else:
         sql.rem_chat(chat_id)
         await message.edit("`AI disabled successfully!`")
-        await asyncio.sleep(5)
-        await message.delete()
+
+    await asyncio.sleep(5)
+    await message.delete()
 
 
 @app.on_message(~Filters.me & ~Filters.edited & (Filters.group | Filters.private), group=6)

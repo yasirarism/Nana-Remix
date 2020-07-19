@@ -57,7 +57,7 @@ async def purge_message(client, message):
                 )
                 count_del_etion_s += len(message_ids)
                 message_ids = []
-        if len(message_ids) > 0:
+        if message_ids:
             await client.delete_messages(
                 chat_id=message.chat.id,
                 message_ids=message_ids,
@@ -94,7 +94,7 @@ async def purge_myself(client, message):
         semua = listall
         jarak = 0
         jarak2 = 0
-        for x in range(math.ceil(len(listall) / 100)):
+        for x in range(math.ceil(len(semua) / 100)):
             if total >= 101:
                 jarak2 += 100
                 await client.delete_messages(message.chat.id, message_ids=semua[jarak:jarak2])

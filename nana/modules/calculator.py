@@ -59,13 +59,11 @@ async def evaluation(client, message):
                 await client.send_document(message.chat.id, "nana/cache/output.txt",
                                        caption="`Output too large, sending as file`")
                 os.remove("nana/cache/output.txt")
-                return
             else:
                 await message.edit("**Query:**\n{}\n\n**Result:**\n`{}`".format(q, ev))
-                return
         else:
             await message.edit("**Query:**\n{}\n\n**Result:**\n`None`".format(q))
-            return
+        return
     except:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)

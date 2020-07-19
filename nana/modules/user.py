@@ -150,7 +150,7 @@ async def join_chat(client, message):
         text = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`cant join the void.`")
         await sleep(2)
         await message.delete()

@@ -58,7 +58,7 @@ async def reboot():
         if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
             imported_module.__MODULE__ = imported_module.__MODULE__
         if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
-            if not imported_module.__MODULE__.lower() in HELP_COMMANDS:
+            if imported_module.__MODULE__.lower() not in HELP_COMMANDS:
                 HELP_COMMANDS[imported_module.__MODULE__.lower()] = imported_module
             else:
                 raise Exception("Can't have two modules with the same name! Please change one")
@@ -113,7 +113,7 @@ async def start_bot():
         if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
             imported_module.__MODULE__ = imported_module.__MODULE__
         if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
-            if not imported_module.__MODULE__.lower() in HELP_COMMANDS:
+            if imported_module.__MODULE__.lower() not in HELP_COMMANDS:
                 HELP_COMMANDS[imported_module.__MODULE__.lower()] = imported_module
             else:
                 raise Exception("Can't have two modules with the same name! Please change one")

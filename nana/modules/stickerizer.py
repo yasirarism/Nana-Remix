@@ -41,7 +41,7 @@ async def google_search(client, message):
         googles = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         googles = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`No text Given hence can not google the void.`")
         await asyncio.sleep(2)
         await message.delete()
@@ -63,7 +63,7 @@ async def mock_spongebob(client, message):
         mock = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         mock = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`Can't mock the void.`")
         await asyncio.sleep(2)
         await message.delete()
@@ -85,7 +85,7 @@ async def senpai_sticker(client, message):
         senpai = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         senpai = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`No text Given hence the senpai Ran Away.`")
         await asyncio.sleep(2)
         await message.delete()
@@ -107,7 +107,7 @@ async def waifu_sticker(client, message):
         waifu = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         waifu = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`No text Given hence the waifu Ran Away.`")
         await asyncio.sleep(2)
         await message.delete()

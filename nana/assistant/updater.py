@@ -19,9 +19,6 @@ from nana import (
 )
 from nana.__main__ import restart_all, loop
 
-if DB_AVAILABLE:
-    pass
-
 
 async def gen_chlog(repo, diff):
     changelog = ""
