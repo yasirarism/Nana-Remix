@@ -29,6 +29,7 @@ async def q_maker(_client, message):
         try:
             msg = await app.get_history("@QuotLyBot", 1)
             check = msg[0]["sticker"]["file_id"]
+            print(check)
             is_sticker = True
         except Exception as e:
             print(e)
