@@ -20,7 +20,7 @@ Current words: 'nigga', 'nigger', 'coon', 'fuck', 'bitch'
 vulgar_filter = False
 
 bad_words = ['nigga', 'nigger', 'coon', 'bitch']
-f_word = ['fuck']
+f_word = ['fuck', 'suck']
 
 
 @app.on_message(~Filters.regex(r"^\.\w*") & Filters.me)
