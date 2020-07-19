@@ -106,15 +106,15 @@ async def youtube_music(_client, message):
 		musicdate = video._ydl_info['upload_date'][:4]
 		titletext = "**Downloading music...**\n"
 		await message.edit(titletext + text, disable_web_page_preview=False)
-		r = requests.get("https://i.ytimg.com/vi/{}/maxresdefault.jpg".format(video.videoid), stream=True)
+		r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/maxresdefault.jpg", stream=True)
 		if r.status_code != 200:
-			r = requests.get("https://i.ytimg.com/vi/{}/hqdefault.jpg".format(video.videoid), stream=True)
+			r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/hqdefault.jpg", stream=True)
 			if r.status_code != 200:
-				r = requests.get("https://i.ytimg.com/vi/{}/sddefault.jpg".format(video.videoid), stream=True)
+				r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/sddefault.jpg", stream=True)
 				if r.status_code != 200:
-					r = requests.get("https://i.ytimg.com/vi/{}/mqdefault.jpg".format(video.videoid), stream=True)
+					r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/mqdefault.jpg", stream=True)
 					if r.status_code != 200:
-						r = requests.get("https://i.ytimg.com/vi/{}/default.jpg".format(video.videoid), stream=True)
+						r = requests.get(f"https://i.ytimg.com/vi/{video.videoid}/default.jpg", stream=True)
 						if r.status_code != 200:
 							avthumb = False
 		if r.status_code == 200:
@@ -122,7 +122,7 @@ async def youtube_music(_client, message):
 			with open("nana/cache/thumb.jpg", "wb") as stk:
 				shutil.copyfileobj(r.raw, stk)
 		try:
-			os.remove("nana/downloads/{}".format(origtitle))
+			os.remove(f"nana/downloads/{origtitle}")
 		except FileNotFoundError:
 			pass
 		# music.download(filepath="nana/downloads/{}".format(origtitle))
@@ -157,8 +157,8 @@ async def youtube_music(_client, message):
 		getprev = requests.get(video.thumb, stream=True)
 		with open("nana/cache/prev.jpg", "wb") as stk:
 			shutil.copyfileobj(getprev.raw, stk)
-		await app.send_audio(message.chat.id, audio="nana/downloads/{}.mp3".format(musictitle),
-							thumb="nana/cache/prev.jpg", title=music.title, caption="🕦 `{}`".format(video.duration),
+		await app.send_audio(message.chat.id, audio=f"nana/downloads/{musictitle}.mp3",
+							thumb="nana/cache/prev.jpg", title=music.title, caption=f"🕦 `{video.duration}`",
 							reply_to_message_id=message.message_id
 						)
 		try:
