@@ -40,7 +40,7 @@ async def print_web(client, message):
     capt = f"Website: `{teks}`"
 
     await client.send_chat_action(message.chat.id, action="upload_photo")
-    r = requests.get("https://api.thumbnail.ws/api/{}/thumbnail/get?url={}&width=1280".format(thumbnail_API, teks),
+    r = requests.get(f"https://api.thumbnail.ws/api/{thumbnail_API}/thumbnail/get?url={teks}&width=1280",
                      stream=True
                      )
     if r.status_code != 200:
@@ -75,7 +75,7 @@ async def ss_web(client, message):
         teks = teks
     else:
         teks = "http://" + teks
-    capt = "Website: `{}`".format(teks)
+    capt = f"Website: `{teks}`"
 
     await client.send_chat_action(message.chat.id, action="upload_photo")
     if full:
