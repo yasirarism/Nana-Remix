@@ -53,7 +53,6 @@ if ENV:
     # Version
     lang_code = os.environ.get('lang_code', "en")
     device_model = os.environ.get('device_model', "PC")
-    app_version = "💝 Nana v{}".format(USERBOT_VERSION)
     system_version = os.environ.get('system_version', "Linux")
 
     # Must be filled
@@ -64,14 +63,6 @@ if ENV:
     USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
     ASSISTANT_SESSION = os.environ.get('ASSISTANT_SESSION', None)
 
-    # Required for some features
-    # Set temp var for load later
-    Owner = 0
-    OwnerName = ""
-    OwnerUsername = ""
-    BotID = 0
-    BotName = ""
-    BotUsername = ""
     # From config
     Command = os.environ.get("Command", "! . - ^").split()
     NANA_WORKER = int(os.environ.get('NANA_WORKER', 8))
@@ -118,7 +109,6 @@ else:
     # Version
     lang_code = Config.lang_code
     device_model = Config.device_model
-    app_version = "💝 Nana v{}".format(USERBOT_VERSION)
     system_version = Config.system_version
 
     # Must be filled
@@ -128,14 +118,6 @@ else:
     # Session
     USERBOT_SESSION = Config.USERBOT_SESSION
     ASSISTANT_SESSION = Config.ASSISTANT_SESSION
-    # Required for some features
-    # Set temp var for load later
-    Owner = 0
-    OwnerName = ""
-    OwnerUsername = ""
-    BotID = 0
-    BotName = ""
-    BotUsername = ""
     # From config
     Command = Config.Command
     NANA_WORKER = Config.NANA_WORKER
@@ -165,6 +147,15 @@ else:
     REMINDER_UPDATE = Config.REMINDER_UPDATE
     TEST_MODE = Config.TEST_MODE
     TERMUX_USER = Config.TERMUX_USER
+OwnerName = ""
+app_version = "💝 Nana v{}".format(USERBOT_VERSION)
+BotUsername = ""
+BotID = 0
+# Required for some features
+# Set temp var for load later
+Owner = 0
+BotName = ""
+OwnerUsername = ""
 if os.path.exists("nana/logs/error.log"):
     f = open("nana/logs/error.log", "w")
     f.write("PEAK OF THE LOGS FILE")

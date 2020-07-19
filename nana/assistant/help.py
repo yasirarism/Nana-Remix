@@ -32,10 +32,7 @@ def get_readable_time(seconds: int) -> str:
     time_suffix_list = ["s", "m", "h", "days"]
     while count < 4:
         count += 1
-        if count < 3:
-            remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -81,19 +78,18 @@ help_button_create = Filters.create(help_button_callback)
 async def help_button(_client, query):
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
     back_match = re.match(r"help_back", query.data)
-    if True:
-        if mod_match:
-            module = mod_match.group(1)
-            text = "This is help for the module **{}**:\n".format(HELP_COMMANDS[module].__MODULE__) \
-                   + HELP_COMMANDS[module].__HELP__
+    if mod_match:
+        module = mod_match.group(1)
+        text = "This is help for the module **{}**:\n".format(HELP_COMMANDS[module].__MODULE__) \
+               + HELP_COMMANDS[module].__HELP__
 
-            await query.message.edit(text=text,
-                                     reply_markup=InlineKeyboardMarkup(
-                                         [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
+        await query.message.edit(text=text,
+                                 reply_markup=InlineKeyboardMarkup(
+                                     [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
-        elif back_match:
-            await query.message.edit(text=HELP_STRINGS,
-                                     reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")))
+    elif back_match:
+        await query.message.edit(text=HELP_STRINGS,
+                                 reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")))
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]) & (Filters.group | Filters.private))

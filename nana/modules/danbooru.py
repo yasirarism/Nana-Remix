@@ -16,11 +16,7 @@ Search images from Danbooru.
 async def danbooru(client, message):
     await message.edit("`Processing…`")
 
-    if "nsfw" in message.command[1]:
-        rating = "Explicit"
-    else:
-        rating = "Safe"
-
+    rating = "Explicit" if "nsfw" in message.command[1] else "Safe"
     search_query = ' '.join(message.command[2:])
 
     params = {"limit": 1,
@@ -42,11 +38,13 @@ async def danbooru(client, message):
         await message.delete()
         return
 
-    valid_urls = []
+    valid_urls = [
+        response[0][url]
+        for url in ['file_url', 'large_file_url', 'source']
+        if url in response[0].keys()
+    ]
 
-    for url in ['file_url', 'large_file_url', 'source']:
-        if url in response[0].keys():
-            valid_urls.append(response[0][url])
+
     if not valid_urls:
         await message.edit(f"`Failed to find URLs for query:` __{search_query}__")
         await sleep(5)
@@ -59,7 +57,6 @@ async def danbooru(client, message):
             return
         except Exception as e:
             print(e)
-            pass
     await message.edit(f"``Failed to fetch media for query:` __{search_query}__")
     await sleep(5)
     await message.delete()

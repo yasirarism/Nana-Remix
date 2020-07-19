@@ -50,10 +50,7 @@ androidfilehost.com`
 @app.on_message(Filters.me & Filters.command("ls", Command))
 async def ls(_client, message):
     args = message.text.split(None, 1)
-    if len(args) == 2:
-        basepath = "nana/{}".format(args[1])
-    else:
-        basepath = "nana/"
+    basepath = "nana/{}".format(args[1]) if len(args) == 2 else "nana/"
     directory = ""
     listfile = ""
     for entry in os.listdir(basepath):

@@ -42,7 +42,7 @@ async def mega_downloaded_file(_client, message):
         await message.edit("You haven't download any files with mega! try to download something")
         return
     listoffile = "List of file you downloaded with mega: \n`"
-    for i in range(len(filelist)):
-        listoffile += filelist[i] + "\n"
+    for item in filelist:
+        listoffile += item + "\n"
     listoffile += "`"
     await message.edit(listoffile)

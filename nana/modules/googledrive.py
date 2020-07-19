@@ -62,8 +62,7 @@ async def get_driveid(driveid):
 async def get_driveinfo(driveid):
     getdrivename = BeautifulSoup(
         requests.get('https://drive.google.com/file/d/{}/view'.format(driveid), allow_redirects=False).content)
-    filename = cleanhtml(str(getdrivename.find('title'))).split(" - ")[0]
-    return filename
+    return cleanhtml(str(getdrivename.find('title'))).split(" - ")[0]
 
 
 @app.on_message(Filters.me & Filters.command("credentials", Command))
@@ -84,11 +83,10 @@ async def credentials(_client, message):
 async def gdrive_stuff(client, message):
     gauth.LoadCredentialsFile("nana/session/drive")
     if gauth.credentials is None:
-        if HEROKU_API:
-            if gdrive_credentials:
-                file = open("client_secrets.json", "w")
-                file.write(gdrive_credentials)
-                file.close()
+        if HEROKU_API and gdrive_credentials:
+            file = open("client_secrets.json", "w")
+            file.write(gdrive_credentials)
+            file.close()
         await message.edit(
             "You are not logged in to your google drive account!\nYour assistant bot may help you to login google "
             "drive, check your assistant bot for more information!")

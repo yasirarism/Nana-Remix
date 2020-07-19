@@ -129,10 +129,7 @@ async def get_myself(client, message):
         message.reply("Bot is currently turned off!")
         return
     getphoto = await client.get_profile_photos(me.id)
-    if len(getphoto) == 0:
-        getpp = None
-    else:
-        getpp = getphoto[0].file_id
+    getpp = None if len(getphoto) == 0 else getphoto[0].file_id
     text = "**ℹ️ Your profile:**\n"
     text += "First name: {}\n".format(me.first_name)
     if me.last_name:
@@ -171,10 +168,6 @@ async def settings(_client, message):
     text += "-> Database: `{}`\n".format(DB_AVAILABLE)
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
-    if not me:
-        pass
-    else:
-        pass
     list_button = [
         [
             InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
@@ -219,9 +212,7 @@ async def get_myself_btn(client, query):
     else:
         text = query.message.text.markdown
 
-    num = []
-    num.append("*" * len(me.phone_number))
-
+    num = ["*" * len(me.phone_number)]
     if "***" not in text.split("Phone number: `")[1].split("`")[0]:
         text = text.replace(
             "Phone number: `{}`\n".format(me.phone_number),
@@ -369,10 +360,7 @@ async def reboot_heroku(client, query):
     text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
     text += "-> Database: `{}`\n".format(DB_AVAILABLE)
     text += "-> Python: `{}`\n".format(python_version())
-    if not me:
-        togglestart = "Start Bot"
-    else:
-        togglestart = "Stop Bot"
+    togglestart = "Start Bot" if not me else "Stop Bot"
     list_button = [
         [
             InlineKeyboardButton(togglestart, callback_data="toggle_startbot"),
@@ -469,10 +457,6 @@ async def back(_client, message):
     text += "-> Database: `{}`\n".format(DB_AVAILABLE)
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
-    if not me:
-        pass
-    else:
-        pass
     list_button = [
         [
             InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
@@ -583,12 +567,10 @@ async def set_stickers(client, message):
         elif USER_SET["type"] == 2:
             set_stanim_set(message.from_user.id, message.text)
         status = "Ok, sticker was set to `{}`".format(message.text)
-        TEMP_KEYBOARD = []
-        USER_SET = {}
     else:
         status = "Invalid pack selected."
-        TEMP_KEYBOARD = []
-        USER_SET = {}
+    USER_SET = {}
+    TEMP_KEYBOARD = []
     try:
         me = await app.get_me()
     except ConnectionError:
@@ -602,10 +584,6 @@ async def set_stickers(client, message):
     text += "-> Database: `{}`\n".format(DB_AVAILABLE)
     text += "-> Python: `{}`\n".format(python_version())
     text += "\n{}".format(status)
-    if not me:
-        pass
-    else:
-        pass
     list_button = [
         [
             InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),

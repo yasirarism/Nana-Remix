@@ -53,7 +53,7 @@ async def voice(client, message):
         v_text = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         v_text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit(
             "Usage: `reply to a message or send text arg to convert to voice`"
         )

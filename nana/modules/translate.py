@@ -35,7 +35,6 @@ async def translate(_client, message):
         except ValueError as err:
             await message.edit(f"Error: `{str(err)}`")
             return
-        await message.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n```{tekstr.text}```")
     else:
         if len(message.text.split()) <= 2:
             await message.edit("Usage: `tr <lang> <text>`")
@@ -48,4 +47,5 @@ async def translate(_client, message):
         except ValueError as err:
             await message.edit("Error: `{}`".format(str(err)))
             return
-        await message.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n```{tekstr.text}```")
+
+    await message.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n```{tekstr.text}```")

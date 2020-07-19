@@ -76,7 +76,6 @@ async def formatJSON(outData):
     res = list(jsonData.keys())
     if "errors" in res:
         msg += f"**Error** : `{jsonData['errors'][0]['message']}`"
-        return msg
     else:
         jsonData = jsonData['data']['Media']
         if "bannerImage" in jsonData.keys():
@@ -96,7 +95,8 @@ async def formatJSON(outData):
         msg += f"\n**Score** : {jsonData['averageScore']}"
         msg += f"\n**Duration** : {jsonData['duration']} min"
         msg += f"\n\n __{jsonData['description']}__"
-        return msg
+
+    return msg
 
 
 @app.on_message(Filters.me & Filters.command("anime", Command))
@@ -107,7 +107,7 @@ async def anime(_client, message):
         query = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         query = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`cant find anime.`")
         await asyncio.sleep(2)
         await message.delete()
@@ -127,7 +127,7 @@ async def character(_client, message):
         query = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         query = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`cant find character.`")
         await asyncio.sleep(2)
         await message.delete()
@@ -165,7 +165,7 @@ async def manga(_client, message):
         query = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         query = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
+    elif len(cmd) == 1:
         await message.edit("`cant find manga.`")
         await asyncio.sleep(2)
         await message.delete()

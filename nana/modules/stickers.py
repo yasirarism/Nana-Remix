@@ -64,15 +64,17 @@ async def kang_stickers(client, message):
             "Reply a sticker or photo to kang it!\nCurrent sticker pack is: {}\nCurrent animation pack is: {}".format(
                 sticker_pack, animation_pack.sticker))
         return
-    if not (
-                   message.reply_to_message.sticker and message.reply_to_message.sticker.mime_type) == "application/x" \
-                                                                                                       "-tgsticker":
+    if (
+        (
+            message.reply_to_message.sticker
+            and message.reply_to_message.sticker.mime_type
+        )
+    ) != "application/x" "-tgsticker":
         im = Image.open("nana/cache/sticker.png")
-        maxsize = (512, 512)
         if (im.width and im.height) < 512:
             size1 = im.width
             size2 = im.height
-            if im.width > im.height:
+            if size1 > size2:
                 scale = 512 / size1
                 size1new = 512
                 size2new = size2 * scale
@@ -85,6 +87,7 @@ async def kang_stickers(client, message):
             sizenew = (size1new, size2new)
             im = im.resize(sizenew)
         else:
+            maxsize = (512, 512)
             im.thumbnail(maxsize)
         im.save("nana/cache/sticker.png", 'PNG')
 

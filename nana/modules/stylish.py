@@ -62,8 +62,8 @@ def text_style_generator(text, text_type):
     for i, _ in enumerate(teks):
         teks[i] = text_type + teks[i]
     pesan = ""
-    for x in range(len(teks)):
-        pesan += teks[x]
+    for tek in teks:
+        pesan += tek
     return pesan + text_type
 
 
@@ -108,7 +108,7 @@ def stylish_formatting(text):
     smallcaps_compile = re.compile(r'<smallcaps>(.*?)</smallcaps>')
     src_code = smallcaps_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, smallcaps))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, smallcaps)}
         convtext = x.translate(unic)
         text = re.sub(r'<smallcaps>(.*?)</smallcaps>', convtext, text, 1)
 
@@ -116,7 +116,7 @@ def stylish_formatting(text):
     superscript_compile = re.compile(r'<superscript>(.*?)</superscript>')
     src_code = superscript_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, superscript))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, superscript)}
         convtext = x.translate(unic)
         text = re.sub(r'<superscript>(.*?)</superscript>', convtext, text, 1)
 
@@ -124,7 +124,7 @@ def stylish_formatting(text):
     subscript_compile = re.compile(r'<subscript>(.*?)</subscript>')
     src_code = subscript_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, subscript))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, subscript)}
         convtext = x.translate(unic)
         text = re.sub(r'<subscript>(.*?)</subscript>', convtext, text, 1)
 
@@ -132,7 +132,7 @@ def stylish_formatting(text):
     wide_compile = re.compile(r'<wide>(.*?)</wide>')
     src_code = wide_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, wide))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, wide)}
         convtext = x.translate(unic)
         text = re.sub(r'<wide>(.*?)</wide>', convtext, text, 1)
 
@@ -140,7 +140,7 @@ def stylish_formatting(text):
     bubble_compile = re.compile(r'<bubble>(.*?)</bubble>')
     src_code = bubble_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, bubbles))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, bubbles)}
         convtext = x.translate(unic)
         text = re.sub(r'<bubble>(.*?)</bubble>', convtext, text, 1)
 
@@ -148,7 +148,7 @@ def stylish_formatting(text):
     bubble2_compile = re.compile(r'<bubble2>(.*?)</bubble2>')
     src_code = bubble2_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, bubblesblack))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, bubblesblack)}
         convtext = x.translate(unic)
         text = re.sub(r'<bubble2>(.*?)</bubble2>', convtext, text, 1)
 
@@ -156,26 +156,26 @@ def stylish_formatting(text):
     smoth_compile = re.compile(r'<smoth>(.*?)</smoth>')
     src_code = smoth_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, smothtext))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, smothtext)}
         convtext = x.translate(unic)
         text = re.sub(r'<smoth>(.*?)</smoth>', convtext, text, 1)
     graffiti_compile = re.compile(r'<graffiti>(.*?)</graffiti>')
     src_code = graffiti_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, graffiti))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, graffiti)}
         convtext = x.translate(unic)
         text = re.sub(r'<graffiti>(.*?)</graffiti>', convtext, text, 1)
     handwriting_compile = re.compile(r'<handwriting>(.*?)</handwriting>')
     src_code = handwriting_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, handwriting))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, handwriting)}
         convtext = x.translate(unic)
         text = re.sub(r'<handwriting>(.*?)</handwriting>', convtext, text, 1)
 
     handwritingb_compile = re.compile(r'<handwritingb>(.*?)</handwritingb>')
     src_code = handwritingb_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, handwritingb))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, handwritingb)}
         convtext = x.translate(unic)
         text = re.sub(r'<handwritingb>(.*?)</handwritingb>', convtext, text, 1)
     return text
@@ -202,9 +202,8 @@ async def stylish_generator(_client, message):
 
 # For inline stuff
 def formatting_text_inline(text, text_style):
-    unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, text_style))
-    conv = text.translate(unic)
-    return conv
+    unic = {ord(x[0]): x[1] for x in zip(normaltext, text_style)}
+    return text.translate(unic)
 
 
 def upsidedown_text_inline(text):

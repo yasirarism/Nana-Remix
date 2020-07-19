@@ -29,10 +29,7 @@ async def tfsh(client, message):
     await message.edit("`Processing...`")
     name = await name_file(client, message)
     await download_file_from_tg(client, message)
-    if len(name) > 10:
-        name_file_upload = name[-10:]
-    else:
-        name_file_upload = name
+    name_file_upload = name[-10:] if len(name) > 10 else name
     name_file_upload.encode('ascii', 'ignore')
     os.rename(r'nana/downloads/{}'.format(name), r'nana/downloads/{}'.format(name_file_upload))
     print(name_file_upload)
