@@ -128,7 +128,13 @@ async def speach_to_text(client, message):
                 end = datetime.now()
                 ms = (end - start).seconds
                 if transcript_response != "":
-                    string_to_show = f"**TRANSCRIPT**:\n`{transcript_response}`\n\n**Time Taken**: `{ms} seconds`\nConfidence: `{transcript_confidence}`"
+                    string_to_show = f"""
+**TRANSCRIPT**:
+`{transcript_response}`
+
+**Time Taken**: `{ms} seconds`
+**Confidence**: `{transcript_confidence}`
+                                    """
                 else:
                     string_to_show = f"Time Taken: {ms} seconds\n**No Results Found**"
                 await message.edit(string_to_show)
