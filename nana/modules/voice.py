@@ -129,15 +129,15 @@ async def speach_to_text(client, message):
                 ms = (end - start).seconds
                 if transcript_response != "":
                     string_to_show = f"""
-**TRANSCRIPT**:
-`{transcript_response}`
+<b>TRANSCRIPT</b>:
+<pre>{transcript_response}<pre>
 
-**Time Taken**: `{ms} seconds`
-**Confidence**: `{transcript_confidence}`
+<b>Time Taken</b>: <pre>{ms} seconds<pre>
+<b>Confidence</b>: <pre>{transcript_confidence}<pre>
                                     """
                 else:
-                    string_to_show = f"Time Taken: {ms} seconds\n**No Results Found**"
-                await message.edit(string_to_show)
+                    string_to_show = f"<pre>Time Taken<pre>: {ms} seconds\n<pre>No Results Found<pre>"
+                await message.edit(string_to_show, parse_mode='html')
             else:
                 await message.edit(r["error"])
             # now, remove the temporary file
