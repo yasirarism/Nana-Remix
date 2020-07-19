@@ -22,11 +22,10 @@ from nana import (
     HEROKU_API,
     Owner,
     OwnerName,
-    OwnerUsername,
     NANA_IMG,
 )
 from nana.__main__ import reload_userbot, restart_all
-from .repo_changer import change_repo
+
 
 if DB_AVAILABLE:
     from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
@@ -640,7 +639,8 @@ async def settings_sticker(_client, message):
     try:
         keyboard = await app.get_history("@Stickers", limit=1)
         keyboard = keyboard[0].reply_markup.keyboard
-    except:
+    except Exception as e:
+        print(e)
         message.message.edit_text(
             "You dont have any sticker pack!\nAdd stickers pack in @Stickers "
         )

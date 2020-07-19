@@ -44,9 +44,9 @@ async def remove_bg(client, message):
                 disable_notification=True)
             await message.delete()
             os.remove(remove_img)
+            os.remove(IMG_PATH)
         except Exception as e:
             print(e)
-            await message.edit("Something went wrong!\nCheck your usage.")
-            
+            await message.edit("Something went wrong!\nCheck your usage.")    
     else:
         await message.edit("Usage: reply to a photo to remove background!")

@@ -16,8 +16,9 @@ class WhitelistUsers(BASE):
     __tablename__ = "pmapprove"
     user_id = Column(String(14), primary_key=True)
     username = Column(String(15))
-    
+
     def __init__(self, user_id, username):
+        """initializing db"""
         self.user_id = user_id
         self.username = username
         
@@ -27,6 +28,7 @@ class ReqUsers(BASE):
     username = Column(String(15))
     
     def __init__(self, user_id, username):
+        """getting query from db for user and name"""
         self.user_id = user_id
         self.username = username
         

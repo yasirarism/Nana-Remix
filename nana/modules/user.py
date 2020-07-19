@@ -165,7 +165,7 @@ async def join_chat(client, message):
 async def leave_chat(client, message):
     await message.edit('__adios__')
     await client.leave_chat(message.chat.id)
-    
+
 
 @app.on_message(Filters.command('unread', Command) & Filters.me)
 async def mark_chat_unread(client, message):

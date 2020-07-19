@@ -8,7 +8,6 @@ import traceback
 
 import pafy
 import requests
-from bs4 import BeautifulSoup
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from pytube import YouTube
 

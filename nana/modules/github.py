@@ -1,11 +1,8 @@
 import aiohttp
 import aiofiles
-import git
-from pyrogram import Filters
 from reportlab.graphics import renderPM
 from svglib.svglib import svg2rlg
 import asyncio
-import datetime
 import os
 from asyncio import sleep
 from glob import iglob

@@ -99,12 +99,10 @@ async def help_button(_client, query):
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]) & (Filters.group | Filters.private))
 async def stats(_client, message):
     text = "**Here is your current stats**\n"
-    
     if DB_AVAILABLE:
         text += "<b>Notes:</b> `{} notes`\n".format(len(get_all_selfnotes(message.from_user.id)))
         text += "<b>Group joined:</b> `{} groups`\n".format(len(get_all_chats()))
     text += "<b>Message received:</b> `{} messages`\n".format(get_msgc())
-
     uptime = get_readable_time((time.time() - StartTime))
     text += ("<b>Nana uptime:</b> <code>{}</code>".format(uptime))
     await message.reply_text(text, quote=True)

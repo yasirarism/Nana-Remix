@@ -9,6 +9,7 @@ class StickerSet(BASE):
     sticker = Column(UnicodeText)
 
     def __init__(self, my_id, sticker):
+        "initialize sticker id to save in db"
         self.my_id = my_id
         self.sticker = str(sticker)
 

@@ -91,7 +91,8 @@ async def executor(client, message):
     code = args[1]
     try:
         await aexec(client, message, code)
-    except:
+    except Exception as e:
+        print(e)
         exc_type, exc_obj, exc_tb = sys.exc_info()
         errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
         await message.edit("**Execute**\n`{}`\n\n**Failed:**\n```{}```".format(code, "".join(errors)))
@@ -123,6 +124,7 @@ async def terminal(client, message):
                     stderr=subprocess.PIPE
                 )
             except Exception as err:
+                print(err)
                 await message.edit("""
 **Input:**
 ```{}```
@@ -251,7 +253,7 @@ async def get_id(_client, message):
                     file_id += "**Animated Sticker**: `False`\n"
             else:
                 file_id += "**Sticker Set**: __None__\n"
-                file_id += "**Sticker Emoji**: __None__"  
+                file_id += "**Sticker Emoji**: __None__"
         elif rep.video:
             file_id = f"**File ID**: `{rep.video.file_id}`\n"
             file_id += f"**File Ref**: `{rep.video.file_ref}`\n"
@@ -324,9 +326,7 @@ async def speedtest(_client, message):
 
 
 def speed_convert(size):
-    """
-    Hi human, you can't read bytes?
-    """
+    """Hi human, you can't read bytes?"""
     power = 2 ** 10
     zero = 0
     units = {0: '', 1: 'Kb/s', 2: 'Mb/s', 3: 'Gb/s', 4: 'Tb/s'}

@@ -2,12 +2,11 @@ import traceback
 import sys
 import os
 import re
-import shutil
 import subprocess
 
 from pyrogram import Filters
 
-from nana import Command, Owner, logging, setbot
+from nana import Owner, logging, setbot
 from nana.modules.devs import aexec
 
 
@@ -46,6 +45,7 @@ async def terminal(client, message):
                     stderr=subprocess.PIPE
                 )
             except Exception as err:
+                print(err)
                 await message.reply("""
 **Input:**
 ```{}```

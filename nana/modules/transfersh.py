@@ -43,12 +43,7 @@ async def tfsh(client, message):
 
 
 async def send_to_transfersh(file, message, name):
-    """
-    send file to transfersh, retrieve download link, and copy it to clipboard
-    :param file: absolute path to file
-    :param message: a message atribute
-    :return: download_link
-    """
+    """send file to transfersh, retrieve download link"""
     size_of_file = get_size(file)
     final_date = get_date_in_two_weeks()
     file_name = os.path.basename(file)

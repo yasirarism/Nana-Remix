@@ -35,7 +35,7 @@ _LOG = logging.getLogger(__name__)
 
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
-    """run command in terminal"""
+    """run command in terminal."""
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(*args,
                                                    stdout=asyncio.subprocess.PIPE,
@@ -48,7 +48,7 @@ async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
 
 
 async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Optional[str]:
-    """take a screenshot"""
+    """take a screenshot."""
     ttl = duration // 2
     thumb_image_path = path or os.path.join(screen_shot, f"{basename(video_file)}.jpg")
     command = f"ffmpeg -ss {ttl} -i '{video_file}' -vframes 1 '{thumb_image_path}'"

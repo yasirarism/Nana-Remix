@@ -66,7 +66,8 @@ async def evaluation(client, message):
         else:
             await message.edit("**Query:**\n{}\n\n**Result:**\n`None`".format(q))
             return
-    except:
+    except Exception as e:
+        print(e)
         exc_type, exc_obj, exc_tb = sys.exc_info()
         errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
         await message.edit("Error: `{}`".format(errors))

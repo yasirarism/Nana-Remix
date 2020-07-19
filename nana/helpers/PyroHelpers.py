@@ -11,10 +11,10 @@ def ReplyCheck(message: Message):
         reply_id = message.message_id
 
     return reply_id
-    
+  
 
 def GetUserMentionable(user: User):
-    """ Get mentionable text of a user."""
+    "Get mentionable text of a user."
     if user.username:
         username = "@{}".format(user.username)
     else:

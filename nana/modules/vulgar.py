@@ -35,7 +35,7 @@ async def vulgar_f(_client, message):
 
             for word in bad_words:
                 txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
-            
+
             for word in f_word:
                 txt = re.sub(word, 'duck', txt, flags=re.IGNORECASE)
 
