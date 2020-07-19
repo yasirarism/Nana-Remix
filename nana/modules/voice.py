@@ -1,16 +1,20 @@
 import os
-
+from datetime import datetime
+import requests
 from gtts import gTTS
-from pyrogram import Filters
 import asyncio
-from nana import app, Command
 
-__MODULE__ = "Voice"
+from pyrogram import Filters
+
+from nana import app, Command, IBM_WATSON_CRED_URL, IBM_WATSON_CRED_PASSWORD
+from nana.modules.downloads import download_reply_nocall
+
+__MODULE__ = "TTS / STT"
 __HELP__ = """
 Convert text to voice chat.
 
-──「 **Voice** 」──
--> `voice (text)`
+──「 **Text-To-Speech** 」──
+-> `tts (text)`
 Convert text to voice by google 
 
 ──「 **Voice Language** 」──
@@ -33,11 +37,15 @@ tl: Filipino  | tr: Turkish
 vi: Vietname  |
 zh-cn: Chinese (Mandarin/China)
 zh-tw: Chinese (Mandarin/Taiwan)`
+
+──「 **Speech-To-Text** 」──
+-> `stt`
+Reply to a voice message to output trascript
 """
 lang = "en"  # Default Language for voice
 
 
-@app.on_message(Filters.me & Filters.command("voice", Command))
+@app.on_message(Filters.me & Filters.command("tts", Command))
 async def voice(client, message):
     global lang
     cmd = message.command
@@ -46,18 +54,23 @@ async def voice(client, message):
     elif message.reply_to_message and len(cmd) == 1:
         v_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("Usage: `reply to a message or send text arg to convert to voice`")
+        await message.edit(
+            "Usage: `reply to a message or send text arg to convert to voice`"
+        )
         await asyncio.sleep(2)
         await message.delete()
         return
     await client.send_chat_action(message.chat.id, "record_audio")
     # noinspection PyUnboundLocalVariable
     tts = gTTS(v_text, lang=lang)
-    tts.save('nana/cache/voice.mp3')
+    tts.save("nana/cache/voice.mp3")
     await message.delete()
     if message.reply_to_message:
-        await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3",
-                                reply_to_message_id=message.reply_to_message.message_id)
+        await client.send_voice(
+            message.chat.id,
+            voice="nana/cache/voice.mp3",
+            reply_to_message_id=message.reply_to_message.message_id,
+        )
     else:
         await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3")
     await client.send_chat_action(message.chat.id, action="cancel")
@@ -77,3 +90,53 @@ async def voicelang(_client, message):
         lang = temp
         return
     await message.edit("Language Set to {}".format(lang))
+
+
+@app.on_message(Filters.me & Filters.command("stt", Command))
+async def speach_to_text(client, message):
+    start = datetime.now()
+    input_str = message.reply_to_message.voice
+    if input_str:
+        required_file_name = await download_reply_nocall(client, message)
+        if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
+            await message.edit("`no ibm watson key provided, aborting...`")
+            await asyncio.sleep(3)
+            await message.delete()
+        else:
+            headers = {
+                "Content-Type": message.reply_to_message.voice.mime_type,
+            }
+            data = open(required_file_name, "rb").read()
+            response = requests.post(
+                IBM_WATSON_CRED_URL + "/v1/recognize",
+                headers=headers,
+                data=data,
+                auth=("apikey", IBM_WATSON_CRED_PASSWORD),
+            )
+            r = response.json()
+            if "results" in r:
+                # process the json to appropriate string format
+                results = r["results"]
+                transcript_response = ""
+                transcript_confidence = ""
+                for alternative in results:
+                    alternatives = alternative["alternatives"][0]
+                    transcript_response += " " + str(alternatives["transcript"]) + " + "
+                    transcript_confidence += (
+                        " " + str(alternatives["confidence"]) + " + "
+                    )
+                end = datetime.now()
+                ms = (end - start).seconds
+                if transcript_response != "":
+                    string_to_show = f"**TRANSCRIPT**:\n`{transcript_response}`\n\n**Time Taken**: `{ms} seconds`\nConfidence: `{transcript_confidence}`"
+                else:
+                    string_to_show = f"Time Taken: {ms} seconds\n**No Results Found**"
+                await message.edit(string_to_show)
+            else:
+                await message.edit(r["error"])
+            # now, remove the temporary file
+            os.remove(required_file_name)
+    else:
+        await message.edit("`Reply to a voice message`")
+        await asyncio.sleep(3)
+        await message.delete()
