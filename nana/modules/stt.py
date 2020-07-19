@@ -23,7 +23,7 @@ async def speach_to_text(client, message):
             await message.delete()
         else:
             headers = {
-                "Content-Type": previous_message.mime_type,
+                "Content-Type": previous_message,
             }
             data = open(required_file_name, "rb").read()
             response = requests.post(
