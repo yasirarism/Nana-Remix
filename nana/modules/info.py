@@ -91,7 +91,7 @@ async def whois(client, message):
         if sw_api:
             sw = spamwatch.Client(sw_api)
             status = sw.get_ban(user.id)
-            if status == False:
+            if status is False:
                 await message.edit(f"""
 **About {user.first_name} {user.last_name if user.last_name else ''}**:
   - **UserID**: `{user.id}`
@@ -114,7 +114,8 @@ async def whois(client, message):
   - **Profile**: [link](tg://user?id={user.id})
 **SpamWatch Banned** : `True`
   • **Reason**: `{status.reason}`
-  • **Message**: `{status.message}`
+  • **Date**: `{status.date}`
+  • **Message**: `{status.message[:64]}`{'[...]' if len(status.message) > 64 else ''}
                 """,
                 disable_web_page_preview=True)
             return
