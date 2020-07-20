@@ -32,7 +32,7 @@ AFK_RESTIRECT = {}
 DELAY_TIME = 60  # seconds
 
 
-@app.on_message(Filters.me & (Filters.command("afk", Command) | Filters.regex("^brb ")))
+@app.on_message(Filters.me & (Filters.command("afk", Command)))
 async def afk(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
