@@ -10,7 +10,7 @@ def replace_text(text):
         return text.replace("\"", "").replace("\\r", "").replace("\\n", "").replace(
             "\\", "")
 
-
+            
 def extract_time(message, time_val):
     if any(time_val.endswith(unit) for unit in ('m', 'h', 'd')):
         unit = time_val[-1]
@@ -99,7 +99,7 @@ def parse_button(text):
             buttons.append((match.group(2), match.group(3), bool(match.group(4))))
             note_data += markdown_note[prev:match.start(1)]
             prev = match.end(1)
-            break
+        # if odd, escaped -> move along
         else:
             note_data += markdown_note[prev:to_check]
             prev = match.start(1) - 1
@@ -126,8 +126,7 @@ START_CHAR = ('\'', '"', SMART_OPEN)
 
 
 def split_quotes(text: str):
-        if not any(text.startswith(char) for char in START_CHAR):
-                return text.split(None, 1)
+    if any(text.startswith(char) for char in START_CHAR):
         counter = 1  # ignore first char -> is some kind of quote
         while counter < len(text):
             if text[counter] == "\\":
@@ -145,6 +144,8 @@ def split_quotes(text: str):
         if not key:
             key = text[0] + text[0]
         return list(filter(None, [key, rest]))
+    else:
+        return text.split(None, 1)
 
 
 def extract_text(message):
@@ -152,14 +153,16 @@ def extract_text(message):
 
 
 def remove_escapes(text: str) -> str:
-        res = ""
-        is_escaped = False
-        for item in text:
-                if is_escaped:
-                        res += item
-                        is_escaped = False
-                elif item == "\\":
-                        is_escaped = True
-                else:
-                        res += item
-        return res
+    counter = 0
+    res = ""
+    is_escaped = False
+    while counter < len(text):
+        if is_escaped:
+            res += text[counter]
+            is_escaped = False
+        elif text[counter] == "\\":
+            is_escaped = True
+        else:
+            res += text[counter]
+        counter += 1
+    return res
