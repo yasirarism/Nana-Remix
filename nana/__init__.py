@@ -54,6 +54,7 @@ if ENV:
     lang_code = os.environ.get('lang_code', "en")
     device_model = os.environ.get('device_model', "PC")
     system_version = os.environ.get('system_version', "Linux")
+    time_country = os.environ.get("time_country", None)
 
     # Must be filled
     api_id = os.environ.get('api_id', None)
@@ -135,6 +136,7 @@ else:
     NANA_IMG = Config.NANA_IMG
     IBM_WATSON_CRED_URL = Config.IBM_WATSON_CRED_URL
     IBM_WATSON_CRED_PASSWORD = Config.IBM_WATSON_CRED_PASSWORD
+    time_country = Config.time_country
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD
     USERBOT_NOLOAD = Config.USERBOT_NOLOAD

@@ -65,6 +65,11 @@
       "value": "",
       "required": false
     },
+    "time_country": {
+      "description": "(optional) input your timezone from this list: https://telegra.ph/Time-Zone-list-for-Nana-Remix-07-21",
+      "value": "",
+      "required": false
+    },
     "IBM_WATSON_CRED_URL": {
       "description": "(optional)",
       "value": "",

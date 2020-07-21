@@ -39,6 +39,7 @@ class Config(object):
 	HEROKU_API = "token"  # if you're using heroku this field must filled, get from here : https://dashboard.heroku.com/account
 	IBM_WATSON_CRED_URL = "token"
 	IBM_WATSON_CRED_PASSWORD = "token"
+	time_country = '' #timezone list is in the link: https://telegra.ph/Time-Zone-list-for-Nana-Remix-07-21
 	# Load or no load plugins
 	# userbot
 	USERBOT_LOAD = [] # Load modules you want only for user, Leave Blank if you want to use All
