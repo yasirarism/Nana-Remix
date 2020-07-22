@@ -17,18 +17,6 @@ To find information about a person.
 
 """
 
-WHOIS = (
-    "**About {first_name}**:\n"
-    " - **UserID**: `{user_id}`\n"
-    " - **First Name**: `{first_name}`\n"
-    " - **Last Name**: `{last_name}`\n"
-    " - **Username**: `{username}`\n"
-    " - **Last Online**: `{last_online}`\n"
-    " - **Common Groups**: `{common_groups}`\n"
-    " - **Contact**: `{is_contact}`\n"
-    " - **Profile**: [link](tg://user?id={user_id})\n"
-    )
-
 
 def LastOnline(user: User):
     if user.is_bot:
@@ -93,25 +81,23 @@ async def whois(client, message):
             status = sw.get_ban(user.id)
             if status == False:
                 await message.edit(f"""
-**About {user.first_name} {user.last_name if user.last_name else ''}**:
+**About [{user.first_name} {user.last_name if user.last_name else ''}](tg://user?id={user.id})**:
   - **UserID**: `{user.id}`
   - **Username**: `{user.username if user.username else ''}`
   - **Last Online**: `{LastOnline(user)}`
   - **Common Groups**: `{len(common.chats)}`
   - **Contact**: `{user.is_contact}`
-  - **Profile**: [link](tg://user?id={user.id})
 **SpamWatch Banned** : `False`
                 """,
                 disable_web_page_preview=True)
             else:
                 await message.edit(f"""
-**About {user.first_name} {user.last_name if user.last_name else ''}**:
+**About [{user.first_name} {user.last_name if user.last_name else ''}](tg://user?id={user.id})**:
   - **UserID**: `{user.id}`
   - **Username**: `{user.username if user.username else ''}`
   - **Last Online**: `{LastOnline(user)}`
   - **Common Groups**: `{len(common.chats)}`
   - **Contact**: `{user.is_contact}`
-  - **Profile**: [link](tg://user?id={user.id})
 **SpamWatch Banned** : `True`
   • **Reason**: `{status.reason}`
   • **Message**: `{status.message}`
@@ -120,12 +106,11 @@ async def whois(client, message):
             return
         else:
             await message.edit(f"""
-**About {user.first_name} {user.last_name if user.last_name else ''}**:
+**About [{user.first_name} {user.last_name if user.last_name else ''}](tg://user?id={user.id})**:
   - **UserID**: `{user.id}`
   - **Username**: `{user.username if user.username else ''}`
   - **Last Online**: `{LastOnline(user)}`
   - **Common Groups**: `{len(common.chats)}`
   - **Contact**: `{user.is_contact}`
-  - **Profile**: [link](tg://user?id={user.id})
             """,
             disable_web_page_preview=True)
