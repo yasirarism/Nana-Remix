@@ -83,7 +83,7 @@ async def whois(client, message):
                 await message.edit(f"""
 **About [{user.first_name} {user.last_name if user.last_name else ''}](tg://user?id={user.id})**:
   - **UserID**: `{user.id}`
-  - **Username**: `{user.username if user.username else ''}`
+  - **Username**: {'@'+user.username if user.username else ''}
   - **Last Online**: `{LastOnline(user)}`
   - **Common Groups**: `{len(common.chats)}`
   - **Contact**: `{user.is_contact}`
@@ -94,7 +94,7 @@ async def whois(client, message):
                 await message.edit(f"""
 **About [{user.first_name} {user.last_name if user.last_name else ''}](tg://user?id={user.id})**:
   - **UserID**: `{user.id}`
-  - **Username**: `{user.username if user.username else ''}`
+  - **Username**: {'@'+user.username if user.username else ''}
   - **Last Online**: `{LastOnline(user)}`
   - **Common Groups**: `{len(common.chats)}`
   - **Contact**: `{user.is_contact}`
@@ -108,7 +108,7 @@ async def whois(client, message):
             await message.edit(f"""
 **About [{user.first_name} {user.last_name if user.last_name else ''}](tg://user?id={user.id})**:
   - **UserID**: `{user.id}`
-  - **Username**: `{user.username if user.username else ''}`
+  - **Username**: {'@'+user.username if user.username else ''}
   - **Last Online**: `{LastOnline(user)}`
   - **Common Groups**: `{len(common.chats)}`
   - **Contact**: `{user.is_contact}`
