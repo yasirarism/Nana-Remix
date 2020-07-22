@@ -188,35 +188,53 @@ async def gdrive_stuff(client, message):
             await message.edit("__Downloading...__")
             c_time = time.time()
             if message.reply_to_message.photo:
-                nama = "photo_{}.png".format(message.reply_to_message.photo.date)
+                if not message.reply_to_message.caption: 
+                    nama = f"photo_{message.reply_to_message.photo.date}.png"
+                else:
+                    nama = f'{message.reply_to_message.caption}.png'.replace(' ', '_')
                 await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.animation:
-                nama = "giphy_{}-{}.gif".format(message.reply_to_message.animation.date,
-                                                message.reply_to_message.animation.file_size)
+                if not message.reply_to_message.caption: 
+                    nama = "giphy_{}-{}.gif".format(message.reply_to_message.animation.date,
+                                                    message.reply_to_message.animation.file_size)
+                else:
+                    nama = f'{message.reply_to_message.caption}.gif'.replace(' ', '_')
                 await client.download_media(message.reply_to_message.animation, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.video:
-                nama = "video_{}-{}.mp4".format(message.reply_to_message.video.date,
-                                                message.reply_to_message.video.file_size)
+                if not message.reply_to_message.caption: 
+                    nama = "video_{}-{}.mp4".format(message.reply_to_message.video.date,
+                                                    message.reply_to_message.video.file_size)
+                else:
+                    nama = f'{message.reply_to_message.caption}.mp4'.replace(' ', '_').replace('.mkv', '')
                 await client.download_media(message.reply_to_message.video, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.sticker:
-                nama = "sticker_{}_{}.webp".format(message.reply_to_message.sticker.date,
-                                                   message.reply_to_message.sticker.set_name)
+                if not message.reply_to_message.caption:
+                    nama = "sticker_{}_{}.webp".format(message.reply_to_message.sticker.date,
+                                                    message.reply_to_message.sticker.set_name)
+                else:
+                    nama = f'{message.reply_to_message.caption}.webp'.replace(' ', '_')
                 await client.download_media(message.reply_to_message.sticker, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.audio:
-                nama = "audio_{}.mp3".format(message.reply_to_message.audio.date)
+                if not message.reply_to_message.caption:
+                    nama = "audio_{}.mp3".format(message.reply_to_message.audio.date)
+                else:
+                    nama = f'{message.reply_to_message.caption}.mp3'.replace(' ', '_')
                 await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.voice:
-                nama = "audio_{}.ogg".format(message.reply_to_message.voice.date)
+                if not message.reply_to_message.caption:
+                    nama = "audio_{}.ogg".format(message.reply_to_message.voice.date)
+                else:
+                    nama = f'{message.reply_to_message.caption}.ogg'.replace(' ', '_')
                 await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
